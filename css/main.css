@@ -1,0 +1,19 @@
+html{min-height:100%;position:relative;}
+body{margin:0;padding:0;font-size:100%;height:100%;color:#222;background:#fff;}
+img{width:100%;}
+.color{color:#b30015;}
+.center{text-align:center;}
+h1,h2,h3,h4,h5,h6{line-height:1;margin:0;padding:0;}
+h1{font-family:'Montserrat',sans-serif;font-size:80px;font-weight:900;letter-spacing:-5px;color:#222;}h1 span{color:#b30015;margin-left:5px;}
+h2{font-family:'Merriweather',serif;font-size:1.69rem;line-height:1.45;font-weight:400;font-style:italic;margin:1rem 0;padding-left:15px;border-left:4px solid #b30015;}
+p{font-family:'Merriweather',serif;font-size:1rem;line-height:1.69rem;margin:0 0 1rem 0;color:#444;}p span{color:#b30015;font-style:italic;}
+a{color:#222;text-decoration:none;}
+a:hover{color:#666;}
+span.clear{clear:left;display:block;}
+.fat{position:relative;padding:0 23.3px;}
+.muscle{max-width:1193px;width:100%;margin:66.5px auto;padding:0;position:relative;}
+.muscle:before,.muscle:after{display:table;line-height:0;content:"";}
+.muscle:after{clear:both;}
+.bone{max-width:543px;margin:0 auto;}
+.cover{margin:80px 0 0;}
+@media (min-width:1000px){.fat{position:relative;padding:0 66.5px;} .bone{width:46%;max-width:none;padding:0;float:left;vertical-align:top;} .bone:last-child{float:right;}}
