@@ -3,14 +3,13 @@ img{width:100%;}
 body{margin:0;padding:0;font-size:100%;}
 .line-through{text-decoration:line-through;}
 h1{font-family:'Montserrat',sans-serif;line-height:1;margin:0;padding:0;font-size:3.157rem;font-weight:900;letter-spacing:-1px;color:#222;}
-h2{font-family:'Merriweather',serif;font-size:1rem;line-height:1.777rem;text-align:center;}
-h3{font-family:'Merriweather',serif;font-size:1.777rem;line-height:1;text-align:center;}
+h2{font-family:'Merriweather',serif;font-size:1rem;line-height:1.777rem;}
+h3{font-family:'Merriweather',serif;font-size:1.777rem;line-height:1;}
 .colored,a{display:inline;color:#00bbb2;}
 a:hover{color:#009992;}
 a{text-decoration:none;}
 .container{max-width:800px;width:100%;margin:3.157rem auto;padding:0;position:relative;}
 .header,.content{position:relative;padding:0 1rem;}
 .header{text-align:right;}
-.content{text-align:center;}
 .item{margin:0 0 80px;padding:0;}.item img{border:1px solid #ccc;}
 @media (min-width:1000px){}
