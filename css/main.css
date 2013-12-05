@@ -10,6 +10,6 @@ a:hover{color:#009992;}
 a{text-decoration:none;}
 .container{max-width:800px;width:100%;margin:3.157rem auto;padding:0;position:relative;}
 .header,.content{position:relative;padding:0 1rem;}
-.header{text-align:right;}
 .item{margin:0 0 80px;padding:0;}.item img{border:1px solid #ccc;}
+.pull-right{text-align:right;}
 @media (min-width:1000px){}
