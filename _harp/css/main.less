@@ -12,16 +12,13 @@ body {
   padding: 0;
   font-size: 100%;
 }
-.line-through {
-  text-decoration: line-through;
-}
 
 h1 {
   font-family: 'Montserrat', sans-serif;
   line-height: 1;
   margin: 0;
   padding: 0;
-  font-size: 3.157rem;
+  font-size: 2.5rem;
   font-weight: 900;
   letter-spacing: -1px;
   color: #222;
@@ -30,11 +27,11 @@ h1 {
 h2 {
   font-family: 'Merriweather', serif;
   font-size: 1rem;
-  line-height: 1.777rem;
+  line-height: 1.5rem;
 }
 h3 {
   font-family: 'Merriweather', serif;
-  font-size: 1.777rem;
+  font-size: 1.5rem;
   line-height: 1;
 }
 
@@ -54,19 +51,10 @@ a {
 /*------------------------------------*/
 
 .container {
-  max-width: 800px;
-  width: 100%;
-  margin: 3.157rem auto;
-  padding: 0;
+  max-width: 700px;
+  margin: 3rem auto;
+  padding: 20px;
   position: relative;
-}
-
-.header, .content {
-  position: relative;
-  padding: 0 1rem;
-}
-
-.content {
 }
 
 .item {
@@ -81,30 +69,24 @@ a {
   text-align: right;
 }
 
-
-
 /*-------------------------------*/
 /*----- RESPONSIVE STUFF  -------*/
 /*-------------------------------*/
 
+@media (max-width: 500px) {
+  .item {
+    margin: 0 0 40px;
+  }
+}
+@media (min-width: 500px) and (max-width: 1000px) {
+   h1 {
+    font-size: 3rem;
+  }
+}
 @media (min-width: 1000px) {
-  
-  // .fat {
-  //   position: relative;
-  //   padding: 0 66.5px;
-  // }
-
-  // .bone {
-  //   width: 46%;
-  //   max-width: none;
-  //   padding: 0;
-  //   float: left;
-  //   vertical-align: top;
-  // }
-
-  // .bone:last-child {
-  //   float: right;
-  // }
+   h1 {
+    font-size: 4rem;
+  }
 }
 
 
