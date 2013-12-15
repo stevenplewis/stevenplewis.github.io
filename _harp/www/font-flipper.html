@@ -1,0 +1,102 @@
+<!DOCTYPE html><html><head><link rel="shortcut icon" href="/img/favicon.png" type="image/png"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-44743958-1', 'notsteve.com');
+  ga('send', 'pageview');
+  </script><link rel="stylesheet" href="./css/font-flipper.css"><link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css"><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><script src="js/jquery.fittext.js"></script></head><body><div id="welcome"><div class="text-container"><h2>Flip through your fonts with the</h2><h1>Font Flipper</h1><h2>1. Scroll</h2><h2>2. Type</h2><h2>3. Flip</h2><a id="welcome-dismiss" href="#">Loading...</a></div></div><a id="color-toggle" href="#" title=""><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewbox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve"><path fill="#aaa" d="M13.776,3.71V0H0v13.776h3.711V20H20V3.71H13.776z M17.487,17.488H6.224V6.223h11.264V17.488z"></path></svg></a><a id="paragraph-toggle" href="#" title="">P</a><div id="fontList"></div><div id="fontList2"></div><script type="text/javascript">// WELCOME FITTEXT SETUP
+$('#welcome').find('h1').fitText(7, { minFontSize: '50px'});
+
+//- GETTING FONTS FROM USER
+function populateFontList(fontArr)
+{
+var allFontsCounter = 0;
+var regularFontsCounter = 0;
+var allFontsHTML = '<ul>';
+var regularFontsHTML = allFontsHTML;
+for (var key in fontArr)
+{
+var fontName = fontArr[key];
+// trim
+fontName = fontName.replace(/^\\s\s*/, '').replace(/\s\s*$/, '');
+if (fontName.match(/[_\\-\s]Italic$/)
+|| fontName.match(/[_\\-\s](Demi)?[Bb]old$/)
+|| fontName.match(/[_\\-\s]Medium$/)
+|| fontName.match(/[_\\-\s](Ultra)?[Ll]ight$/)
+|| fontName.match(/[_\\-\s]Condensed$/)
+)
+allFontsHTML += '<li>'+fontName+'</li>';
+else
+{
+allFontsHTML += '<li class="font-item" data-value="' + fontName + '"></li>';
+fontName = fontName.replace(/\\s*Regular$/, '');
+regularFontsHTML += '<li class="font-item" data-value="' + fontName + '"><h2 class="font-name">'+fontName+'</h2><h1>&</h1></li>';
+
+regularFontsCounter++;
+}
+allFontsCounter++;
+}
+regularFontsHTML += '</ul>';
+allFontsHTML += '</ul>';
+// allFontsHTML = allFontsCounter+' fonts altogether:'+allFontsHTML;
+// regularFontsHTML = regularFontsCounter+' "regular" fonts:'+regularFontsHTML;
+document.getElementById('fontList').innerHTML = allFontsHTML;
+document.getElementById('fontList').innerHTML = regularFontsHTML;
+document.getElementById('fontList2').innerHTML = regularFontsHTML;
+$('.font-item').append("<p>Every year, I took a holiday. I went to Florence, this cafe on the banks of the Arno. Every fine evening, I would sit there and order a Fernet Branca. I had this fantasy, that I would look across the tables and I would see you there with a wife maybe a couple of kids. You wouldn't say anything to me, nor me to you. But we would both know that you've made it, that you were happy. I never wanted you to come back to Gotham. I always knew there was nothing here for you except pain and tragedy and I wanted something more for you than that. I still do.</p>");
+changeFonts();
+}
+
+//- STUFF PAT HELPED ME WRITE
+function changeFonts() {
+    $(window).on('keypress', function(evt) { 
+    $('#fontList').find('li').find('h1').text(String.fromCharCode(evt.which));
+    $('#fontList2').find('li').find('h1').text(String.fromCharCode(evt.which));
+    })
+    
+    // SET ITEM FONTS
+    $('.font-item').find('h1').each(function(){
+    $(this).css('font-family',$(this).attr('data-value'));
+    });
+    $('.font-item').each(function(){
+    var fontName = $(this).attr('data-value');
+    $(this).find('h1').css('font-family', fontName);
+    $(this).find('p').css('font-family', fontName);
+    });
+    
+    
+    //- SETTING UP FITTEXT
+    $('.font-item').find('h1').fitText(1, { minFontSize: '80px'});
+    
+    
+    //- WELCOME PAGE BEHAVIOR
+    $('#welcome-dismiss').text('Show Me').css('opacity', 1);
+    $('#welcome-dismiss').click(function() {
+        $("#welcome").slideUp("slow")
+        });
+        
+        
+    //- INVERT COLOR TOGGLE
+    $('#color-toggle').click(function () {
+            $('#fontList').toggleClass('color-flip');
+            $('#fontList2').toggleClass('color-flip');
+            $('#color-toggle').toggleClass('color-flip');
+    });
+    
+    //- TESTING FOR PARAGRAPH
+    $('#paragraph-toggle').click(function () {
+            $('#fontList ul li h1').toggle();
+            $('#fontList ul li p').toggle();
+            $('#fontList2 ul li h1').toggle();
+            $('#fontList2 ul li p').toggle();
+            if ($(this).text() == "P")
+               $(this).text("C")
+            else
+               $(this).text("P");
+    });
+};
+
+
+
+
+</script><object id="fontListSWF" name="fontListSWF" type="application/x-shockwave-flash" data="FontList.swf" width="1" height="1"><param name="movie" value="FontList.swf"></param><embed src="FontList.swf" width="1" height="1"></embed></object></body></html>
