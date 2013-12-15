@@ -1,0 +1,116 @@
+extends _base
+
+block head
+    //- ADDITIONAL STYLESHEET
+    link(rel="stylesheet", href="./css/font-flipper.css")
+
+    //- OPEN SANS FONT
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,700', rel='stylesheet', type='text/css')
+
+    //- JAVASCRIPT LINKS
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
+    script(src='js/jquery.fittext.js')
+
+block body
+
+    //- ACTUAL PAGE
+    #welcome
+        .text-container
+            h2 Flip through your fonts with the
+            h1 Font Flipper
+            h2 1. Scroll
+            h2 2. Type
+            h2 3. Flip
+            a#welcome-dismiss(href="#") Loading...
+    a#color-toggle(href="#", title="")
+        svg(version='1.1', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', x='0px', y='0px', width='20px', height='20px', viewbox='0 0 20 20', enable-background='new 0 0 20 20', xml:space='preserve')
+            path(fill="#aaa", d='M13.776,3.71V0H0v13.776h3.711V20H20V3.71H13.776z M17.487,17.488H6.224V6.223h11.264V17.488z')
+    #fontList
+    #fontList2
+
+
+    //- MORE JAVASCRIPT MAGIC
+    script(type='text/javascript').
+        
+        // WELCOME FITTEXT SETUP
+        $('#welcome').find('h1').fitText(7, { minFontSize: '50px'});
+
+        //- GETTING FONTS FROM USER
+        function populateFontList(fontArr)
+        {
+        var allFontsCounter = 0;
+        var regularFontsCounter = 0;
+        var allFontsHTML = '<ul>';
+        var regularFontsHTML = allFontsHTML;
+        for (var key in fontArr)
+        {
+        var fontName = fontArr[key];
+        // trim
+        fontName = fontName.replace(/^\\s\s*/, '').replace(/\s\s*$/, '');
+        if (fontName.match(/[_\\-\s]Italic$/)
+        || fontName.match(/[_\\-\s](Demi)?[Bb]old$/)
+        || fontName.match(/[_\\-\s]Medium$/)
+        || fontName.match(/[_\\-\s](Ultra)?[Ll]ight$/)
+        || fontName.match(/[_\\-\s]Condensed$/)
+        )
+        allFontsHTML += '<li>'+fontName+'</li>';
+        else
+        {
+        allFontsHTML += '<li class="font-item" data-value="' + fontName + '"><h1>&</h1><h2 class="font-name">'+fontName+'</h2></li>';
+        fontName = fontName.replace(/\\s*Regular$/, '');
+        regularFontsHTML += '<li class="font-item" data-value="' + fontName + '"><h2 class="font-name">'+fontName+'</h2><h1>&</h1></li>';
+
+        regularFontsCounter++;
+        }
+        allFontsCounter++;
+        }
+        regularFontsHTML += '</ul>';
+        allFontsHTML += '</ul>';
+        // allFontsHTML = allFontsCounter+' fonts altogether:'+allFontsHTML;
+        // regularFontsHTML = regularFontsCounter+' "regular" fonts:'+regularFontsHTML;
+        document.getElementById('fontList').innerHTML = allFontsHTML;
+        document.getElementById('fontList').innerHTML = regularFontsHTML;
+        document.getElementById('fontList2').innerHTML = regularFontsHTML;
+        changeFonts();
+        }
+
+        //- STUFF PAT HELPED ME WRITE
+        function changeFonts() {
+            $(window).on('keypress', function(evt) { 
+            $('#fontList').find('li').find('h1').text(String.fromCharCode(evt.which));
+            $('#fontList2').find('li').find('h1').text(String.fromCharCode(evt.which));
+            })
+
+            // SET ITEM FONTS
+            $('.font-item').find('h1').each(function(){
+            $(this).css('font-family',$(this).attr('data-value'));
+            });
+            $('.font-item').each(function(){
+            var fontName = $(this).attr('data-value');
+            $(this).find('h1').css('font-family', fontName);
+            });
+
+
+            //- SETTING UP FITTEXT
+            $('.font-item').find('h1').fitText(1, { minFontSize: '80px'});
+
+
+            //- WELCOME PAGE BEHAVIOR
+            $('#welcome-dismiss').text('Show Me').css('opacity', 1);
+            $('#welcome-dismiss').click(function() {
+                $("#welcome").slideUp("slow")
+                });
+            $('#color-toggle').click(function () {
+                    $('#fontList').toggleClass('color-flip');
+                    $('#fontList2').toggleClass('color-flip');
+                    $('#color-toggle').toggleClass('color-flip');
+                });
+        };
+
+
+
+
+
+    object#fontListSWF(name='fontListSWF', type='application/x-shockwave-flash', data='FontList.swf', width='1', height='1')
+      param(name='movie', value='FontList.swf')
+      embed(src='FontList.swf', width='1', height='1')
