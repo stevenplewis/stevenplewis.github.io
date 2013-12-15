@@ -25,6 +25,7 @@ block body
     a#color-toggle(href="#", title="")
         svg(version='1.1', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink', x='0px', y='0px', width='20px', height='20px', viewbox='0 0 20 20', enable-background='new 0 0 20 20', xml:space='preserve')
             path(fill="#aaa", d='M13.776,3.71V0H0v13.776h3.711V20H20V3.71H13.776z M17.487,17.488H6.224V6.223h11.264V17.488z')
+    a#paragraph-toggle(href="#", title="") P
     #fontList
     #fontList2
 
@@ -56,7 +57,7 @@ block body
         allFontsHTML += '<li>'+fontName+'</li>';
         else
         {
-        allFontsHTML += '<li class="font-item" data-value="' + fontName + '"><h1>&</h1><h2 class="font-name">'+fontName+'</h2></li>';
+        allFontsHTML += '<li class="font-item" data-value="' + fontName + '"></li>';
         fontName = fontName.replace(/\\s*Regular$/, '');
         regularFontsHTML += '<li class="font-item" data-value="' + fontName + '"><h2 class="font-name">'+fontName+'</h2><h1>&</h1></li>';
 
@@ -71,6 +72,7 @@ block body
         document.getElementById('fontList').innerHTML = allFontsHTML;
         document.getElementById('fontList').innerHTML = regularFontsHTML;
         document.getElementById('fontList2').innerHTML = regularFontsHTML;
+        $('.font-item').append("<p>Every year, I took a holiday. I went to Florence, this cafe on the banks of the Arno. Every fine evening, I would sit there and order a Fernet Branca. I had this fantasy, that I would look across the tables and I would see you there with a wife maybe a couple of kids. You wouldn't say anything to me, nor me to you. But we would both know that you've made it, that you were happy. I never wanted you to come back to Gotham. I always knew there was nothing here for you except pain and tragedy and I wanted something more for you than that. I still do.</p>");
         changeFonts();
         }
 
@@ -88,6 +90,7 @@ block body
             $('.font-item').each(function(){
             var fontName = $(this).attr('data-value');
             $(this).find('h1').css('font-family', fontName);
+            $(this).find('p').css('font-family', fontName);
             });
 
 
@@ -100,10 +103,25 @@ block body
             $('#welcome-dismiss').click(function() {
                 $("#welcome").slideUp("slow")
                 });
+
+
+            //- INVERT COLOR TOGGLE
             $('#color-toggle').click(function () {
                     $('#fontList').toggleClass('color-flip');
                     $('#fontList2').toggleClass('color-flip');
                     $('#color-toggle').toggleClass('color-flip');
+                });
+
+            //- TESTING FOR PARAGRAPH
+            $('#paragraph-toggle').click(function () {
+                    $('#fontList ul li h1').toggle();
+                    $('#fontList ul li p').toggle();
+                    $('#fontList2 ul li h1').toggle();
+                    $('#fontList2 ul li p').toggle();
+                    if ($(this).text() == "P")
+                       $(this).text("C")
+                    else
+                       $(this).text("P");
                 });
         };
 
