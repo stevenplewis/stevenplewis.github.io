@@ -74,12 +74,12 @@ body {
 #fontList ul {
   left: 0;
   right: 50%;
-  padding-left: 20px;
+  padding-left: 40px;
 }
 #fontList2 ul {
   left: 50%;
   right: 0;
-  padding-right: 20px;
+  padding-right: 40px;
 }
 
 
@@ -137,25 +137,50 @@ body {
 
 // INVERT COLOR TOGGLE SWITCH
 
-#color-toggle {
+.toggle-buttons {
+  height: 300px;
+  width: 70px;
   position: absolute;
+  z-index: 100;
+
+  a {
+    position: absolute;
+    left: 20px;
+    z-index: 900;
+    font-family: 'open sans', sans-serif;
+    text-decoration: none;
+    font-weight: 700;
+    color: #aaa;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+
+    i {
+      font-size: 20px;
+    }
+  }
+  a:hover {
+    color: #ccc;
+  }
+  #color-toggle {
   top: 20px;
-  left: 20px;
-  z-index: 900;
+  }
+  #paragraph-toggle {
+    top: 50px;
+    i {
+      font-size: 18px;
+    }
+  }
+  #facebook-share{
+    top: 120px;
+  }
+  #twitter-share{
+    top: 150px;
+  }
+  #google-share{
+    top: 180px;
+  }
 }
 
 
-#paragraph-toggle {
-  font-family: 'open sans', sans-serif;
-  text-decoration: none;
-  font-weight: 700;
-  color: #aaa;
-  height: 20px;
-  width: 20px;
-  border-radius: 2px;
-  text-align: center;
-  position: absolute;
-  top: 50px;
-  left: 20px;
-  z-index: 900;
-}
+
