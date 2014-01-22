@@ -19,6 +19,7 @@ body {
   max-width: 800px;
   margin:0 auto;
   text-align: center;
+  position: relative;
 }
 
 #header {
@@ -33,18 +34,8 @@ h2 {
   line-height: 2;
 }
 
-#original {
-  opacity: 0.8;
 
-  
-  position: absolute;
-  top: -9999px;
-  left: 9999px;
-  height: 1px;
-  width: 1px;
-}
-
-#paper {
+#paper, #original {
   text-align: left;
   font-weight: 400;
   font-size: 1rem;
@@ -55,10 +46,18 @@ h2 {
   text-shadow: 0px 0px 1px #eee;
   outline: 2px solid #ccc;
   width: 70%;
-  padding: 80px 10%;
+  padding: 8% 10%;
   margin: 0 5% 200px;
   min-height: 800px;
   resize: none;
+}
+
+#original {
+  // opacity: 0;
+  position: absolute;
+  left: -999px;
+  top: 300px;
+  font-family: 'PT Mono', monospace;
 }
 
 
