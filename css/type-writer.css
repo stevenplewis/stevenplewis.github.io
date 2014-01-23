@@ -4,5 +4,5 @@ body{font-family:'PT Mono',monospace;color:#222;text-decoration:none;}
 #header{margin:40px 0;}
 h1{font-size:2rem;}
 h2{font-size:1rem;line-height:2;}
-#paper,#original{text-align:left;font-weight:400;font-size:1rem;line-height:1.5;border:none;background:#fff;text-shadow:0px 0px 1px #eee;outline:2px solid #ccc;width:70%;padding:8% 10%;margin:0 5% 200px;min-height:800px;resize:none;}
+#paper,#original{text-align:left;font-weight:400;font-size:1rem;line-height:1.5;border:none;background:#fff;text-shadow:0px 0px 1px #eee;outline:2px solid #ccc;width:70%;padding:8% 10%;margin:0 5% 200px;min-height:650px;resize:none;}
 #original{position:absolute;left:-999px;top:300px;font-family:'PT Mono',monospace;}
