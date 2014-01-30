@@ -2,7 +2,7 @@ extends _base
 
 block head
   //- FONTS
-  link(href='http://fonts.googleapis.com/css?family=Montserrat:700|Merriweather', rel='stylesheet', type='text/css')
+  link(href='http://fonts.googleapis.com/css?family=Merriweather|Merriweather+Sans:800', rel='stylesheet', type='text/css')
 
   //- STYLESHEETS
   link(rel="stylesheet", href="./css/main.css")
@@ -15,47 +15,51 @@ block body
       a(href="http://notsteve.com", title="home")
         h1 STEVEN
           .colored LEWIS
-  img(src="img/steve@2x.png", alt="")
+  img(src="img/steve-2.png", alt="")
   .container
     a(href="http://onesecond.designly.com", title="One second on the internet")
       .item
         img(src="img/one-second.png", alt="One second on the internet page")
-        h2 see the full site at onesecond.designly.com
+        h2 See the full site at 
+          u onesecond.designly.com
+    a(href="http://notsteve.com/font-flipper", title="The Font Flipper")
+      .item
+        img(src="img/font-flipper.png", alt="font flipper screenshot")
+        h2 Explore your fonts with the experimental 
+          u Font Flipper
     a(href="http://nickmalburg.bandcamp.com/", title="Nick Malburg bandcamp page")
       .item
         img(src="img/nick-cover.jpg", alt="album cover for nick malburg")
-        h2 download the album for free at nickmalburg.bandcamp.com
-    a(href="http://designly.com", title="")
+        h2 Download the album for free at 
+          u nickmalburg.bandcamp.com
+    a(href="http://www.laurastevenson.net/home", title="laura stevenson website")
       .item
-        img(src="img/designly.png", alt="Designly.com page")
-        h2 see the full site at designly.com
+        img(src="img/laura-shirt.jpg", alt="laura stevenson and the cans shirt")
+        h2 My shirt is SOLD OUT, but still check out 
+          u Laura Stevenson & the Cans!
     .item
-      img(src="img/plants.jpg", alt="plant hangers by Rachel")
+      img(src="img/designly.png", alt="Designly.com page")
     .item
-      img(src="img/laura-shirt.jpg", alt="laura stevenson and the cans shirt")
+      img(src="img/plants.jpg", alt="plant hangers")
     .item
       img(src="img/league.png", alt="freelance league illustration")
     .item
-      img(src="img/btmi-logo.png", alt="Bomb the Music Industry logo")
-      h2.pull-right "This shit is AWESOME!!!"
-        br
-        | - Jeff Rosenstock of Bomb the Music Industry
-    .item
       img(src="img/dark-knight.png", alt="dark knight t-shirt")
-    a(href="http://quoems.com", title="quoems.com")
-      .item
-        img(src="img/quoem-cover.png", alt="quoem book")
-        h2 check out quoems.com
     .item
       img(src="img/chimera.jpg", alt="chimera book")
     .item
-      img(src="img/searching.png", alt="soul searching print")
+      img(src="img/how-mag.jpg", alt="chimera award")
+      h2 Chimera Eight won several awards, including one from HOW Magazine
     .item
-      img(src="img/invite.jpg", alt="invitation for spring show")
+      img(src="img/searching.png", alt="soul searching print")
     .item
       img(src="img/handout.jpg", alt="handout for spring show")
     .item
+      img(src="img/invite.jpg", alt="invitation for spring show")
+    .item
       img(src="img/bomb-book.png", alt="")
+    .item
+      img(src="img/quoem-cover.png", alt="quoem book")
     .item
       img(src="img/gallery-full.jpg", alt="yeah, wer're designers but... show")
     .item
@@ -63,5 +67,5 @@ block body
     .item
       h2 Get in touch: 
         a(href="mailto:baffledappledesign@gmail.com", title="steve's email")
-          | baffledappledesign@gmail.com
+          u baffledappledesign@gmail.com
 
