@@ -2,10 +2,15 @@ extends _base
 
 block head
   //- FONTS
-  link(href='http://fonts.googleapis.com/css?family=Merriweather|Merriweather+Sans:800', rel='stylesheet', type='text/css')
+  link(href="http://fonts.googleapis.com/css?family=Merriweather|Merriweather+Sans:800", rel="stylesheet", type="text/css")
 
   //- STYLESHEETS
   link(rel="stylesheet", href="./css/main.css")
+
+  //- JAVASCRIPT LINKS
+  script(src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js")
+  script(src="./js/hisrc.js")
+
 
 
 
@@ -16,8 +21,8 @@ block body
         a(href="http://notsteve.com", title="home")
           h1 STEVEN
             .colored LEWIS
-    img(src="img/steve-2.png", alt="")
-    .container
+    img(src="img/steve.png", alt="")
+    .container.hisrc
       a(href="http://onesecond.designly.com", title="One second on the internet")
         .item
           img(src="img/one-second.png", alt="One second on the internet page")
@@ -30,43 +35,48 @@ block body
             u Font Flipper
       a(href="http://nickmalburg.bandcamp.com/", title="Nick Malburg bandcamp page")
         .item
-          img(src="img/nick-cover.jpg", alt="album cover for nick malburg")
+          img(src="img/nick-cover.png", alt="album cover for nick malburg")
           p Download the album for free at 
             u nickmalburg.bandcamp.com
       a(href="http://www.laurastevenson.net/home", title="laura stevenson website")
         .item
-          img(src="img/laura-shirt.jpg", alt="laura stevenson and the cans shirt")
+          img(src="img/laura-shirt.png", alt="laura stevenson and the cans shirt")
           p My shirt is SOLD OUT, but check out 
             u Laura Stevenson & the Cans!
       .item
         img(src="img/designly.png", alt="Designly.com page")
       .item
-        img(src="img/plants.jpg", alt="plant hangers")
+        img(src="img/plants.png", alt="plant hangers")
       .item
         img(src="img/league.png", alt="freelance league illustration")
       .item
         img(src="img/dark-knight.png", alt="dark knight t-shirt")
       .item
-        img(src="img/chimera.jpg", alt="chimera book")
+        img(src="img/chimera.png", alt="chimera book")
       .item
-        img(src="img/how-mag.jpg", alt="chimera award")
+        img(src="img/how-mag.png", alt="chimera award")
         p Chimera Eight was featured in HOW Magazine.
       .item
         img(src="img/searching.png", alt="soul searching print")
       .item
-        img(src="img/handout.jpg", alt="handout for spring show")
+        img(src="img/handout.png", alt="handout for spring show")
       .item
-        img(src="img/invite.jpg", alt="invitation for spring show")
+        img(src="img/invite.png", alt="invitation for spring show")
       .item
         img(src="img/bomb-book.png", alt="")
       .item
         img(src="img/quoem-cover.png", alt="quoem book")
       .item
-        img(src="img/gallery-full.jpg", alt="yeah, wer're designers but... show")
+        img(src="img/gallery-full.png", alt="yeah, wer're designers but... show")
       .item
-        img(src="img/gallery-chair.jpg", alt="a visitor in the gallery")
+        img(src="img/gallery-chair.png", alt="a visitor in the gallery")
       .item
         p Get in touch: 
           a(href="mailto:steven@notsteve.com", title="steve's email")
             u steven@notsteve.com
+          |  / 
+          a(href="#", title="steve's twitter page")
+            u @airguitarbandit
+
+      #log
 
