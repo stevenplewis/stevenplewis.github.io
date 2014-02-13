@@ -2,81 +2,131 @@ extends _base
 
 block head
   //- FONTS
-  link(href="http://fonts.googleapis.com/css?family=Merriweather|Merriweather+Sans:800", rel="stylesheet", type="text/css")
+  link(href="http://fonts.googleapis.com/css?family=Arvo|Montserrat:400,700", rel="stylesheet", type="text/css")
+  link(href="http://fonts.googleapis.com/css?family=Lato:400,900|Volkhov", rel="stylesheet", type="text/css")
 
   //- STYLESHEETS
-  link(rel="stylesheet", href="./css/main.css")
+  link(rel="stylesheet", href="./css/styles.css")
 
   //- JAVASCRIPT LINKS
   script(src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js")
   script(src="./js/hisrc.js")
+  script(src="./js/jquery.fittext.js")
+  script(src="./js/mine.js")
+
 
 
 
 
 block body
-  #page
-    .header.pull-right
-      .container
-        a(href="http://notsteve.com", title="home")
-          h1 STEVEN
-            .colored LEWIS
-    img(src="img/steve.png", alt="")
-    .container.hisrc
-      a(href="http://onesecond.designly.com", title="One second on the internet")
-        .item
+  .header
+    h1.responsive_h1 STEVEN LEWIS
+    h2.responsive_h2 California-based designer who likes to make things awesome. This is my portfolio.
+  .container.hisrc
+    .item
+      .item-image
+        a(href="http://onesecond.designly.com", title="One second on the internet")
           img(src="img/one-second.png", alt="One second on the internet page")
-          p See the full site at 
-            u onesecond.designly.com
-      a(href="http://notsteve.com/font-flipper", title="The Font Flipper")
-        .item
+      .item-description
+        h3 One Second on the Internet
+        p There are over 50,000 likes clicked every second on Facebook. Stats like this can blow your hair back and prove how huge the internet has become, but it's hard to really visualize or FEEL what 50,000 of anything is like. That's why I made this site.
+        a(href="http://onesecond.designly.com", title="One second on the internet") onesecond.designly.com
+    .item
+      .item-image
+        a(href="http://notsteve.com/font-flipper", title="The Font Flipper")
           img(src="img/font-flipper.png", alt="font flipper screenshot")
-          p Explore your fonts with the experimental 
-            u Font Flipper
-      a(href="http://nickmalburg.bandcamp.com/", title="Nick Malburg bandcamp page")
-        .item
+      .item-description
+        h3 Font Flipper
+        p Like most graphic designers, I adore typography. I made this site one weekend so I could see all the little details in the fonts on my computer and compare different fonts side-by-side. It was amazing which fonts I ended up falling more in love with, and which ones I realized where not actually that great up close.
+        a(href="http://notsteve.com/font-flipper", title="The Font Flipper") notsteve.com/font-flipper
+    .item
+      .item-image
+        a(href="http://nickmalburg.bandcamp.com/", title="Nick Malburg bandcamp page")
           img(src="img/nick-cover.png", alt="album cover for nick malburg")
-          p Download the album for free at 
-            u nickmalburg.bandcamp.com
-      a(href="http://www.laurastevenson.net/home", title="laura stevenson website")
-        .item
+      .item-description
+        h3 Nick Malburg: Word Murder
+        p Nick Malburg is solo folk/punk musician from Pittsburgh, PA who not only writes catchy tunes, but amazing lyrics as well. The entire album was recorded and mixed by Nick himself in his apartment, so I definately wanted to give his name a handwritten look. He also explained the album's theme was about balancing his thoughts and words with music, which ultimately led to the reflecting top and bottom images.
+        a(href="http://nickmalburg.bandcamp.com/", title="Nick Malburg bandcamp page") nickmalburg.bandcamp.com
+    .item
+      .item-image
+        a(href="http://designly.herokuapp.com/")
+          img(src="img/designly.png", alt="Designly.com page")
+      .item-description
+        h3 Designly
+        p Designly was my first startup failure. I was originally hired to make logos, but the company pivoted into an online store selling site templates built with Twitter Bootstrap and aimed at fellow startups. In addition to designing and coding the site, I created half of the themes offered and a series of coupon cards to be handed out at events.
+        a(href="http://designly.herokuapp.com/") designly.herokuapp.com
+    .item
+      .item-image
+        a(href="http://www.laurastevenson.net/home", title="laura stevenson website")
           img(src="img/laura-shirt.png", alt="laura stevenson and the cans shirt")
-          p My shirt is SOLD OUT, but check out 
-            u Laura Stevenson & the Cans!
-      .item
-        img(src="img/designly.png", alt="Designly.com page")
-      .item
-        img(src="img/plants.png", alt="plant hangers")
-      .item
+      .item-description
+        h3 Laura Stevenson & the Cans
+        p A few years ago, I started making logos for bands I really enjoy as a way of practicing my design/Illustrator skills. If I can find contact info for the bands, I'll usually send them my "fan art". This particular band liked theirs so much, they made it into a T-shirt. One band member even emailed me a few months later to say it was the most popular shirt they had, was completely sold out, and they are planning to make a second printing with new colors.
+        a(href="http://www.laurastevenson.net/home", title="laura stevenson website") laurastevenson.net
+    .item
+      .item-image
         img(src="img/league.png", alt="freelance league illustration")
-      .item
+      .item-description
+        h3 Freelance League
+        p “It would be awesome if we had a cool illustration of superheroes for this landing page”, said my boss one day. I was busy writing some code, but on my lunch break I started doodling some simple heroes. Before I had even finished, he walked past and said, “Well that was easy. This is exactly what I wanted!” He then gave me permission to put the code on hold so I could trace and color them to put on the site.
+    .item
+      .item-image
         img(src="img/dark-knight.png", alt="dark knight t-shirt")
-      .item
+      .item-description
+        h3 The Dark Knight Rises T-Shirt
+        p I’ve loved Batman since I was 3. I was even an extra in the newest film, *The Dark Knight Rises*. When I heard about a T-Shirt contest judged by Christopher Nolan, the director, I knew I had to enter. Unfortunately, The screening personnel refused to believe I had received permission for the font from it’s creator and would not let me enter the contest. So it goes.
+    .item
+      .item-image
         img(src="img/chimera.png", alt="chimera book")
-      .item
+      .item-description
+        h3 Chimera Eight
+        p Tu quoque, Brute, fili mi, nihil timor populi, nihil! Quam diu etiam furor iste tuus nos eludet? Magna pars studiorum, prodita quaerimus. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh. Tu quoque, Brute, fili mi, nihil timor populi, nihil! Quam diu etiam furor iste tuus nos eludet? Magna pars studiorum.
+      .item-image
         img(src="img/how-mag.png", alt="chimera award")
-        p Chimera Eight was featured in HOW Magazine.
-      .item
+
+    .item
+      .item-image
         img(src="img/searching.png", alt="soul searching print")
-      .item
-        img(src="img/handout.png", alt="handout for spring show")
-      .item
-        img(src="img/invite.png", alt="invitation for spring show")
-      .item
-        img(src="img/bomb-book.png", alt="")
-      .item
+      .item-description
+        h3 Screen Prints
+        p Tu quoque, Brute, fili mi, nihil timor populi, nihil! Quam diu etiam furor iste tuus nos eludet? Magna pars studiorum, prodita quaerimus. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh. Tu quoque, Brute, fili mi, nihil timor populi, nihil! Quam diu etiam furor iste tuus nos eludet? Magna pars studiorum.
+      .item-image
+        img(src="img/dubduck.png", alt="soul searching print")
+    .item
+      .item-image
+        a(href="http://erieartmuseum.org/")
+          img(src="img/handout.png", alt="handout for spring show")
+      .item-description
+        h3 Erie Art Museum Spring Show
+        p Tu quoque, Brute, fili mi, nihil timor populi, nihil! Quam diu etiam furor iste tuus nos eludet? Magna pars studiorum, prodita quaerimus. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh. Tu quoque, Brute, fili mi, nihil timor populi, nihil! Quam diu etiam furor iste tuus nos eludet? Magna pars studiorum.
+        a(href="http://erieartmuseum.org/") erieartmuseum.org
+      .item-image
+        a(href="http://erieartmuseum.org/")
+          img(src="img/invite.png", alt="invitation for spring show")
+    .item
+      .item-image
+        a(href="http://www.bombthemusicindustry.com/final.html")
+          img(src="img/bomb-book.png", alt="")
+      .item-description
+        h3 Bomb the Music Industry Book
+        p Tu quoque, Brute, fili mi, nihil timor populi, nihil! Quam diu etiam furor iste tuus nos eludet? Magna pars studiorum, prodita quaerimus. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh. Tu quoque, Brute, fili mi, nihil timor populi, nihil! Quam diu etiam furor iste tuus nos eludet? Magna pars studiorum.
+        a(href="http://www.bombthemusicindustry.com/final.html") bombthemusicindustry.com
+    .item
+      .item-image
         img(src="img/quoem-cover.png", alt="quoem book")
-      .item
+      .item-description
+        h3 Quoem Book
+        p Tu quoque, Brute, fili mi, nihil timor populi, nihil! Quam diu etiam furor iste tuus nos eludet? Magna pars studiorum, prodita quaerimus. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh. Tu quoque, Brute, fili mi, nihil timor populi, nihil! Quam diu etiam furor iste tuus nos eludet? Magna pars studiorum.
+      .item-image
+        img(src="img/quoem-progress.png", alt="quoem book progression")
+    .item
+      .item-image
         img(src="img/gallery-full.png", alt="yeah, wer're designers but... show")
-      .item
+      .item-description
+        h3 Yeah, We're Designers, But...
+        p Tu quoque, Brute, fili mi, nihil timor populi, nihil! Quam diu etiam furor iste tuus nos eludet? Magna pars studiorum, prodita quaerimus. Morbi odio eros, volutpat ut pharetra vitae, lobortis sed nibh. Tu quoque, Brute, fili mi, nihil timor populi, nihil! Quam diu etiam furor iste tuus nos eludet? Magna pars studiorum.
+      .item-image
         img(src="img/gallery-chair.png", alt="a visitor in the gallery")
-      .item
-        p Get in touch: 
-          a(href="mailto:steven@notsteve.com", title="steve's email")
-            u steven@notsteve.com
-          |  / 
-          a(href="#", title="steve's twitter page")
-            u @airguitarbandit
-
-      #log
-
+    .footer    
+        a.responsive_links(href="mailto:steven@notsteve.com", title="steve's email") steven@notsteve.com
+        a.responsive_links(href="https://twitter.com/airguitarbandit", title="steve's twitter page") @airguitarbandit
