@@ -23,3 +23,4 @@ body{font-family:'open sans',sans-serif;font-weight:400;background:#222;color:#f
 .toggle-buttons #google-share{top:180px;}
 #author-link a{position:absolute;bottom:0;right:0;padding:10px 20px;color:#aaa;z-index:9000;text-decoration:none;}
 #author-link:hover a{color:#ccc;}
+#flash-warning{position:absolute;bottom:0;left:0;padding:10px 20px 0;color:#555;z-index:9000;text-decoration:none;}
