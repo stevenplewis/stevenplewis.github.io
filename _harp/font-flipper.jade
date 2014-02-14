@@ -37,9 +37,7 @@ block body
         .text-container
             h2 Flip through your fonts with the
             h1 Font Flipper
-            h2 1. Scroll
-            h2 2. Type
-            h2 3. Flip
+            h2 A simple little website to get to know the fonts installed on your computer better. Try typing to see different letters, compare paragraphs of text as well as each character, and invert colors. 
             a#welcome-dismiss(href="#") Loading...
     
 
@@ -57,7 +55,7 @@ block body
             i.fa.fa-google-plus-square
 
     #author-link
-        a(href="http://notsteve.com", title="") Made by Steve L.
+        a(href="http://notsteve.com", title="") Made by Steven Lewis
 
 
     //- THE ACTUAL LISTS OF FONTS
@@ -134,7 +132,7 @@ block body
 
 
             //- WELCOME PAGE BEHAVIOR
-            $('#welcome-dismiss').text('Show Me').css('opacity', 1);
+            $('#welcome-dismiss').text('Flip!').css('opacity', 1);
             $('#welcome-dismiss').click(function() {
                 $("#welcome").slideUp("slow")
                 });
