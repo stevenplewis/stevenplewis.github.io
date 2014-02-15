@@ -71,6 +71,7 @@ block body
         // WELCOME FITTEXT SETUP
         $('#welcome').find('h1').fitText(7, { minFontSize: '50px'});
 
+
         //- GETTING FONTS FROM USER
         function populateFontList(fontArr)
         {
@@ -133,11 +134,18 @@ block body
             $('.font-item').find('h1').fitText(1, { minFontSize: '80px'});
 
 
-            //- WELCOME PAGE BEHAVIOR
+            //- WELCOME PAGE BEHAVIOR (AUTO TYPING)
             $('#welcome-dismiss').text('Flip!').css('opacity', 1);
             $('#welcome-dismiss').click(function() {
-                $("#welcome").slideUp("slow")
-                });
+                $("#welcome").slideUp("slow", function() {
+                    window.setTimeout(function() {
+                        var event = jQuery.Event('keypress');
+                        event.which = 65; 
+                        event.keyCode = 65;
+                        $('body').trigger(event);
+                        }, 2000);
+                    });
+            });
 
 
             //- INVERT COLOR TOGGLE
@@ -156,6 +164,8 @@ block body
                     $(this).find('i').toggleClass("fa-align-left fa-font")
                 });
         };
+
+
 
 
 
