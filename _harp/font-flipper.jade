@@ -140,12 +140,43 @@ block body
                 $("#welcome").slideUp("slow", function() {
                     window.setTimeout(function() {
                         var event = jQuery.Event('keypress');
-                        event.which = 65; 
-                        event.keyCode = 65;
+                        event.which = 97; 
+                        event.keyCode = 97;
                         $('body').trigger(event);
-                        }, 2000);
+                        }, 0);
+                    window.setTimeout(function() {
+                        var event = jQuery.Event('keypress');
+                        event.which = 98; 
+                        event.keyCode = 98;
+                        $('body').trigger(event);
+                        }, 20);
+                    window.setTimeout(function() {
+                        var event = jQuery.Event('keypress');
+                        event.which = 99; 
+                        event.keyCode = 99;
+                        $('body').trigger(event);
+                        }, 50);
+                    window.setTimeout(function() {
+                        var event = jQuery.Event('keypress');
+                        event.which = 100; 
+                        event.keyCode = 100;
+                        $('body').trigger(event);
+                        }, 80);
+                    window.setTimeout(function() {
+                        var event = jQuery.Event('keypress');
+                        event.which = 101; 
+                        event.keyCode = 101;
+                        $('body').trigger(event);
+                        }, 120);
+                    window.setTimeout(function() {
+                        var event = jQuery.Event('keypress');
+                        event.which = 102; 
+                        event.keyCode = 102;
+                        $('body').trigger(event);
+                        }, 170);
                     });
-            });
+                });
+
 
 
             //- INVERT COLOR TOGGLE
