@@ -142,8 +142,14 @@ body {
   }
 }
 
+.header-wrapper {
+  position: relative;
+  padding: 10px 0 40px;
+  z-index: 3000;
+}
+
 .header {
-  margin: 10px 0 40px;
+  margin: 0;
   h1 {
     margin-bottom: 5px;
   }
@@ -151,28 +157,38 @@ body {
     max-width: 800px;
   }
 }
+
 @media (min-width: 550px) {
   .header {
-    margin: 20px auto 50px;
+    margin: 0 auto;
     h1 {
       margin-bottom: 8px;
     }
+  }
+  .header-wrapper {
+    padding: 20px 0 40px;
   }
 }
 @media (min-width: 760px) {
   .header {
-    margin: 40px auto 50px;
+    margin: 0 auto;
     h1 {
       margin-bottom: 8px;
     }
   }
+  .header-wrapper {
+    padding: 40px 0 60px;
+  }
 }
 @media (min-width: 990px) {
   .header {
-    margin: 80px auto 100px;
+    margin: 0 auto;
     h1 {
       margin-bottom: 8px;
     }
+  }
+  .header-wrapper {
+    padding: 80px 0 80px;
   }
 }
 
@@ -263,6 +279,5 @@ body {
 
 
 // -------- MESSING AROUND --------
-
 
 
