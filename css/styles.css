@@ -8,17 +8,18 @@ h1{color:#d1fef4;}
 h2{color:#ddd;}
 h3{color:#666;}
 p{color:#999;}
-a{color:#999;}
-a:hover{color:#666;}
+a{color:#fec4a4;}
+a:hover{color:#FF9E69;}
 body{font-family:'Arvo',serif;font-size:100%;}
 h1,h2,h3,h4,h5,h6,a{font-family:'Montserrat',sans-serif;}
 h1{line-height:0.9;letter-spacing:-1px;}
-h2{line-height:1.25;letter-spacing:-1px;font-weight:100;max-width:750px;}
+h2{line-height:1.25;letter-spacing:-1px;font-weight:100;}
 h3{font-size:16px;line-height:1.2;font-weight:800;}
 p{font-size:0.9rem;font-weight:400;line-height:1.25;}
 @media screen and (min-width:45rem){p{line-height:1.375;}}body{padding:10px;}
 @media (min-width:550px){body{padding:20px 40px 40px;}}@media (min-width:990px){body{padding:0;}}.container,.header,.footer{position:relative;max-width:900px;margin:0 auto;}.container img,.header img,.footer img{width:100%;}
 .header{margin:10px 0 40px;}.header h1{margin-bottom:5px;}
+.header h2{max-width:800px;}
 @media (min-width:550px){.header{margin:20px auto 50px;}.header h1{margin-bottom:8px;}}@media (min-width:760px){.header{margin:40px auto 50px;}.header h1{margin-bottom:8px;}}@media (min-width:990px){.header{margin:80px auto 100px;}.header h1{margin-bottom:8px;}}.item{position:relative;margin:0 0 30px;padding:0 0 25px;border-bottom:1px dotted #ccc;}.item img{border:1px solid #eee;}
 .item .item-description h3{margin-bottom:10px;}
 .item .item-description a{display:inline-block;margin-top:10px;}

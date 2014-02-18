@@ -1,0 +1,36 @@
+extends _base
+
+block head
+  //- FONTS
+  //- link(href="http://fonts.googleapis.com/css?family=Arvo|Montserrat:400,700", rel="stylesheet", type="text/css")
+
+  //- STYLESHEETS
+  link(rel="stylesheet", href="./css/mother-board.css")
+
+  //- JAVASCRIPT LINKS
+  script(src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js")
+  script(type="text/javascript", src="./js/parser.js")
+
+  
+
+
+
+
+
+block body
+  #topbar
+    #w
+      #content
+        h1 Automated jQuery RSS Feed Listing
+        #new-comics.feedcontainer
+        hr
+    script(type='text/javascript')
+      $(function(){
+      // running custom RSS functions
+      parseRSS('http://www.tfaw.com/rss/new_releases.php', '#new-comics');
+      });
+
+
+
+  // script(type='text/javascript')
+  //   google.load("feeds", "1");
