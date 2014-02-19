@@ -4,9 +4,11 @@
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-44743958-1', 'notsteve.com');
   ga('send', 'pageview');
-  </script><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="./css/mother-board.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script><script type="text/javascript" src="./js/parser.js"></script></head><body><div id="topbar"><div id="w"><div id="content"><h1>Automated jQuery RSS Feed Listing</h1><div id="new-comics" class="feedcontainer"></div><hr></div></div><script type="text/javascript">$(function(){
+  </script><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="./css/mother-board.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script><script type="text/javascript" src="./js/parser.js"></script></head><body><div id="topbar"><div id="w"><div id="content"><h1>The Mother-Board</h1><div id="dribbble" class="feedcontainer"></div><hr><div id="designer-news" class="feedcontainer"></div><hr><div id="designer-news" class="feedcontainer"></div><hr></div></div><script type="text/javascript">$(function(){
 // running custom RSS functions
-parseRSS('http://www.tfaw.com/rss/new_releases.php', '#new-comics');
+parseRSS('http://dribbble.com/jobs.rss', '#dribbble');
+parseRSS('https://news.layervault.com/?format=rss', '#designer-news')
+parseRSS('http://www.authenticjobs.com/rss/custom.php?terms=&type=1,3,5,2,6,4&cats=&onlyremote=&location=San+Francisco%2C+CA', '#authentic-jobs')
 });
 
 
