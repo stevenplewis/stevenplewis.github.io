@@ -1,0 +1,14 @@
+html{min-height:100%;position:relative;}
+make sure it is at least as tall as the viewport body,div,h1,h2,h3,h4,h5,h6,p,blockquote,pre,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,th,td,article,aside,figure,footer,header,hgroup,menu,nav,section,*{margin:0;padding:0;border:0;}
+*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+a{text-decoration:none;}
+ul{list-style:none;}
+body{background:#111;padding-bottom:80px;}
+h1{color:#fff;font-size:4rem;margin:40px 0;text-align:center;}
+#comic-list{padding:0 5% 40px;width:100%;}#comic-list li{position:relative;display:inline-block;width:22.5%;height:0;padding-bottom:38%;margin:0 1.25%;overflow:hidden;}#comic-list li a{position:absolute;top:0;bottom:0;}#comic-list li a img{width:100%;max-height:94%;box-shadow:0 0 5px #000;}
+#comic-list li a div{position:absolute;left:-2px;top:0;right:-2px;bottom:6%;opacity:0;padding:20px;overflow-y:auto;background:#111;}#comic-list li a div h2{color:#fff;}
+#comic-list li a div h3{color:#999;}
+#comic-list li a div p{color:#999;}
+#comic-list li a:hover div{opacity:0.9;}
+#comic-list li a:hover img{box-shadow:none;}

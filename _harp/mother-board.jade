@@ -8,8 +8,14 @@ block head
   link(rel="stylesheet", href="./css/mother-board.css")
 
   //- JAVASCRIPT LINKS
+    //- FROM GOOGLE API TUTORIAL
   script(src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js")
   script(type="text/javascript", src="./js/parser.js")
+
+
+
+
+
 
   
 
@@ -23,17 +29,13 @@ block body
       #content
         h1 The Mother-Board
         #dribbble.feedcontainer
-        hr
-        #designer-news.feedcontainer
-        hr
-        #designer-news.feedcontainer
-        hr
+
     script(type='text/javascript')
       $(function(){
       // running custom RSS functions
       parseRSS('http://dribbble.com/jobs.rss', '#dribbble');
-      parseRSS('https://news.layervault.com/?format=rss', '#designer-news')
-      parseRSS('http://www.authenticjobs.com/rss/custom.php?terms=&type=1,3,5,2,6,4&cats=&onlyremote=&location=San+Francisco%2C+CA', '#authentic-jobs')
+      // parseRSS('https://news.layervault.com/?format=rss', '#designer-news');
+      // parseRSS('http://www.authenticjobs.com/rss/custom.php?terms=&type=1,3,5,2,6,4&cats=&onlyremote=&location=San+Francisco%2C+CA', '#authentic-jobs');
       });
 
 
