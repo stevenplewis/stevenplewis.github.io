@@ -1,6 +1,3 @@
-// $(document).ready(function(){
-// });
-
 function kimonoCallback(data) {
   var newComics = data.results.collection1
   
@@ -17,7 +14,7 @@ function kimonoCallback(data) {
 
     var coverBig = newComics[i].cover_art.src.replace('/n_iv/120/', '/n_iv/300/');
 
-    $('ul').append('<li><a href="' + newComics[i].issue_title.href + '"><img src="' + coverBig + '"><div><h2>' + newComics[i].issue_title.text + '</h2><h3>' + newComics[i].issue_num + '</h3><p>' + newComics[i].issue_info + '</p></div></a></li>');
+    $('ul').append('<li><img src="' + coverBig + '"><div><h2>' + newComics[i].issue_title.text + '</h2><h3>' + newComics[i].issue_num + '</h3><p>' + newComics[i].issue_info + '</p></div></li>');
   };
 }
 
@@ -26,3 +23,10 @@ $.ajax({
     "crossDomain":true,
     "dataType":"jsonp"
 });
+
+
+$(function () {
+});
+
+
+

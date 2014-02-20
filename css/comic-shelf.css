@@ -4,11 +4,10 @@ make sure it is at least as tall as the viewport body,div,h1,h2,h3,h4,h5,h6,p,bl
 *:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 a{text-decoration:none;}
 ul{list-style:none;}
-body{background:#111;padding-bottom:80px;}
+body{background:#111;padding:20px;}
 h1{color:#fff;font-size:4rem;margin:40px 0;text-align:center;}
-#comic-list{padding:0 5% 40px;width:100%;}#comic-list li{position:relative;display:inline-block;width:22.5%;height:0;padding-bottom:38%;margin:0 1.25%;overflow:hidden;}#comic-list li a{position:absolute;top:0;bottom:0;}#comic-list li a img{width:100%;max-height:94%;box-shadow:0 0 5px #000;}
-#comic-list li a div{position:absolute;left:-2px;top:0;right:-2px;bottom:6%;opacity:0;padding:20px;overflow-y:auto;background:#111;}#comic-list li a div h2{color:#fff;}
-#comic-list li a div h3{color:#999;}
-#comic-list li a div p{color:#999;}
-#comic-list li a:hover div{opacity:0.9;}
-#comic-list li a:hover img{box-shadow:none;}
+#comic-list{max-width:300px;margin:0 auto;}#comic-list li{width:100%;margin-bottom:10px;vertical-align:middle;text-align:center;-webkit-transition:all 0.2s ease-in-out;position:relative;}#comic-list li img{width:100%;}
+#comic-list li div{display:none;}
+#comic-list li:hover{-webkit-transform:scale(1.1);z-index:999;}
+#comic-list li.selected div{background:#111;color:#eee;opacity:0.95;display:inline;position:absolute;top:0;bottom:0;right:0;left:0;text-align:left;}
+@media (min-width:400px){#comic-list{max-width:620px;}#comic-list li{display:inline-block;width:50%;margin-bottom:0;}#comic-list li img{width:auto;max-width:100%;}}@media (min-width:800px){#comic-list{max-width:960px;}#comic-list li{width:33.3%;}}@media (min-width:960px){#comic-list li{margin-bottom:10px;}}
