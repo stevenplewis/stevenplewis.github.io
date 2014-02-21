@@ -1,5 +1,6 @@
 
 // MY RESPONSEIVE IMAGE REPLACING
+// inspired by CHRIS ARASIN (http://www.fourfront.us/blog/jquery-window-width-and-media-queries)
 
 var checkSizeReplace = function(){
   if ($("body").css("padding-top") == "10px" ){

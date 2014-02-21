@@ -11,7 +11,7 @@ function parseRSS(url, container) {
       $(container).html('<h2>'+capitaliseFirstLetter(data.responseData.feed.title)+'</h2>');
 
       $.each(data.responseData.feed.entries, function(key, value){
-        var thehtml = '<h3><a href="'+value.link+'" target="_blank">'+value.title+'</a></h3><div>'+value.content+'</div>';
+        var thehtml = '<h3><a href="'+value.link+'" target="_blank">'+value.title+'</a></h3>';
         $(container).append(thehtml);
       });
     }

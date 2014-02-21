@@ -4,7 +4,7 @@ make sure it is at least as tall as the viewport body,div,h1,h2,h3,h4,h5,h6,p,bl
 *:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 a{text-decoration:none;}
 ul{list-style:none;}
-h1{color:#d1fef4;}
+h1{color:#BEEDE3;}
 h2{color:#ddd;}
 h3{color:#666;}
 p{color:#999;}
