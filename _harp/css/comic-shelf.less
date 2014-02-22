@@ -54,7 +54,8 @@ h1 {
     // margin-bottom: 10px;
     vertical-align: middle;
     text-align: center;
-    -webkit-transition: all .2s ease-in-out;
+    // transition: box-shadow 1s, transform 0.5s;
+    // -webkit-transition: box-shadow 0.5s, -webkit-transform 1s;
     position: relative;
     box-shadow: 0 0 35px #000;
     margin-bottom: -250px;
@@ -66,14 +67,18 @@ h1 {
       display: none;
     }
   }
-  // li:hover {
-  //   -webkit-transform: scale(1.1);
-  //   z-index: 999;
+  li:hover {
+    // transform: scale(1.1);
+    // -webkit-transform: scale(1.1);
+    // transition: box-shadow 0s, transform 0.5s;
+    // -webkit-transition: box-shadow 0s, -webkit-transform 0.5s;
+    z-index: 999;
+    box-shadow: none;
 
-  //   img {
-  //     box-shadow: 0 0 5px #111;
-  //   }
-  // }
+    img {
+      box-shadow: 0 0 5px #111;
+    }
+  }
   li.selected {
     img {
     }
