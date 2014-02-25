@@ -49,6 +49,7 @@ h1 {
 }
 #comic-list {
   margin: 0 auto;
+  display: none;
 
   li { 
     position: relative;
@@ -56,7 +57,7 @@ h1 {
     vertical-align: top;
     text-align: center;
     box-shadow: 0 0 30px #000;
-    margin-bottom: -20%;
+    margin-bottom: -40%;
     cursor: pointer;
     img {
       width: 100%;
@@ -114,13 +115,24 @@ h1 {
   #comic-list {
     li {
       display: inline-block;
-      width: 33.3%;
+      width: 50%;
     }
     li.selected {
-      margin-bottom: -20%;
+      margin-bottom: -40%;
       div {
         position: absolute;
       }
+    }
+  }
+}
+@media (min-width: 600px) {
+  #comic-list {
+    li {
+      width: 33.33%;
+      margin-bottom: -30%;
+    }
+    li.selected {
+      margin-bottom: -30%;
     }
   }
 }
@@ -129,6 +141,10 @@ h1 {
     max-width: 1000px;
     li {
       width: 25%;
+      margin-bottom: -20%;
+    }
+    li.selected {
+      margin-bottom: -20%;
     }
   }
 }

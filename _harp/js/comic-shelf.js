@@ -2,13 +2,10 @@ function kimonoCallback(data) {
 // begin kimon functions and looping over issues
 
   var newComics = data.results.collection1
-  
-  console.log(newComics.length);
 
   // looping over all the issues
   for (var i = 0; i < newComics.length; i+=1) {
     // logs for all the different values we're getting
-
     // console.log(newComics[i]);
     // console.log(newComics[i].issue_title.text);
     // console.log(newComics[i].issue_title.href);
@@ -26,6 +23,10 @@ function kimonoCallback(data) {
   // end of looping over all the issues
   };
 
+  // displaying the finished list
+  $('#comic-list').css('display','block');
+
+
   // click listener to toggle class
   // has to come after loop to make sure they're all loaded
   $('#comic-list li').click(function(){
@@ -38,13 +39,8 @@ function kimonoCallback(data) {
     }
   });
 
-
-
 // end of kimono stuff
 };
-
-
-
 // some other kimono nonsense
 $.ajax({
     "url":"http://www.kimonolabs.com/api/71blnv5q?apikey=d62eaf8c48b7eb0fe3cab0f0dc1bab83&callback=kimonoCallback",
