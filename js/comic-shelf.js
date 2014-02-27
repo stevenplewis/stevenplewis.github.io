@@ -1,7 +1,12 @@
+// ----------------------------------------------
+// This relies on Kimono (kimonolabs.com) and the API I created using their tool. Also utilizes info from mycomicshop.com (thanks!)
+// ----------------------------------------------
+
+
 function kimonoCallback(data) {
 // begin kimon functions and looping over issues
 
-  var newComics = data.results.collection1
+  var newComics = data.results.collection1;
 
   // looping over all the issues
   for (var i = 0; i < newComics.length; i+=1) {
@@ -12,13 +17,18 @@ function kimonoCallback(data) {
     // console.log(newComics[i].issue_num);
     // console.log(newComics[i].publisher.text);
     // console.log(newComics[i].issue_info);
-    // console.log(newComics[i].cover_art.src);
+    console.log(newComics[i].cover_art.src);
 
-    // getting the larger-res image for awesome browsing.
-    var coverBig = newComics[i].cover_art.src.replace('/n_iv/120/', '/n_iv/300/');
+    // check for cover art
+    if (newComics[i].cover_art.src == undefined){
+    } else {
+      // replacing the 120px version with a 300px version
+      var coverBig = newComics[i].cover_art.src.replace('/n_iv/120/', '/n_iv/300/');
+      console.log(coverBig);
 
-    // creating the HTML for each li or "issue"
-    $('#comic-list').append('<li><img src="' + coverBig + '"><div class="info-div"><h2>' + newComics[i].issue_title.text + '</h2><h3>' + newComics[i].issue_num.replace('#ITEM', '') + '</h3><p>' + newComics[i].issue_info + '</p></div></li>');
+      // creating the HTML for each li or "issue"
+      $('#comic-list').append('<li><img src="' + coverBig + '"><div class="info-div"><h2>' + newComics[i].issue_title.text + '</h2><h3>' + newComics[i].issue_num.replace('#ITEM', '') + '</h3><p>' + newComics[i].issue_info + '</p></div></li>');
+    };
 
   // end of looping over all the issues
   };
