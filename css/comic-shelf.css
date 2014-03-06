@@ -6,9 +6,8 @@ body{font-size:100%;}
 a{text-decoration:none;}
 ul{list-style:none;}
 body{background:#111;position:relative;padding-bottom:280px;font-family:'Merriweather Sans','Helvetica','Arial',sans-serif;}
-h1,h2{font-family:'Permanent Marker',script,serif;color:#fff;}
+h1{font-family:'Permanent Marker',script,serif;color:#fff;}
 h1{margin:20px 0;text-align:center;}h1 a{color:#fff;}
-h2{font:1rem;text-align:center;}h2 a{display:inline-block;color:#fff;line-height:1;width:30%;padding:0 20px;}
 #comic-list{margin:40px auto 80px;display:none;}#comic-list li{position:relative;width:100%;vertical-align:top;text-align:center;box-shadow:0 0 30px #000;margin-bottom:-40%;cursor:pointer;}#comic-list li img{width:100%;}
 #comic-list li div{display:none;}
 #comic-list li.selected{box-shadow:0 0 60px #000;z-index:9999;margin-bottom:0;}#comic-list li.selected img{box-shadow:0 0 5px #111;}
