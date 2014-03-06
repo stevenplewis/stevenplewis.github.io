@@ -39,16 +39,34 @@ ul {
 body {
   background: #111;
   position: relative;
+  padding-bottom: 280px;
   font-family: 'Merriweather Sans', 'Helvetica', 'Arial', sans-serif;
 }
-h1 {
+h1,h2 {
+  font-family: 'Permanent Marker', script, serif;
   color: #fff;
-  font-size: 4rem;
-  margin: 40px 0;
-  text-align: center;
 }
+h1 {
+  margin: 20px 0;
+  text-align: center;
+  a {
+    color: #fff;
+  }
+}
+h2 {
+  font: 1rem;
+  text-align: center;
+  a {
+    display: inline-block;
+    color: #fff;
+    line-height: 1;
+    width: 30%;
+    padding: 0 20px;
+  }
+}
+
 #comic-list {
-  margin: 0 auto;
+  margin: 40px auto 80px;
   display: none;
 
   li { 
@@ -112,6 +130,9 @@ h1 {
 }
 
 @media (min-width: 400px) {
+  h1 {
+    font-size: 4.2rem;
+  }
   #comic-list {
     li {
       display: inline-block;
@@ -126,6 +147,9 @@ h1 {
   }
 }
 @media (min-width: 600px) {
+  h1 {
+    font-size: 5.4rem;
+  }
   #comic-list {
     li {
       width: 33.33%;
@@ -137,6 +161,9 @@ h1 {
   }
 }
 @media (min-width: 900px) {
+  h1 {
+    font-size: 4.5rem;
+  }
   #comic-list {
     max-width: 1000px;
     li {

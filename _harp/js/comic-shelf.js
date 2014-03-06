@@ -17,14 +17,14 @@ function kimonoCallback(data) {
     // console.log(newComics[i].issue_num);
     // console.log(newComics[i].publisher.text);
     // console.log(newComics[i].issue_info);
-    console.log(newComics[i].cover_art.src);
+    // console.log(newComics[i].cover_art.src);
 
     // check for cover art
     if (newComics[i].cover_art.src == undefined){
     } else {
       // replacing the 120px version with a 300px version
-      var coverBig = newComics[i].cover_art.src.replace('/n_iv/120/', '/n_iv/300/');
-      console.log(coverBig);
+      var coverBig = newComics[i].cover_art.src.replace('/120/', '/300/');
+      // console.log(coverBig);
 
       // creating the HTML for each li or "issue"
       $('#comic-list').append('<li><img src="' + coverBig + '"><div class="info-div"><h2>' + newComics[i].issue_title.text + '</h2><h3>' + newComics[i].issue_num.replace('#ITEM', '') + '</h3><p>' + newComics[i].issue_info + '</p></div></li>');
