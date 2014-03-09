@@ -45,7 +45,7 @@ function kimonoCallback(data) {
     } else {
       $('.selected').removeClass('selected');
       $(this).addClass('selected').find('div');
-      $('body').animate({scrollTop:$('.selected').offset().top},500);
+      $('body').animate({scrollTop:$('.selected').offset().top - 50},500);
     }
   });
 
