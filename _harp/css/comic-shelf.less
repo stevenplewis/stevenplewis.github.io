@@ -22,9 +22,6 @@ body {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-a {
-  text-decoration: none;
-}
 ul {
   list-style: none;
 }
@@ -37,57 +34,67 @@ ul {
 /*---------------------------------*/
 
 body {
-  background: #111;
+  background: #fff;
   position: relative;
   padding-bottom: 280px;
-  font-family: 'Merriweather Sans', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Merriweather', serif;
+  text-align: center;
 }
 h1 {
   font-family: 'Permanent Marker', script, serif;
-  color: #fff;
-}
-h1 {
-  margin: 20px 0;
+  font-size: 5rem;
   text-align: center;
+  margin: 80px 0 0;
   a {
-    color: #fff;
+    color: #aaa;
+    text-decoration: none;
   }
 }
-// h2 {
-//   font: 1rem;
-//   text-align: center;
-//   a {
-//     display: inline-block;
-//     color: #fff;
-//     line-height: 1;
-//     width: 30%;
-//     padding: 0 20px;
-//   }
-// }
+h2 {
+  font-size: 1.5rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 80px;
+}
+h3 a {
+  color: #333;
+}
+h3 a:hover {
+  color: #000;
+}
 
 #comic-list {
   margin: 40px auto 80px;
   display: none;
+  text-align: left;
 
   li { 
     position: relative;
+    bottom: 0;
     width: 100%;
     vertical-align: top;
     text-align: center;
-    box-shadow: 0 0 30px #000;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
     margin-bottom: -40%;
     cursor: pointer;
+
     img {
       width: 100%;
+      border-radius: 1px;
     }
     div {
       display: none;
     }
   }
+  li:hover {
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    bottom: 5px;
+  }
   li.selected {
-    box-shadow: 0 0 60px #000;
+    box-shadow: 0 0 80px rgba(0,0,0,0.6);
     z-index: 9999;
     margin-bottom: 0;
+    bottom: 10px;
 
     img {
       box-shadow: 0 0 5px #111;
@@ -100,14 +107,14 @@ h1 {
       color: #eee;
       opacity: 0.95;
       text-align: left;
-      padding: 20px 20px 40px;
+      padding: 20px;
       overflow-y: auto;
-      h2 {
+      h3 {
         font-size: 1.5rem;
         line-height: 1.2;
         color: #222;
       }
-      h3 {
+      h4 {
         font-size: 1.2rem;
         color: red;
         line-height: 2;
@@ -116,6 +123,7 @@ h1 {
         color: #000;
         font-size: 1rem;
         line-height: 1.5;
+        margin-bottom: 20px;
       }
     }
   }
@@ -130,9 +138,6 @@ h1 {
 }
 
 @media (min-width: 400px) {
-  h1 {
-    font-size: 4.2rem;
-  }
   #comic-list {
     li {
       display: inline-block;
@@ -147,9 +152,6 @@ h1 {
   }
 }
 @media (min-width: 600px) {
-  h1 {
-    font-size: 5.4rem;
-  }
   #comic-list {
     li {
       width: 33.33%;
@@ -161,9 +163,6 @@ h1 {
   }
 }
 @media (min-width: 900px) {
-  h1 {
-    font-size: 4.5rem;
-  }
   #comic-list {
     max-width: 1000px;
     li {

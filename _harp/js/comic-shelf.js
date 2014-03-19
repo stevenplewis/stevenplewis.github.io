@@ -24,17 +24,13 @@ function kimonoCallback(data) {
     } else {
       // replacing the 120px version with a 300px version
       var coverBig = newComics[i].cover_art.src.replace('/120/', '/300/');
-      // console.log(coverBig);
 
       // creating the HTML for each li or "issue"
-      $('#comic-list').append('<li><img src="' + coverBig + '"><div class="info-div"><h2>' + newComics[i].issue_title.text + '</h2><h3>' + newComics[i].issue_num.replace('#ITEM', '') + '</h3><p>' + newComics[i].issue_info + '</p></div></li>');
+      $('#comic-list').append('<li><img src="' + coverBig + '"><div class="info-div"><h3>' + newComics[i].issue_title.text + '</h3><h4>' + newComics[i].issue_num.replace('#ITEM', '') + '</h4><p>' + newComics[i].issue_info + '</p></div></li>');
     };
 
   // end of looping over all the issues
   };
-
-  // displaying the finished list
-  $('#comic-list').css('display','block');
 
 
   // click listener to toggle class
@@ -48,7 +44,9 @@ function kimonoCallback(data) {
       $('body').animate({scrollTop:$('.selected').offset().top - 50},500);
     }
   });
-
+  $('#comic-list li')
+  // displaying the finished list
+  $("ul#comic-list").css("display","block");
 // end of kimono stuff
 };
 // some other kimono nonsense
@@ -57,4 +55,12 @@ $.ajax({
     "crossDomain":true,
     "dataType":"jsonp"
 });
+// $.ajax({
+//     "url":"http://www.kimonolabs.com/api/9nwl3qpq?apikey=d62eaf8c48b7eb0fe3cab0f0dc1bab83&callback=kimonoCallback",
+//     "crossDomain":true,
+//     "dataType":"jsonp"
+// });
+
+
+
 

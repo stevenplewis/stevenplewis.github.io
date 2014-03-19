@@ -20,9 +20,9 @@ block body
     a(href="#", alt="OnTheShelf home page") On The Shelf
   h2 What's new in comic shops
   //- h2
-    //- a(href="#", alt="last week's comics") LAST week
-  //-   a(href="#", alt="this week's comics") THIS week
-  a(href="/comic-shelf-next.html", alt="next week's comics") NEXT week
+  //-   a(href="#", alt="last week's comics") LAST week
+  a(href="/comic-shelf.html", alt="this week's comics") THIS week
+  //-   a(href="#", alt="next week's comics") NEXT week
   ul#comic-list
 
   script
@@ -79,11 +79,10 @@ block body
     };
     // some other kimono nonsense
     $.ajax({
-        "url":"http://www.kimonolabs.com/api/71blnv5q?apikey=d62eaf8c48b7eb0fe3cab0f0dc1bab83&callback=kimonoCallback",
+        "url":"http://www.kimonolabs.com/api/9nwl3qpq?apikey=d62eaf8c48b7eb0fe3cab0f0dc1bab83&callback=kimonoCallback",
         "crossDomain":true,
         "dataType":"jsonp"
     });
-
 
 
 
