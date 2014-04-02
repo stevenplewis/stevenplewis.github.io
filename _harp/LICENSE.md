@@ -1,1 +1,0 @@
-Copyright (c) Steven Lewis 2014

@@ -1,2 +1,0 @@
-##STEVEN LEWIS
-#Graphic Designer
