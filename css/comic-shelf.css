@@ -5,15 +5,15 @@ body{font-size:100%;}
 *:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 ul{list-style:none;}
 body{background:#fff;position:relative;padding-bottom:280px;font-family:'Merriweather',serif;text-align:center;}
-h1{font-family:'Permanent Marker',script,serif;font-size:5rem;text-align:center;margin:80px 0 0;}h1 a{color:#aaa;text-decoration:none;}
-h2{font-size:1.5rem;color:#333;text-align:center;margin-bottom:80px;}
-h3 a{color:#333;}
-h3 a:hover{color:#000;}
-#comic-list{margin:40px auto 80px;display:none;text-align:left;}#comic-list li{position:relative;bottom:0;width:100%;vertical-align:top;text-align:center;box-shadow:0 0 20px rgba(0, 0, 0, 0.1);margin-bottom:-40%;cursor:pointer;}#comic-list li img{width:100%;border-radius:1px;}
+h1{font-family:'Permanent Marker',script,serif;font-size:5rem;text-align:center;position:relative;height:0;z-index:0;}h1 a{color:#BEEDE3;opacity:0.3;position:absolute;left:0;right:0;top:-40px;text-decoration:none;}
+h2{position:relative;z-index:1;font-size:1.5rem;color:#333;text-align:center;padding:140px 0 10px;}
+h3{position:relative;color:#333;z-index:1;}
+h3:hover{color:#000;}
+#comic-list{margin:40px auto 80px;display:none;text-align:left;}#comic-list li{position:relative;bottom:0;width:100%;height:0;margin-bottom:200px;vertical-align:top;text-align:center;box-shadow:0 0 20px rgba(0, 0, 0, 0.1);cursor:pointer;}#comic-list li img{width:100%;border-radius:1px;}
 #comic-list li div{display:none;}
 #comic-list li:hover{box-shadow:0 0 20px rgba(0, 0, 0, 0.4);bottom:5px;}
-#comic-list li.selected{box-shadow:0 0 80px rgba(0, 0, 0, 0.6);z-index:9999;margin-bottom:0;bottom:10px;}#comic-list li.selected img{box-shadow:0 0 5px #111;}
+#comic-list li.selected{z-index:9999;bottom:10px;}#comic-list li.selected img{box-shadow:0 0 30px rgba(0, 0, 0, 0.3);}
 #comic-list li.selected div{display:block;margin:-4px 0 0;width:100%;background:#fff;color:#eee;opacity:0.95;text-align:left;padding:20px;overflow-y:auto;}#comic-list li.selected div h3{font-size:1.5rem;line-height:1.2;color:#222;}
 #comic-list li.selected div h4{font-size:1.2rem;color:red;line-height:2;}
 #comic-list li.selected div p{color:#000;font-size:1rem;line-height:1.5;margin-bottom:20px;}
-@media (max-width:400px){li.selected div{position:relative;}}@media (min-width:400px){#comic-list li{display:inline-block;width:50%;} #comic-list li.selected{margin-bottom:-40%;}#comic-list li.selected div{position:absolute;}}@media (min-width:600px){#comic-list li{width:33.33%;margin-bottom:-30%;} #comic-list li.selected{margin-bottom:-30%;}}@media (min-width:900px){#comic-list{max-width:1000px;}#comic-list li{width:25%;margin-bottom:-20%;} #comic-list li.selected{margin-bottom:-20%;}}
+@media (max-width:400px){li.selected div{position:relative;}}@media (min-width:400px){#comic-list li{display:inline-block;width:50%;} #comic-list li.selected div{position:absolute;}}@media (min-width:600px){#comic-list li{width:33.33%;margin-bottom:250px;}}@media (min-width:900px){#comic-list{max-width:1000px;}#comic-list li{width:25%;}}
