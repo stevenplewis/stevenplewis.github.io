@@ -12,23 +12,21 @@ block head
 
   //- JAVASCRIPT LINKS
   script(src='http://code.jquery.com/jquery-1.10.1.min.js')
-  // script(src='./js/comic-shelf.js')
+  script(src='./js/jquery.fittext.js')
 
 
 block body
-  h1
+  h1.responsive_h1
     a(href="#", alt="OnTheShelf home page") On The Shelf
   h2 What's new in comic shops
-  //- h2
-    //- a(href="#", alt="last week's comics") LAST week
-  //-   a(href="#", alt="this week's comics") THIS week
-  a(href="/comic-shelf-next.html", alt="next week's comics") NEXT week
+  h3 
+    a(href="/comic-shelf-next.html", alt="next week's comics") NEXT week
   ul#comic-list
 
   script
-    // ----------------------------------------------
+    // -----------------------------------------
     // This relies on Kimono (kimonolabs.com) and the API I created using their tool. Also utilizes info from mycomicshop.com (thanks!)
-    // ----------------------------------------------
+    // -----------------------------------------
 
 
     function kimonoCallback(data) {
@@ -54,7 +52,7 @@ block body
           var coverBig = newComics[i].cover_art.src.replace('/120/', '/300/');
 
           // creating the HTML for each li or "issue"
-          $('#comic-list').append('<li><img src="' + coverBig + '"><div class="info-div"><h3><a href="' + newComics[i].issue_title.href + '">' + newComics[i].issue_title.text + '</a></h3><h4>' + newComics[i].issue_num.replace('#ITEM', '') + '</h4><p>' + newComics[i].issue_info + '</p></div></li>');
+          $('#comic-list').append('<li><img src="' + coverBig + '"><div class="info-div"><h3><a target="blank" clas="title-link" href="' + newComics[i].issue_title.href + '">' + newComics[i].issue_title.text + '</a></h3><h4>' + newComics[i].issue_num.replace('#ITEM', '') + '</h4><p>' + newComics[i].issue_info + '</p></div></li>');
         };
 
       // end of looping over all the issues
@@ -82,6 +80,11 @@ block body
         "url":"http://www.kimonolabs.com/api/71blnv5q?apikey=d62eaf8c48b7eb0fe3cab0f0dc1bab83&callback=kimonoCallback",
         "crossDomain":true,
         "dataType":"jsonp"
+    });
+
+    // CALLING FITTEXT ON HEADLINE
+    $(document).ready(function(){
+      $('.responsive_h1').fitText(5, { minFontSize: '70px', maxFontSize: '150px' })
     });
 
 
