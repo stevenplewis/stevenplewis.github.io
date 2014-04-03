@@ -1,0 +1,33 @@
+extends _base
+
+block head
+  //- FONTS
+  //- link(href="http://fonts.googleapis.com/css?family=Arvo|Montserrat:400,700", rel="stylesheet", type="text/css")
+
+  //- STYLESHEETS
+  link(rel="stylesheet", href="./css/mother-board.css")
+
+  //- JAVASCRIPT LINKS
+    //- FROM GOOGLE API TUTORIAL
+  script(src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js")
+  script(type="text/javascript", src="./js/mother-board.js")
+
+
+block body
+  header
+    h1 The Mother-Board
+  .container
+    #dribbble.feedcontainer
+    #authenticjobsSF.feedcontainer
+
+  script(type='text/javascript')
+    $(function(){
+    // running custom RSS functions
+    parseRSS('http://dribbble.com/jobs.rss', '#dribbble');
+    parseRSS('http://www.authenticjobs.com/rss/custom.php?terms=&type=1,2,3,4,5,6&cats=&onlyremote=&location=San+Francisco%2C+CA', '#authenticjobsSF')
+    });
+
+
+
+  // script(type='text/javascript')
+  //   google.load("feeds", "1");
