@@ -4,9 +4,9 @@
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-44743958-1', 'notsteve.com');
   ga('send', 'pageview');
-  </script><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="http://fonts.googleapis.com/css?family=Merriweather:400,700,800" rel="stylesheet" type="text/css"><link href="http://fonts.googleapis.com/css?family=Permanent+Marker|Londrina+Shadow" rel="stylesheet" type="text/css"><link rel="stylesheet" href="./css/comic-shelf.css"><script src="http://code.jquery.com/jquery-1.10.1.min.js"></script><!-- script(src='./js/comic-shelf.js')--></head><body><h1><a href="#" alt="OnTheShelf home page">On The Shelf</a></h1><h2>What's new in comic shops</h2><a href="/comic-shelf-next.html" alt="next week's comics">NEXT week</a><ul id="comic-list"></ul><script>// ----------------------------------------------
+  </script><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="http://fonts.googleapis.com/css?family=Merriweather:400,700,800" rel="stylesheet" type="text/css"><link href="http://fonts.googleapis.com/css?family=Permanent+Marker|Londrina+Shadow" rel="stylesheet" type="text/css"><link rel="stylesheet" href="./css/comic-shelf.css"><script src="http://code.jquery.com/jquery-1.10.1.min.js"></script><script src="./js/jquery.fittext.js"></script></head><body><h1 class="responsive_h1"><a href="#" alt="OnTheShelf home page">On The Shelf</a></h1><h2>What's new in comic shops</h2><h3> <a href="/comic-shelf-next.html" alt="next week's comics">NEXT week</a></h3><ul id="comic-list"></ul><script>// -----------------------------------------
 // This relies on Kimono (kimonolabs.com) and the API I created using their tool. Also utilizes info from mycomicshop.com (thanks!)
-// ----------------------------------------------
+// -----------------------------------------
 
 
 function kimonoCallback(data) {
@@ -32,7 +32,7 @@ function kimonoCallback(data) {
       var coverBig = newComics[i].cover_art.src.replace('/120/', '/300/');
       
       // creating the HTML for each li or "issue"
-      $('#comic-list').append('<li><img src="' + coverBig + '"><div class="info-div"><h3><a href="' + newComics[i].issue_title.href + '">' + newComics[i].issue_title.text + '</a></h3><h4>' + newComics[i].issue_num.replace('#ITEM', '') + '</h4><p>' + newComics[i].issue_info + '</p></div></li>');
+      $('#comic-list').append('<li><img src="' + coverBig + '"><div class="info-div"><h3><a target="blank" clas="title-link" href="' + newComics[i].issue_title.href + '">' + newComics[i].issue_title.text + '</a></h3><h4>' + newComics[i].issue_num.replace('#ITEM', '') + '</h4><p>' + newComics[i].issue_info + '</p></div></li>');
     };
     
   // end of looping over all the issues
@@ -60,6 +60,11 @@ $.ajax({
     "url":"http://www.kimonolabs.com/api/71blnv5q?apikey=d62eaf8c48b7eb0fe3cab0f0dc1bab83&callback=kimonoCallback",
     "crossDomain":true,
     "dataType":"jsonp"
+});
+
+// CALLING FITTEXT ON HEADLINE
+$(document).ready(function(){
+  $('.responsive_h1').fitText(5, { minFontSize: '70px', maxFontSize: '150px' })
 });
 
 
