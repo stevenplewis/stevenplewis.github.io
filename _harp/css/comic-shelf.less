@@ -34,7 +34,7 @@ ul {
 /*---------------------------------*/
 
 body {
-  background: #fff;
+  background: #222;
   position: relative;
   padding-bottom: 280px;
   font-family: 'Merriweather', serif;
@@ -48,8 +48,7 @@ h1 {
   height: 0;
   z-index: 0;
   a {
-    color: #BEEDE3;
-    opacity: 0.3;
+    color: red;
     position: absolute;
     left: 0;
     right: 0;
@@ -61,17 +60,22 @@ h2 {
   position: relative;
   z-index: 1;
   font-size: 1.5rem;
-  color: #333;
+  color: #fff;
   text-align: center;
   padding: 140px 0 10px;
 }
 h3 {
   position: relative;
-  color: #333;
+  color: #fff;
   z-index: 1;
 }
-h3:hover {
-  color: #000;
+h3 {
+  a {
+    color: #fff;
+  }
+  a:hover {
+    color: blue;
+  }
 }
 
 #comic-list {
@@ -87,12 +91,12 @@ h3:hover {
     margin-bottom: 200px;
     vertical-align: top;
     text-align: center;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
     cursor: pointer;
 
     img {
       width: 100%;
       border-radius: 1px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
     }
     div {
       display: none;
@@ -101,23 +105,28 @@ h3:hover {
   li:hover {
     box-shadow: 0 0 20px rgba(0,0,0,0.4);
     bottom: 5px;
+    img {
+      box-shadow: 0 0 25px rgba(0,0,0,0.2);
+    }
   }
   li.selected {
-    z-index: 9999;
+    z-index: 800;
     bottom: 10px;
 
     img {
       box-shadow: 0 0 30px rgba(0,0,0,0.3);
+      z-index: 802;
     }
     div {
+      z-index: 801;
       display: block;
-      margin: -4px 0 0;
+      margin: -10px 0 0;
       width: 100%;
       background: #fff;
       color: #eee;
       opacity: 0.95;
       text-align: left;
-      padding: 20px;
+      padding: 25px 20px 20px;
       overflow-y: auto;
       h3 {
         font-size: 1.5rem;
