@@ -5,30 +5,32 @@ block head
   link(href='http://fonts.googleapis.com/css?family=Merriweather:400,700,800', rel='stylesheet', type='text/css')
   link(href='http://fonts.googleapis.com/css?family=Permanent+Marker|Londrina+Shadow', rel='stylesheet', type='text/css')
 
-
   //- STYLESHEETS
   link(rel="stylesheet", href="./css/comic-shelf.css")
 
-
   //- JAVASCRIPT LINKS
   script(src='http://code.jquery.com/jquery-1.10.1.min.js')
-  // script(src='./js/comic-shelf.js')
 
 
 block body
-  h1
-    a(href="#", alt="OnTheShelf home page") On The Shelf
-  h2 What's new in comic shops
-  //- h2
-  //-   a(href="#", alt="last week's comics") LAST week
-  a(href="/comic-shelf.html", alt="this week's comics") THIS week
-  //-   a(href="#", alt="next week's comics") NEXT week
-  ul#comic-list
-
+  h1.responsive_h1 On the Shelf
+  .da-shelf
+    h2 Next week's new comics. 
+      a(href="/comic-shelf.html", alt="next week's comics") See this week!
+  .wrapper
+    h4#loading-text LOADING...
+    ul#comic-list
+  h3#credits Site created by 
+    a(href="http://notsteve.com") Steven Lewis
+    | . Info pulled from 
+    a(href="http://www.mycomicshop.com/newreleases", alt="mycomicshop.com") MyComicShop.com
+    |  using 
+    a(href="http://www.kimonolabs.com/") Kimono
+    | .
   script
-    // ----------------------------------------------
+    // -----------------------------------------
     // This relies on Kimono (kimonolabs.com) and the API I created using their tool. Also utilizes info from mycomicshop.com (thanks!)
-    // ----------------------------------------------
+    // -----------------------------------------
 
 
     function kimonoCallback(data) {
@@ -54,7 +56,7 @@ block body
           var coverBig = newComics[i].cover_art.src.replace('/120/', '/300/');
 
           // creating the HTML for each li or "issue"
-          $('#comic-list').append('<li><img src="' + coverBig + '"><div class="info-div"><h3><a href="' + newComics[i].issue_title.href + '">' + newComics[i].issue_title.text + '</a></h3><h4>' + newComics[i].issue_num.replace('#ITEM', '') + '</h4><p>' + newComics[i].issue_info + '</p></div></li>');
+          $('#comic-list').append('<li><img src="' + coverBig + '"><div class="info-div"><h3><a target="blank" clas="title-link" href="' + newComics[i].issue_title.href + '">' + newComics[i].issue_title.text + '</a></h3><h4>' + newComics[i].issue_num.replace('#ITEM', '') + '</h4><p>' + newComics[i].issue_info + '</p></div></li>');
         };
 
       // end of looping over all the issues
@@ -65,6 +67,7 @@ block body
       // has to come after loop to make sure they're all loaded
       $('#comic-list li').click(function(){
         if ( $(this).hasClass('selected') ) {
+          $('body').animate({scrollTop:$(this).offset().top - 50},500);
           $(this).removeClass('selected');
         } else {
           $('.selected').removeClass('selected');
@@ -72,16 +75,16 @@ block body
           $('body').animate({scrollTop:$('.selected').offset().top - 50},500);
         }
       });
-      $('#comic-list li')
       // displaying the finished list
-      $("ul#comic-list").css("display","block");
+      $("#comic-list").css("display","block");
+      $("#loading-text").css("display","none");
     // end of kimono stuff
     };
     // some other kimono nonsense
     $.ajax({
-        "url":"http://www.kimonolabs.com/api/9nwl3qpq?apikey=d62eaf8c48b7eb0fe3cab0f0dc1bab83&callback=kimonoCallback",
-        "crossDomain":true,
-        "dataType":"jsonp"
+    "url":"http://www.kimonolabs.com/api/9nwl3qpq?apikey=d62eaf8c48b7eb0fe3cab0f0dc1bab83&callback=kimonoCallback",
+    "crossDomain":true,
+    "dataType":"jsonp"
     });
 
 

@@ -5,24 +5,28 @@ block head
   link(href='http://fonts.googleapis.com/css?family=Merriweather:400,700,800', rel='stylesheet', type='text/css')
   link(href='http://fonts.googleapis.com/css?family=Permanent+Marker|Londrina+Shadow', rel='stylesheet', type='text/css')
 
-
   //- STYLESHEETS
   link(rel="stylesheet", href="./css/comic-shelf.css")
 
-
   //- JAVASCRIPT LINKS
   script(src='http://code.jquery.com/jquery-1.10.1.min.js')
-  script(src='./js/jquery.fittext.js')
 
 
 block body
-  h1.responsive_h1
-    a(href="#", alt="OnTheShelf home page") On The Shelf
-  h2 What's new in comic shops
-  h3 
-    a(href="/comic-shelf-next.html", alt="next week's comics") NEXT week
-  ul#comic-list
-
+  h1.responsive_h1 On the Shelf
+  .da-shelf
+    h2 This week's new comics. 
+      a(href="/comic-shelf-next.html", alt="next week's comics") See next week!
+  .wrapper
+    h4#loading-text LOADING...
+    ul#comic-list
+  h3#credits Site created by 
+    a(href="http://notsteve.com") Steven Lewis
+    | . Info pulled from 
+    a(href="http://www.mycomicshop.com/newreleases", alt="mycomicshop.com") MyComicShop.com
+    |  using 
+    a(href="http://www.kimonolabs.com/") Kimono
+    | .
   script
     // -----------------------------------------
     // This relies on Kimono (kimonolabs.com) and the API I created using their tool. Also utilizes info from mycomicshop.com (thanks!)
@@ -63,6 +67,7 @@ block body
       // has to come after loop to make sure they're all loaded
       $('#comic-list li').click(function(){
         if ( $(this).hasClass('selected') ) {
+          $('body').animate({scrollTop:$(this).offset().top - 50},500);
           $(this).removeClass('selected');
         } else {
           $('.selected').removeClass('selected');
@@ -70,9 +75,9 @@ block body
           $('body').animate({scrollTop:$('.selected').offset().top - 50},500);
         }
       });
-      $('#comic-list li')
       // displaying the finished list
-      $("ul#comic-list").css("display","block");
+      $("#comic-list").css("display","block");
+      $("#loading-text").css("display","none");
     // end of kimono stuff
     };
     // some other kimono nonsense
@@ -82,10 +87,6 @@ block body
         "dataType":"jsonp"
     });
 
-    // CALLING FITTEXT ON HEADLINE
-    $(document).ready(function(){
-      $('.responsive_h1').fitText(5, { minFontSize: '70px', maxFontSize: '150px' })
-    });
 
 
 
