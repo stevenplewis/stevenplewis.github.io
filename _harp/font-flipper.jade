@@ -1,6 +1,7 @@
 extends _base
 
 block head
+    //- TITLE AND INFO
     title Font Flipper - Flip through your fonts
     meta(name="description", content="Simple little website to get to know the fonts installed on your computer better.")
     meta(name="autho", content="Steven Lewis")
@@ -20,30 +21,31 @@ block head
 
     //- ADDITIONAL STYLESHEET
     link(rel="stylesheet", href="./css/font-flipper.css")
-    link(href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css', rel='stylesheet')
+    link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css', rel='stylesheet")
 
 
     //- OPEN SANS FONT
-    link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,700', rel='stylesheet', type='text/css')
+    link(href="http://fonts.googleapis.com/css?family=Open+Sans:400,700', rel='stylesheet', type='text/css")
 
     //- JAVASCRIPT LINKS
-    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
+    // script(src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
+    script(src="js/jquery.js")
     script(src='js/jquery.fittext.js')
 
 block body
 
     //- WELCOME PAGE (overlaid)
-    #welcome-mobile
-        .text-container
-            h2 Flip through your fonts with the
-            h1 Font Flipper
-            h2 This site requires flash to get the list of your fonts. Unfortunately, this means it does not work on mobile :(
-    #welcome
-        .text-container
-            h2 Flip through your fonts with the
-            h1 Font Flipper
-            h2 A simple little website to get to know the fonts installed on your computer better. Try typing to see different letters, compare paragraphs of text as well as each character, and invert colors. 
-            a#welcome-dismiss(href="#") Loading...
+    //- #welcome-mobile
+    //-     .text-container
+    //-         h2 Flip through your fonts with the
+    //-         h1 Font Flipper
+    //-         h2 This site requires flash to get the list of your fonts. Unfortunately, this means it does not work on mobile :(
+    //- #welcome
+    //-     .text-container
+    //-         h2 Flip through your fonts with the
+    //-         h1 Font Flipper
+    //-         h2 A simple little website to get to know the fonts installed on your computer better. Try typing to see different letters, compare paragraphs of text as well as each character, and invert colors. 
+    //-         a#welcome-dismiss(href="#") Loading...
     
 
     //- TOGGLE BUTTONS
@@ -66,12 +68,19 @@ block body
 
 
     //- THE ACTUAL LISTS OF FONTS
-    #fontList
+    .filters-dropdown
+        #filter1box.filter
+            input#list1filter
+            button#filter1go Filter list 1
+        #filter2box.filter
+            input#list2filter
+            button#filter2go Filter list 2
+    #fontList1
     #fontList2
 
 
     //- MORE JAVASCRIPT MAGIC
-    script(type='text/javascript').
+    script(type='text/javascript')
         
         // WELCOME FITTEXT SETUP
         $('#welcome').find('h1').fitText(7, { minFontSize: '50px'});
@@ -87,6 +96,10 @@ block body
         for (var key in fontArr)
         {
         var fontName = fontArr[key];
+        
+
+
+
         // trim
         fontName = fontName.replace(/^\\s\s*/, '').replace(/\s\s*$/, '');
         if (fontName.match(/[_\\-\s]Italic$/)
@@ -98,9 +111,9 @@ block body
         allFontsHTML += '<li>'+fontName+'</li>';
         else
         {
-        allFontsHTML += '<li class="font-item" data-value="' + fontName + '"></li>';
+        allFontsHTML += '<li class="font-item ' + fontName + '" data-value="' + fontName + '"></li>';
         fontName = fontName.replace(/\\s*Regular$/, '');
-        regularFontsHTML += '<li class="font-item" data-value="' + fontName + '"><h2 class="font-name">'+fontName+'</h2><h1>&</h1></li>';
+        regularFontsHTML += '<li class="font-item ' + fontName + '" data-value="' + fontName + '"><h2 class="font-name">'+fontName+'</h2><h1>&</h1></li>';
 
         regularFontsCounter++;
         }
@@ -110,8 +123,12 @@ block body
         allFontsHTML += '</ul>';
         // allFontsHTML = allFontsCounter+' fonts altogether:'+allFontsHTML;
         // regularFontsHTML = regularFontsCounter+' "regular" fonts:'+regularFontsHTML;
-        document.getElementById('fontList').innerHTML = allFontsHTML;
-        document.getElementById('fontList').innerHTML = regularFontsHTML;
+
+
+
+        
+        document.getElementById('fontList1').innerHTML = allFontsHTML;
+        document.getElementById('fontList1').innerHTML = regularFontsHTML;
         document.getElementById('fontList2').innerHTML = regularFontsHTML;
         $('.font-item').append("<p>Every year, I took a holiday. I went to Florence, this cafe on the banks of the Arno. Every fine evening, I would sit there and order a Fernet Branca. I had this fantasy, that I would look across the tables and I would see you there with a wife maybe a couple of kids. You wouldn't say anything to me, nor me to you. But we would both know that you've made it, that you were happy. I never wanted you to come back to Gotham. I always knew there was nothing here for you except pain and tragedy and I wanted something more for you than that. I still do.</p>");
         changeFonts();
@@ -120,7 +137,7 @@ block body
         //- STUFF PAT HELPED ME WRITE
         function changeFonts() {
             $(window).on('keypress', function(evt) { 
-            $('#fontList').find('li').find('h1').text(String.fromCharCode(evt.which));
+            $('#fontList1').find('li').find('h1').text(String.fromCharCode(evt.which));
             $('#fontList2').find('li').find('h1').text(String.fromCharCode(evt.which));
             })
 
@@ -179,27 +196,73 @@ block body
                         event.keyCode = 102;
                         $('body').trigger(event);
                         }, 170);
-                    });
                 });
+            });
 
 
 
             //- INVERT COLOR TOGGLE
             $('#color-toggle').click(function () {
-                    $('#fontList').toggleClass('color-flip');
-                    $('#fontList2').toggleClass('color-flip');
-                    $('#color-toggle').toggleClass('color-flip');
-                });
+                $('#fontList1').toggleClass('color-flip');
+                $('#fontList2').toggleClass('color-flip');
+                $('#color-toggle').toggleClass('color-flip');
+            });
 
             //- TESTING FOR PARAGRAPH
             $('#paragraph-toggle').click(function () {
-                    $('#fontList ul li h1').toggle();
-                    $('#fontList ul li p').toggle();
-                    $('#fontList2 ul li h1').toggle();
-                    $('#fontList2 ul li p').toggle();
-                    $(this).find('i').toggleClass("fa-align-left fa-font")
-                });
+                $('#fontList1 ul li h1').toggle();
+                $('#fontList1 ul li p').toggle();
+                $('#fontList2 ul li h1').toggle();
+                $('#fontList2 ul li p').toggle();
+                $(this).find('i').toggleClass("fa-align-left fa-font")
+            });
+
+
+            //- FILTERING
+            (function ($) {
+                //- setting up case-insensitive contains
+                jQuery.expr[':'].Contains = function(a,i,m){
+                  return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
+                };
+
+                //- the actual filtering part
+                function listFilter(list) {
+                    $('#filter1go').mouseup( function () {
+                        var filter = $('#list1filter').val();
+
+                        if(filter) {
+                          $(list).find("h2:not(:Contains(" + filter + "))").parent().slideUp();
+                          $(list).find("h2:Contains(" + filter + ")").parent().slideDown();
+                        } else {
+                          $(list).find("li").slideDown();
+                        }
+                        return false;
+                      });
+                }
+                //- filter for list two
+                function listFilter2(list) {
+                    $('#filter2go').mouseup( function () {
+                        var filter = $('#list2filter').val();
+
+                        if(filter) {
+                          $(list).find("h2:not(:Contains(" + filter + "))").parent().slideUp();
+                          $(list).find("h2:Contains(" + filter + ")").parent().slideDown();
+                        } else {
+                          $(list).find("li").slideDown();
+                        }
+                        return false;
+                      });
+                }
+              //ondomready
+              $(function () {
+                listFilter($("#fontList1 ul"));
+                listFilter2($("#fontList2 ul"));
+              });
+            }(jQuery));
         };
+
+    
+
 
 
 

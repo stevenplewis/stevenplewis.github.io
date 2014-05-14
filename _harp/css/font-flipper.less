@@ -13,23 +13,20 @@ body {
   visibility: hidden;
 }
 
-#fontList.color-flip ul, #fontList2.color-flip ul {
+#fontList1.color-flip ul, #fontList2.color-flip ul {
   background: #fff;
   color: #222;
   .font-item h2 {
     background: #fff;
   }
-  .font-item:hover .font-name {
-    color: #222;
-  }
 }
 
-#fontList, #fontList2 {
+#fontList1, #fontList2 {
   ul {
     padding: 0;
     margin: 0;
     position: absolute;
-    top: 0;
+    top: 45px;
     bottom: 0;
     overflow-y: auto;
     overflow-x: hidden;
@@ -67,11 +64,8 @@ body {
       margin-bottom: 80px;
     }
   }
-  .font-item:hover .font-name {
-    color: #fff;
-  }
 }
-#fontList ul {
+#fontList1 ul {
   left: 0;
   right: 50%;
   padding-left: 40px;
@@ -80,6 +74,48 @@ body {
   left: 50%;
   right: 0;
   padding-right: 40px;
+}
+
+.filters-dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  
+  background: yellow;
+}
+
+.filter {
+  input {
+    border: none;
+    border-bottom: 2px solid #999;
+    background: none;
+    // width: 60%;
+  }
+  button {
+    border: 2px solid #999;
+    background: none;
+    color: red;
+  }
+}
+.filters {
+  // background: yellow;
+  // position: absolute;
+  // bottom: 100%;
+  // left: 75px;
+  // right: 25px;
+}
+#filter1box, #filter2box {
+  // position: absolute;
+  // top: 10px;
+  // z-index: 999;
+}
+#filter1box {
+  left: 13%;
+  right: 47%;
+}
+#filter2box {
+  left: 60%;
+  right: 0;
 }
 
 
