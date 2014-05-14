@@ -68,13 +68,15 @@ block body
 
 
     //- THE ACTUAL LISTS OF FONTS
-    .filters-dropdown
+    #filters-dropdown
+        #dropdown-toggle
+            a(href="#") ^
         #filter1box.filter
             input#list1filter
-            button#filter1go Filter list 1
+            button#filter1go Filter A
         #filter2box.filter
             input#list2filter
-            button#filter2go Filter list 2
+            button#filter2go Filter B
     #fontList1
     #fontList2
 
@@ -208,13 +210,18 @@ block body
                 $('#color-toggle').toggleClass('color-flip');
             });
 
-            //- TESTING FOR PARAGRAPH
+            //- PARAGRAPH/SINGLE LETTER TOGGLE
             $('#paragraph-toggle').click(function () {
                 $('#fontList1 ul li h1').toggle();
                 $('#fontList1 ul li p').toggle();
                 $('#fontList2 ul li h1').toggle();
                 $('#fontList2 ul li p').toggle();
                 $(this).find('i').toggleClass("fa-align-left fa-font")
+            });
+
+            //- SHOW/HIDE FILTERS TOGGLE
+            $('#dropdown-toggle').click(function () {
+                $("#filters-dropdown,.toggle-buttons").toggleClass('dropdown-hidden');
             });
 
 
@@ -237,7 +244,7 @@ block body
                           $(list).find("li").slideDown();
                         }
                         return false;
-                      });
+                    });
                 }
                 //- filter for list two
                 function listFilter2(list) {
@@ -253,11 +260,12 @@ block body
                         return false;
                       });
                 }
-              //ondomready
-              $(function () {
-                listFilter($("#fontList1 ul"));
-                listFilter2($("#fontList2 ul"));
-              });
+                //ondomready
+                $(function () {
+                    listFilter($("#fontList1 ul"));
+                    listFilter2($("#fontList2 ul"));
+                    });
+
             }(jQuery));
         };
 

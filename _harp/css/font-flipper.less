@@ -4,10 +4,11 @@
 
 body {
   font-family: 'open sans', sans-serif;
-  font-weight: 400;
+  font-weight: 700;
   background: #222;
   color: #fff;
   text-decoration: none;
+  margin: 0;
 }
 #fontListSWF {
   visibility: hidden;
@@ -76,47 +77,154 @@ body {
   padding-right: 40px;
 }
 
-.filters-dropdown {
+#filters-dropdown {
+  z-index: 8888;
   position: absolute;
   left: 0;
   right: 0;
-  
-  background: yellow;
+  padding: 15px 40px 15px 80px;
+  background: #333;
+  color: #777;
+  top: 0;
+    -webkit-transition: top 0.5s ease;
+    -moz-transition: top 0.5s ease;
+    -o-transition: top 0.5s ease;
+    transition: top 0.5s ease;
+}
+#filters-dropdown.dropdown-hidden{
+  top: -60px;
 }
 
+#dropdown-toggle {
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background: #333;
+  position: absolute;
+  top: 65px;
+  right: 20px;
+  a {
+    display: inline-block;
+    padding: 14px 20px 10px;
+    color: #777;
+    text-decoration: none;
+    font-weight: 700;
+  }
+  a:hover {
+    color: #fff;
+  }
+}
+#filter1box, #filter2box {
+  display: inline-block;
+  width: 48%;
+}
+#filter1box {
+  margin-right: 4%;
+}
 .filter {
   input {
     border: none;
-    border-bottom: 2px solid #999;
+    border-bottom: 2px solid #777;
     background: none;
-    // width: 60%;
+    width: 77%;
+    margin-right: 2%;
+    padding: 5px 0;
+    color: #777;
+    font-size: 16px;
+  }
+  input:focus {
+    outline: none;
+    border-color: #fff;
+    color: #fff;
   }
   button {
-    border: 2px solid #999;
+    border: 2px solid #777;
+    padding: 5px 0;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 3px;
     background: none;
-    color: red;
+    color: #777;
+    width: 20%;
+    cursor: pointer;
+  }
+  button:hover {
+    border-color: #fff;
+    color: #fff;
+  }
+  button:active {
+    outline: none;
+    border-color: #fff;
+    background: #fff;
+    color: #333;
+  }
+  button:focus {
+    outline: none;
   }
 }
-.filters {
-  // background: yellow;
-  // position: absolute;
-  // bottom: 100%;
-  // left: 75px;
-  // right: 25px;
+@media screen and (max-width: 600px) {
+  .filter {
+    button {
+      width: 60px;
+    }
+  }
 }
-#filter1box, #filter2box {
-  // position: absolute;
-  // top: 10px;
-  // z-index: 999;
+
+// INVERT COLOR TOGGLE SWITCH
+
+.toggle-buttons {
+  width: 40px;
+  position: absolute;
+  top: 65px;
+  left: 5px;
+  z-index: 999;
+    -webkit-transition: top 0.5s ease;
+    -moz-transition: top 0.5s ease;
+    -o-transition: top 0.5s ease;
+    transition: top 0.5s ease;
+
+  a {
+    // GER RID OF THIS BACKGROUND
+    background: #666;
+    position: absolute;
+    left: 10px;
+    font-family: 'open sans', sans-serif;
+    text-decoration: none;
+    font-weight: 700;
+    color: #aaa;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+
+    i {
+      font-size: 20px;
+    }
+  }
+  a:hover {
+    color: #ccc;
+  }
+  #color-toggle {
+  top: 20px;
+  }
+  #paragraph-toggle {
+    top: 50px;
+    i {
+      font-size: 18px;
+    }
+  }
+  #facebook-share{
+    top: 120px;
+  }
+  #twitter-share{
+    top: 150px;
+  }
+  #google-share{
+    top: 180px;
+  }
 }
-#filter1box {
-  left: 13%;
-  right: 47%;
+.toggle-buttons.dropdown-hidden{
+  top: 5px;
 }
-#filter2box {
-  left: 60%;
-  right: 0;
-}
+
 
 
 
@@ -209,52 +317,6 @@ body {
   }
 }
 
-// INVERT COLOR TOGGLE SWITCH
-
-.toggle-buttons {
-  height: 300px;
-  width: 70px;
-  position: absolute;
-  z-index: 100;
-
-  a {
-    position: absolute;
-    left: 20px;
-    z-index: 900;
-    font-family: 'open sans', sans-serif;
-    text-decoration: none;
-    font-weight: 700;
-    color: #aaa;
-    height: 20px;
-    width: 20px;
-    text-align: center;
-
-    i {
-      font-size: 20px;
-    }
-  }
-  a:hover {
-    color: #ccc;
-  }
-  #color-toggle {
-  top: 20px;
-  }
-  #paragraph-toggle {
-    top: 50px;
-    i {
-      font-size: 18px;
-    }
-  }
-  #facebook-share{
-    top: 120px;
-  }
-  #twitter-share{
-    top: 150px;
-  }
-  #google-share{
-    top: 180px;
-  }
-}
 
 #author-link a {
   position: absolute;
