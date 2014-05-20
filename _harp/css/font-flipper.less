@@ -4,7 +4,7 @@
 
 body {
   font-family: 'open sans', sans-serif;
-  font-weight: 700;
+  font-weight: 400;
   background: #222;
   color: #fff;
   text-decoration: none;
@@ -27,10 +27,17 @@ body {
     padding: 0;
     margin: 0;
     position: absolute;
-    top: 45px;
+    top: 0px;
     bottom: 0;
     overflow-y: auto;
     overflow-x: hidden;
+    -webkit-transition: top 0.5s ease;
+    -moz-transition: top 0.5s ease;
+    -o-transition: top 0.5s ease;
+    transition: top 0.5s ease;
+  }
+  ul.dropdown-shown {
+    top: 62px;
   }
 
   li:first-child h1 {
@@ -83,83 +90,119 @@ body {
   left: 0;
   right: 0;
   padding: 15px 40px 15px 80px;
-  background: #333;
+  background: #292929;
   color: #777;
-  top: 0;
+  top: -60px;
     -webkit-transition: top 0.5s ease;
     -moz-transition: top 0.5s ease;
     -o-transition: top 0.5s ease;
     transition: top 0.5s ease;
-}
-#filters-dropdown.dropdown-hidden{
-  top: -60px;
-}
 
-#dropdown-toggle {
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
-  background: #333;
-  position: absolute;
-  top: 65px;
-  right: 20px;
-  a {
+  #dropdown-toggle {
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background: #292929;
+    position: absolute;
+    top: 63px;
+    right: 20px;
+    a {
+      display: inline-block;
+      padding: 14px 20px 10px;
+      color: #777;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    a:hover {
+      color: #aaa;
+    }
+  }
+  #filter1box, #filter2box {
     display: inline-block;
-    padding: 14px 20px 10px;
-    color: #777;
-    text-decoration: none;
-    font-weight: 700;
+    width: 48%;
   }
-  a:hover {
-    color: #fff;
+  #filter1box {
+    margin-right: 4%;
+  }
+  .filter {
+    input {
+      border: none;
+      border-bottom: 1px solid #777;
+      background: none;
+      width: 77%;
+      margin-right: 2%;
+      padding: 5px 0;
+      color: #777;
+      font-size: 16px;
+    }
+    input:focus {
+      outline: none;
+      border-color: #fff;
+      color: #fff;
+    }
+    button {
+      border: 1px solid #777;
+      padding: 5px 0;
+      font-weight: 400;
+      font-size: 16px;
+      border-radius: 3px;
+      background: none;
+      color: #777;
+      width: 20%;
+      cursor: pointer;
+    }
+    button:hover {
+      border-color: #aaa;
+      color: #aaa;
+    }
+    button:active {
+      outline: none;
+      border-color: #aaa;
+      background: #aaa;
+      color: #333;
+    }
+    button:focus {
+      outline: none;
+    }
   }
 }
-#filter1box, #filter2box {
-  display: inline-block;
-  width: 48%;
+#filters-dropdown.dropdown-shown{
+  top: 0;
 }
-#filter1box {
-  margin-right: 4%;
-}
-.filter {
-  input {
-    border: none;
-    border-bottom: 2px solid #777;
-    background: none;
-    width: 77%;
-    margin-right: 2%;
-    padding: 5px 0;
-    color: #777;
-    font-size: 16px;
-  }
-  input:focus {
-    outline: none;
-    border-color: #fff;
-    color: #fff;
-  }
-  button {
-    border: 2px solid #777;
-    padding: 5px 0;
-    font-weight: 700;
-    font-size: 16px;
-    border-radius: 3px;
-    background: none;
-    color: #777;
-    width: 20%;
-    cursor: pointer;
-  }
-  button:hover {
-    border-color: #fff;
-    color: #fff;
-  }
-  button:active {
-    outline: none;
-    border-color: #fff;
-    background: #fff;
-    color: #333;
-  }
-  button:focus {
-    outline: none;
-  }
+#filters-dropdown.color-flip {
+  background: #FAFAFA;
+  color: #222;
+    #dropdown-toggle {
+      background: #FAFAFA;
+      a {
+        color: #777;
+      }
+      a:hover {
+        color: #aaa;
+      }
+    }
+    .filter {
+      input {
+        color: #777;
+        border-color: #777;
+      }
+      input:focus {
+        border-color: #aaa;
+        color: #aaa;
+      }
+      button {
+        color: #777;
+        border-color: #777;
+      }
+      button:hover {
+        border-color: #aaa;
+        color: #aaa;
+      }
+      button:active {
+        border-color: #aaa;
+        background: #aaa;
+        color: #FAFAFA;
+      }
+    }
 }
 @media screen and (max-width: 600px) {
   .filter {
@@ -174,7 +217,7 @@ body {
 .toggle-buttons {
   width: 40px;
   position: absolute;
-  top: 65px;
+  top: 5px;
   left: 5px;
   z-index: 999;
     -webkit-transition: top 0.5s ease;
@@ -183,14 +226,12 @@ body {
     transition: top 0.5s ease;
 
   a {
-    // GER RID OF THIS BACKGROUND
-    background: #666;
     position: absolute;
     left: 10px;
     font-family: 'open sans', sans-serif;
     text-decoration: none;
-    font-weight: 700;
-    color: #aaa;
+    font-weight: 400;
+    color: #777;
     height: 20px;
     width: 20px;
     text-align: center;
@@ -200,7 +241,7 @@ body {
     }
   }
   a:hover {
-    color: #ccc;
+    color: #aaa;
   }
   #color-toggle {
   top: 20px;
@@ -221,8 +262,8 @@ body {
     top: 180px;
   }
 }
-.toggle-buttons.dropdown-hidden{
-  top: 5px;
+.toggle-buttons.dropdown-shown{
+  top: 65px;
 }
 
 
@@ -252,7 +293,7 @@ body {
     h2 {
       margin: 0;
       font-weight: 100;
-      color: #888;
+      color: #777;
       font-size: 24px;
       line-height: 1.5;
     }
@@ -266,7 +307,7 @@ body {
     opacity: 0.3;
     padding: 10px;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 400;
     background: none;
     border: 3px solid #eb5050;
     border-radius: 8px;
@@ -298,7 +339,7 @@ body {
     }
     h2 {
       margin: 0;
-      font-weight: 100;
+      font-weight: 400;
       color: #888;
       font-size: 24px;
       line-height: 1.5;
@@ -319,23 +360,24 @@ body {
 
 
 #author-link a {
+  font-size: 12px;
   position: absolute;
   bottom: 5px;
   right: 0;
   padding: 10px 20px;
-  color: #aaa;
+  color: #777;
   z-index: 9000;
   text-decoration: none;
 }
 #author-link:hover a {
-  color: #ccc;
+  color: #aaa;
 }
 #flash-warning {
   position: absolute;
   bottom: 0;
   left: 0;
   padding: 10px 20px 0;
-  color: #555;
+  color: #444;
   z-index: 9000;
   text-decoration: none;
 }

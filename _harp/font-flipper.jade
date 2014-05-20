@@ -21,7 +21,7 @@ block head
 
     //- ADDITIONAL STYLESHEET
     link(rel="stylesheet", href="./css/font-flipper.css")
-    link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css', rel='stylesheet")
+    link(href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css", rel="stylesheet")
 
 
     //- OPEN SANS FONT
@@ -30,7 +30,7 @@ block head
     //- JAVASCRIPT LINKS
     // script(src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
     script(src="js/jquery.js")
-    script(src='js/jquery.fittext.js')
+    script(src="js/jquery.fittext.js")
 
 block body
 
@@ -62,7 +62,7 @@ block body
             i.fa.fa-google-plus-square
 
     #author-link
-        a(href="http://notsteve.com", title="") Hire Steven Lewis
+        a(href="http://notsteve.com", title="") Created by Steven Lewis
     #flash-warning
         p *requires Flash
 
@@ -70,7 +70,7 @@ block body
     //- THE ACTUAL LISTS OF FONTS
     #filters-dropdown
         #dropdown-toggle
-            a(href="#") ^
+            a(href="#") Show Filters
         #filter1box.filter
             input#list1filter
             button#filter1go Filter A
@@ -205,9 +205,7 @@ block body
 
             //- INVERT COLOR TOGGLE
             $('#color-toggle').click(function () {
-                $('#fontList1').toggleClass('color-flip');
-                $('#fontList2').toggleClass('color-flip');
-                $('#color-toggle').toggleClass('color-flip');
+                $('#fontList1,#fontList2,#color-toggle,#filters-dropdown').toggleClass('color-flip');
             });
 
             //- PARAGRAPH/SINGLE LETTER TOGGLE
@@ -221,7 +219,10 @@ block body
 
             //- SHOW/HIDE FILTERS TOGGLE
             $('#dropdown-toggle').click(function () {
-                $("#filters-dropdown,.toggle-buttons").toggleClass('dropdown-hidden');
+                $(this).find('a').text(function(i, v){
+                   return v === 'Show Filters' ? 'Hide Filters' : 'Show Filters'
+                });
+                $("#filters-dropdown,.toggle-buttons,#fontList1 ul,#fontList2 ul").toggleClass('dropdown-shown');
             });
 
 
