@@ -35,12 +35,12 @@ body{font-family:'open sans',sans-serif;font-weight:400;background:#222;color:#f
 .toggle-buttons #twitter-share{top:150px;}
 .toggle-buttons #google-share{top:180px;}
 .toggle-buttons.dropdown-shown{top:65px;}
-#welcome{position:absolute;top:0;bottom:0;left:0;right:0;background:#222;color:#fff;z-index:1000;padding:20px;}#welcome .text-container{margin:0 auto;max-width:700px;padding-top:100px;}#welcome .text-container h1{margin:0 0 4px;}
+#welcome{position:absolute;top:0;bottom:0;left:0;right:0;background:#222;color:#fff;z-index:9998;padding:20px;}#welcome .text-container{margin:0 auto;max-width:700px;padding-top:100px;}#welcome .text-container h1{margin:0 0 4px;}
 #welcome .text-container h2{margin:0;font-weight:100;color:#777;font-size:24px;line-height:1.5;}
 #welcome #welcome-dismiss{display:inline-block;text-decoration:none;text-align:center;width:150px;margin:40px 0 0;opacity:0.3;padding:10px;font-size:24px;font-weight:400;background:none;border:3px solid #eb5050;border-radius:8px;color:#eb5050;}
 #welcome #welcome-dismiss:hover{color:#222;background:#eb5050;}
 #welcome-mobile{position:absolute;top:0;bottom:0;left:0;right:0;background:#222;color:#fff;z-index:1000;padding:20px;}#welcome-mobile .text-container{margin:0 auto;}#welcome-mobile .text-container h1{margin:0 0 4px;}
 #welcome-mobile .text-container h2{margin:0;font-weight:400;color:#888;font-size:24px;line-height:1.5;}
-@media screen and (max-width:600px){#welcome{display:none;}}@media screen and (min-width:600px){#welcome-mobile{display:none;}}#author-link a{font-size:12px;position:absolute;bottom:5px;right:0;padding:10px 20px;color:#777;z-index:9000;text-decoration:none;}
+@media screen and (max-width:600px){#welcome{display:none;}}@media screen and (min-width:600px){#welcome-mobile{display:none;}}#author-link a{font-size:12px;position:absolute;bottom:5px;right:0;padding:10px 20px;color:#777;z-index:9999;text-decoration:none;}
 #author-link:hover a{color:#aaa;}
-#flash-warning{position:absolute;bottom:0;left:0;padding:10px 20px 0;color:#444;z-index:9000;text-decoration:none;}
+#flash-warning{position:absolute;bottom:0;left:0;padding:10px 20px 0;color:#444;z-index:9999;text-decoration:none;}
