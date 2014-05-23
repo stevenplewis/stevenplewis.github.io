@@ -8,7 +8,7 @@ body{background:#fff;font-family:'Comic Neue Angular',sans-serif;text-align:cent
 h1{font-family:'Comic Neue Angular',sans-serif;font-size:100px;letter-spacing:-8px;position:relative;margin:20px 0;line-height:1;z-index:0;color:#222;}
 a{text-decoration:underline;color:#222;}
 a:hover{color:#aaa;}
-.da-shelf{background:#222;margin:0 auto;padding:10px 0;}.da-shelf h2{font-family:'Comic Neue Angular',sans-serif;margin:0;position:relative;z-index:1;font-weight:700;font-size:22px;line-height:1.3;color:#fff;}
+.da-shelf{background:#777;margin:0 auto;padding:7px 0;}.da-shelf h2{font-family:'Comic Neue Angular',sans-serif;margin:0;position:relative;z-index:1;font-weight:700;font-size:22px;line-height:1.3;color:#fff;}
 .da-shelf a{display:block;color:#fff;}
 .da-shelf a:hover{color:#ccc;}
 #loading-text{margin:80px;font-size:30px;}
