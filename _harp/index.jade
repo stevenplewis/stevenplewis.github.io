@@ -1,6 +1,24 @@
 extends _base
 
 block head
+  //- TITLE AND INFO
+  title notsteve.com
+  meta(name="description", content="The portfolio of designer, Steven Lewis")
+  meta(name="autho", content="Steven Lewis")
+
+  //- FACEBOOK META STUFF
+  meta(property="og:title", content="notsteve.com")
+  meta(property="og:url", content="http://notsteve.com")
+  meta(property="og:type", content="website")
+  meta(property="og:image", content="http://notsteve.com/img/steve.jpg")
+  meta(property="og:description", content="The portfolio site for designer, Steven Lewis.")
+  //- TWITTER META STUFF
+  meta(name="twitter:card", content="The portfolio site for designer, Steven Lewis.")
+  meta(name="twitter:url", content="http://notsteve.com")
+  meta(name="twitter:title", content="notsteve.com")
+  meta(name="twitter:description", content="The portfolio site for designer, Steven Lewis.")
+  meta(name="twitter:image", content="http://notsteve.com/img/steve.jpg")
+
   //- FONTS
   link(href="http://fonts.googleapis.com/css?family=Arvo|Montserrat:400,700", rel="stylesheet", type="text/css")
   link(href="http://fonts.googleapis.com/css?family=Lato:400,900|Volkhov", rel="stylesheet", type="text/css")
@@ -29,7 +47,7 @@ block body
           img(src="img/font-flipper-p.png", alt="font flipper screenshot")
       .item-description
         h3 Font Flipper
-        p Like most graphic designers, I adore typography. I developed this site to better appreciate the detail in each font and character, and to better enable a side-by-side comparison of the individual letters and complete paragraphs. Each and every typeface is unique, and “Font Flipper” enables the user to view multiple fonts, compare, and choose the best fit for their products, whether it is a book title, a page header, or just for fun. Type is a complicated, and beautiful thing. 
+        p Like most graphic designers, I adore typography. I developed this site to better appreciate the detail in each font and character, and to better enable a side-by-side comparison of the individual letters and complete paragraphs. Every typeface is unique, and “Font Flipper” enables the user to view multiple fonts, compare, and choose the best fit for their products, whether it is a book title, a page header, or just for fun. Type is a complicated, and beautiful thing. 
         a(href="http://notsteve.com/font-flipper",target="_blank", title="The Font Flipper") notsteve.com/font-flipper
     .item
       .item-image
@@ -59,6 +77,14 @@ block body
         h3 Nick Malburg: Word Murder
         p Nick Malburg is solo folk/punk musician from Pittsburgh, Pennsylvania. He not only writes catchy tunes, but amazing lyrics. The entire album, “Word Murder" was recorded and mixed by Nick himself. As an artist, he wanted the album cover to embody the DIY style. As such, I combined a handwritten font for the title, text from “Everything Matters” by Ron Curie JR., and a shot of the neck of his guitar. For Nick, the album was about balancing his thoughts and words with music, and I believe the cover equates that message. 
         a(href="http://nickmalburg.bandcamp.com/",target="_blank", title="Nick Malburg bandcamp page") nickmalburg.bandcamp.com
+    .item
+      .item-image
+        a(href="http://notsteve.com/comic-shelf",target="_blank", title="On the Shelf")
+          img(src="img/comic-shelf.png", alt="On the Shelf page")
+      .item-description
+        h3 On the Shelf
+        p Comics are one of the reasons I do what I do. They fueled my interest in art as a kid, and I even made a comic book as one of my senior projects in college. I built this site to allow fans to virtually browse through new comic releases, and hopefully discover some new books to check out. There were several sites already with this information, but none of them really focused on the artwork or covers, which for me just would not do.
+        a(href="http://notsteve.com/comic-shelf", target="_blank",title="On the Shelf") notsteve.com/comic-shelf
     .item
       .item-image
         a(href="http://designly.herokuapp.com/",target="_blank",)
