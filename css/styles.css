@@ -11,7 +11,7 @@ a{color:#9BE1FF;}
 a:hover{color:#A9EADD;}
 body{font-family:'Arvo',serif;font-size:100%;}
 h1,h2,h3,h4,h5,h6,a{font-family:'Montserrat',sans-serif;}
-h1{display:inline-block;line-height:0.9;letter-spacing:-1px;}
+h1{line-height:0.9;letter-spacing:-1px;}
 h2{line-height:1.25;letter-spacing:-1px;font-weight:100;}
 h3{font-size:16px;line-height:1.2;font-weight:800;}
 p{font-size:0.9rem;font-weight:400;line-height:1.25;}
