@@ -34,7 +34,7 @@ ul {
 /*-----------------------------*/
 
 h1 {
-  color: #9BE1FF;
+  // color: #9BE1FF;
 }
 
 h2 {
@@ -48,7 +48,7 @@ p {
   color: #999;
 }
 a {
-  color: #91D9CB;
+  color: #9BE1FF;
 }
 a:hover {
   color: #A9EADD;
@@ -74,6 +74,7 @@ h1,h2,h3,h4,h5,h6,a {
 // -------------- H1s ---------------
 
 h1 {
+  display: inline-block;
   line-height: 0.9;
   letter-spacing: -1px;
 }
@@ -279,5 +280,46 @@ body {
 
 
 // -------- MESSING AROUND --------
+// #contact-links {
+//   display: inline-block;
+//   margin-left: 20px;
+// }
+// #twitter-btn, #email-btn {
+//   width: 30px;
+//   svg {
+//     display: block;
+//     width: 30px;
+//     height: 30px;
+//     vertical-align: top;
+
+//     #email-icon,#twitter-icon {
+//       fill: #fff;
+//     }
+//   }
+// }
+
+#email-btn {
+  margin-left: 20px;
+}
+#twitter-btn {
+  margin-left: 20px;
+}
+
+#twitter-btn, #email-btn {
+  width: 30px;
+  svg {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    #email-icon,#twitter-icon {
+      fill: #9BE1FF;
+    }
+  }
+}
+#twitter-btn:hover, #email-btn:hover {
+  #email-icon,#twitter-icon {
+    fill: #A9EADD;
+  }
+}
 
 
