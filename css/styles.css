@@ -28,7 +28,7 @@ p{font-size:0.9rem;font-weight:400;line-height:1.25;}
 @media (min-width:768px){.item{margin:0 0 80px;padding:0 0 76px;}.item .item-image{display:inline-block;width:67%;}.item .item-image img{margin-bottom:20px;} .item .item-image img:last-child{margin-bottom:0;} .item .item-description{display:inline-block;width:33%;padding:0 20px;vertical-align:top;}}.footer{margin:40px 0;}.footer a{display:block;line-height:1.5;}
 .footer p{font-family:"Montserrat",sans-serif;cursor:pointer;}
 .footer p:hover{color:#666;}
-@media (min-width:768px){.footer a{line-height:1.4;}}@media (min-width:60rem){.footer{margin:80px auto 100px;}}#email-btn{margin-left:20px;}
-#twitter-btn{margin-left:20px;}
+@media (min-width:768px){.footer a{line-height:1.4;}}@media (min-width:60rem){.footer{margin:80px auto 100px;}}#email-btn{margin-left:5px;}
+#twitter-btn{margin-left:10px;}
 #twitter-btn,#email-btn{width:30px;}#twitter-btn svg,#email-btn svg{display:inline-block;width:30px;height:30px;}#twitter-btn svg #email-icon,#email-btn svg #email-icon,#twitter-btn svg #twitter-icon,#email-btn svg #twitter-icon{fill:#9BE1FF;}
 #twitter-btn:hover #email-icon,#email-btn:hover #email-icon,#twitter-btn:hover #twitter-icon,#email-btn:hover #twitter-icon{fill:#A9EADD;}
