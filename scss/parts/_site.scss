@@ -1,0 +1,70 @@
+
+
+img {
+  max-width: 100%;
+  margin-bottom: 1rem;
+  outline: 1px solid #eee;
+}
+
+
+.front-head {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+a.social {
+  margin-right: 0.5rem;
+}
+.piece {
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  border-top: 1px dashed $medium-gray;
+
+  &:last-child {
+    padding-bottom: 4rem;
+  }
+}
+
+
+
+
+
+
+
+
+.pt-1 {
+  padding-top: 1rem;
+}
+.pb-1 {
+  padding-bottom: 1rem;
+}
+.pt-2 {
+  padding-top: 2rem;
+}
+.pb-2 {
+  padding-bottom: 2rem;
+}
+.pt-3 {
+  padding-top: 3rem;
+}
+.pb-3 {
+  padding-bottom: 3rem;
+}
+.pt-4 {
+  padding-top: 4rem;
+}
+.pb-4 {
+  padding-bottom: 4rem;
+}
+.pt-5 {
+  padding-top: 5rem;
+}
+.pb-5 {
+  padding-bottom: 5rem;
+}
+.pt-6 {
+  padding-top: 6rem;
+}
+.pb-6 {
+  padding-bottom: 6rem;
+}
