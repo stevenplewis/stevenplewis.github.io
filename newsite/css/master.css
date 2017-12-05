@@ -166,7 +166,7 @@ a:hover {
   margin: auto;
   padding: 0.25rem;
 }
-.study-link-box:hover .study-link-box-title, .study-link-box:active .study-link-box-title {
+.study-link-box:hover .study-link-box-title {
   opacity: 1;
 }
 
