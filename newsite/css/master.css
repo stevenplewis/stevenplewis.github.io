@@ -122,13 +122,13 @@ img {
   left: 0;
   right: 0;
   background: white;
-  background: rgba(255, 255, 255, 0.9);
+  /*background: rgba(255, 255, 255, 0.9);*/
   z-index: 9999;
   padding: 1rem;
 }
 @media (min-width: 32.5rem) {
     .header-row {
-      padding: 2rem;
+      padding: 1rem 2rem;
     }
 }
 .header-row h3 {
@@ -151,7 +151,7 @@ a:hover {
 .study-link-box-title {
   opacity: 0;
   background: #07aac6;
-  background: rgba(8, 170, 199, 0.9);
+  background: rgba(8, 170, 199, 0.8);
   background-blend-mode: multiply;
   position: absolute;
   right: 0;
