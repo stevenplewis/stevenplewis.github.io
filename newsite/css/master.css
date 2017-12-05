@@ -120,14 +120,15 @@ img {
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
   background: white;
+  background: rgba(255, 255, 255, 0.9);
   z-index: 9999;
   padding: 1rem;
 }
 @media (min-width: 32.5rem) {
     .header-row {
-      top: 1rem;
-      left: 1rem;
+      padding: 2rem;
     }
 }
 .header-row h3 {
@@ -150,7 +151,7 @@ a:hover {
 .study-link-box-title {
   opacity: 0;
   background: #07aac6;
-  background: rgba(8, 170, 199, 1);
+  background: rgba(8, 170, 199, 0.9);
   background-blend-mode: multiply;
   position: absolute;
   right: 0;
@@ -165,7 +166,7 @@ a:hover {
   margin: auto;
   padding: 0.25rem;
 }
-.study-link-box:hover .study-link-box-title {
+.study-link-box:hover .study-link-box-title, .study-link-box:active .study-link-box-title {
   opacity: 1;
 }
 
