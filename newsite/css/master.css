@@ -24,6 +24,14 @@ body {
   padding-top: 5rem;
   padding-bottom: 3rem;
 }
+.container-home {
+  padding-top: 1rem;
+}
+@media (min-width: 32.5rem) {
+  .container-home {
+    padding-top: 2rem;
+  }
+}
 .container-about {
   padding-top: 1rem;
 }
@@ -79,12 +87,10 @@ ul {
 hr {
   margin: 4rem auto;
   width: 12rem;
-  border-bottom: 1px solid #aaa;
+  border-color: #777;
 }
 hr.closer {
-  /*width: 6rem;*/
   margin: 4rem auto 7rem;
-  /*border-bottom: 1px solid #777;*/
 }
 @media (max-width: 32.5rem) {
     hr.closer {
