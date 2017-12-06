@@ -158,6 +158,9 @@ img {
 a {
   color: #07aac6;
 }
+p a {
+  color: #059fba;
+}
 a:hover {
   color: #06bddd;
 }
