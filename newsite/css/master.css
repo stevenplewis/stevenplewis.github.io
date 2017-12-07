@@ -149,7 +149,11 @@ img {
   padding: 0.5rem;
   position: relative;
 }
-
+@media (max-width: 20rem) {
+    .header-row .col {
+      padding: 0;
+    }
+}
 @media (min-width: 32.5rem) {
     .header-row {
       padding: 2rem 0 3rem;
