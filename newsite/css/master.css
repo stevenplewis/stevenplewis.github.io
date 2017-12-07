@@ -167,13 +167,10 @@ img {
   margin-top: 1rem;
   text-align: center;
 }
-.study-link-box {
-  position: relative;
-  width: 100%;
-  margin: 0 0 1rem 0;
-}
+
 a {
   color: #07aac6;
+  touch-action: manipulation;
 }
 p a {
   color: #059fba;
@@ -181,7 +178,20 @@ p a {
 a:hover {
   color: #06bddd;
 }
-.study-link-box-title {
+.study-link {
+  position: relative;
+  width: 100%;
+  margin: 0 0 1rem 0;
+}
+/*.study-link-tag {
+  color: black;
+  background: white;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}*/
+.study-link-box {
+  touch-action: manipulation;
   opacity: 0;
   background: #07aac6;
   background: rgba(8, 170, 199, 0.8);
@@ -194,12 +204,14 @@ a:hover {
   text-align: center;
   display: grid;
 }
+.study-link-box-title {
+  margin: auto;
+}
 .study-link-box-title p, .study-link-box-title h2 {
   color: white;
-  margin: auto;
-  padding: 0.25rem;
+  margin: 0.5rem;
 }
-.study-link-box:hover .study-link-box-title {
+.study-link:hover .study-link-box {
   opacity: 1;
 }
 
