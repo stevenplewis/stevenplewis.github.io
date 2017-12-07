@@ -12,16 +12,30 @@
     <link href="https://fonts.googleapis.com/css?family=Alegreya:400,400i" rel="stylesheet">
   </head>
   <body>
-    <div class=" header-row">
-      <h1><a href="index.html">Steven Lewis</a> <a href="about.html">*</a> </h1>
+    <div class="nav-row">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+            <h1><a href="index.html">Steven Lewis</a></h1>
+            <!-- <h4 class="about-link"><a href="about.html">About</a></h4> -->
+          </div>
+        </div>
+      </div>
     </div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-8 offset-sm-2">
           <h2>The Chartio Application</h2>
           <p>Visualizing data is great because sometimes raw numbers just don’t communicate enough. I realize I’m a visual person by nature, but I believe we can all benefit from being able to <em>see</em> some groups of numbers, especially when spread out over a dimension like time. <a href="#">Chartio</a> is a web-based application aiming to help companies visualize their business data. </p>
+          <div class="study-challenge">
+            <p>The Challenge:</p>
+            <ul>
+              <li>Identify areas of the Chartio application to improve</li>
+              <li>Consider the effort required to implement each improvement and which would have the most impact for customers</li>
+              <li>Maintain what customers were already building and able to do</li>
+            </ul>
+          </div>
           <p>When I joined the theam, Chartio had a chart creation interface which was the core of their product. Charts generated here could be saved to dashboards, and these dashboards all lived in a dropdown menu in the navbar. There were also links for the settings and support pages.</p>
-          <p><em>The challenge was to find the best areas to expand the application and design improvements, while maintaining what current customers where building and able to do.</em></p>
         </div>
       </div>
       <div class="row">
@@ -34,6 +48,7 @@
       </div>
       <div class="row">
         <div class="col-sm-8 offset-sm-2">
+          <h3>Initial Research</h3>
           <p>There were some little things I wanted to fix. Like how changing the data source dropdown within a layer changed the list of tables available to drag in, from outside the layer.</p>
         </div>
       </div>
@@ -56,7 +71,7 @@
       <div class="row">
         <div class="col">
           <figure>
-            <img src="img/chartio-pipeline.png" alt="">
+            <img src="img/chartio-pipeline.png" alt="" class="bordered-img">
             <figcaption>The redesign chart creation interface of Chartio.</figcaption>
           </figure>
         </div>
@@ -69,7 +84,7 @@
       <div class="row">
         <div class="col-sm-10 offset-sm-1">
           <figure>
-            <img src="img/chartio-add-step.png" alt="">
+            <img src="img/chartio-add-step.png" alt="" class="bordered-img">
             <figcaption>The “Add a Step” menu gave us a place to put all the cool things we could help customers do with their data automatically.</figcaption>
           </figure>
         </div>
@@ -83,13 +98,13 @@
       <div class="row">
         <div class="col-sm-8 offset-sm-2">
           <figure>
-            <img src="img/OR1.png" alt="">
+            <img src="img/OR1.png" alt="" class="bordered-img">
           </figure>
           <figure>
-            <img src="img/OR2.png" alt="">
+            <img src="img/OR2.png" alt="" class="bordered-img">
           </figure>
           <figure>
-            <img src="img/OR3.png" alt="">
+            <img src="img/OR3.png" alt="" class="bordered-img">
           </figure>
         </div>
       </div>
@@ -101,7 +116,7 @@
       <div class="row">
         <div class="col">
           <figure>
-            <img src="img/chartio-step-open.png" alt="">
+            <img src="img/chartio-step-open.png" alt="" class="bordered-img">
             <figcaption>The data input and output of each Pipeline step can be shown to help understand how each step works.</figcaption>
           </figure>
         </div>
@@ -114,7 +129,7 @@
       <div class="row">
         <div class="col-sm-10 offset-sm-1">
           <figure>
-            <img src="img/chartio-chart-help.png" alt="">
+            <img src="img/chartio-chart-help.png" alt="" class="bordered-img">
             <figcaption>In addition to the helper text and example table, small question mark links are placed throughout the app taking a customer to a related documentation page.</figcaption>
           </figure>
           <hr>
@@ -155,7 +170,7 @@
       <div class="row">
         <div class="col">
           <figure>
-            <img src="img/chartio-app-home.png" alt="">
+            <img src="img/chartio-app-home.png" alt="" class="bordered-img">
             <figcaption>The new in-app homepage is a great improvement over the previous nav dropdown list. Customers can filter by category, see who's viewed or edited dashboars recently, and get thumbnail previews.</figcaption>
           </figure>
         </div>
@@ -180,17 +195,15 @@
         </div>
       </div>
 
-      <hr class="closer">
-
       <div class="row footer-row">
         <div class="col">
           <p>
+            <a href="about.html">About</a> •
             <a class="social" href="https://dribbble.com/airguitarbandit" target="_blank" title="Steven's dribbble page">Dribbble</a> •
             <a class="social" href="https://unsplash.com/@stevenlewis" target="_blank" title="Steven's unsplash page">Unsplash</a> •
-            <a class="social" href="https://twitter.com/airguitarbandit" target="_blank" title="Steven's twitter page">Twitter</a> •
-            <a class="social" href="mailto:steven@notsteve.com" title="Steven's email">Email</a>
+            <a class="social" href="https://twitter.com/airguitarbandit" target="_blank" title="Steven's twitter page">Twitter</a>
           </p>
-          <p class="copyright">Copyright © 2013-2017 Steven Lewis</p>
+          <p class="copyright">Copyright © 2013-2017 Steven Lewis <br> <em>Eliminate the bullshit.</em> </p>
         </div>
       </div>
 

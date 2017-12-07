@@ -32,9 +32,6 @@ body {
     padding-top: 2rem;
   }
 }
-.container-about {
-  padding-top: 1rem;
-}
 
 .col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
   padding-left: 0.5rem;
@@ -55,6 +52,7 @@ figcaption {
 }
 .copyright {
   font-size: 1em;
+  text-align: center;
 }
 
 h1 {
@@ -79,6 +77,10 @@ h3.title {
   margin-top: 1rem;
   margin-bottom: 2rem;
 }
+h4  {
+  font-size: 1em;
+  text-transform: uppercase;
+}
 
 ul {
   padding-left: 1rem;
@@ -98,7 +100,7 @@ hr.closer {
     }
 }
 
-img, iframe {
+.bordered-img {
   border: 1px solid #777;
 }
 figure img, figure iframe {
@@ -112,17 +114,13 @@ img {
   width: 100%;
 }
 
-
-.prev-next-links .col {
-  margin-top: 4rem;
-}
 .prev-next-links .col a {
   display: inline-block;
   width: 100%;
-  padding: 2rem 0;
+  padding: 2rem 0 3rem;
 }
 
-.header-row {
+.nav-row {
   position: fixed;
   top: 0;
   left: 0;
@@ -131,24 +129,39 @@ img {
   z-index: 9999;
   padding: 1rem;
 }
+.nav-row .container-fluid {
+  padding: 0;
+}
+.nav-row h1 {
+  display: inline-block;
+}
+.nav-row .about-link {
+  float: right;
+}
+.header-row {
+  z-index: 9999;
+  padding: 1rem 0;
+}
+.header-row h3 {
+  margin-top: 1rem;
+}
 .static-header {
   padding: 0.5rem;
   position: relative;
 }
+
 @media (min-width: 32.5rem) {
     .header-row {
-      padding: 1rem 2rem;
+      padding: 2rem 0 3rem;
     }
     .static-header {
       padding: 0.5rem 1.5rem;
     }
 }
-.header-row h3 {
-  margin: 1rem 0 0;
-}
 
 .footer-row {
   margin-top: 1rem;
+  text-align: center;
 }
 .study-link-box {
   position: relative;
