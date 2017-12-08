@@ -192,9 +192,10 @@ a:hover {
 }*/
 .study-link-box {
   touch-action: manipulation;
-  opacity: 0;
-  background: #07aac6;
-  background: rgba(8, 170, 199, 0.8);
+  opacity: 1;
+  /*background: #07aac6;*/
+  background: none;
+  /*background: rgba(8, 170, 199, 0);*/
   background-blend-mode: multiply;
   position: absolute;
   right: 0;
@@ -206,12 +207,14 @@ a:hover {
 }
 .study-link-box-title {
   margin: auto;
+  background: #07aac6;
 }
 .study-link-box-title p, .study-link-box-title h2 {
   color: white;
   margin: 0.5rem;
 }
 .study-link:hover .study-link-box {
+  background: rgba(8, 170, 199, 0.25);
   opacity: 1;
 }
 
