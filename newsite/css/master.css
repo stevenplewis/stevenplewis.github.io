@@ -21,8 +21,9 @@ body {
 
 .container-fluid {
   max-width: 50rem;
-  padding-top: 5rem;
-  padding-bottom: 3rem;
+  /*padding-top: 5rem;
+  padding-bottom: 3rem;*/
+  padding: 5rem 1rem 3rem;
 }
 .container-home {
   padding-top: 1rem;
@@ -130,7 +131,7 @@ img {
   padding: 1rem;
 }
 .nav-row .container-fluid {
-  padding: 0;
+  padding: 0 0.5rem;
 }
 .nav-row h1 {
   display: inline-block;
