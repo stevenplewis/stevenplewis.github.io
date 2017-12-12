@@ -212,7 +212,10 @@ a:hover {
 }
 .study-link-box-title p, .study-link-box-title h2 {
   color: white;
-  margin: 0.5rem;
+  margin: 0.5rem 0.75rem;
+}
+.study-link-box-title p {
+  /*font-style: italic;*/
 }
 .study-link:hover .study-link-box {
   background: rgba(8, 170, 199, 0.25);
