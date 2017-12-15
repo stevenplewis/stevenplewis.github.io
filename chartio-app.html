@@ -103,7 +103,7 @@
       <div class="row">
         <div class="col-sm-8 offset-sm-2">
           <h3>Pipeline Results</h3>
-          <p>The introduction of the Data Pipeline was a pretty big change to the interface. Some would call it a <em>redesign</em>. We put the querying section (with that dropdown I mentioned earlier now moved) in the left half of the screen, and the final resulting chart to the right. For a lot of simple charts which don’t need transformations, this is all you need. The right half is fixed so the final result is always visible. The left half scrolls to show the actual Pipeline, which replaces the <em>Formulas</em> section and allows for steps to be added and removed independently of one another. These <em>steps</em> do simple things like add a column or hide a column, but also allowed for the fancier things the Chartio team had been dreaming up.</p>
+          <p>The introduction of the Data Pipeline was a pretty big change to the interface. Some would call it a <em>redesign</em>. We put the querying section (with that dropdown I mentioned earlier now moved) in the left half of the screen, and the final resulting chart to the right. For a lot of simple charts which don’t need transformations, this is all you need. The right half is fixed so the final result is always visible. The left half scrolls to show the actual Pipeline, which replaces the <em>Formulas</em> section and allows for steps to be added and removed independently of one another. These <em>steps</em> do simple things like add a column or hide a column, but also allows for the fancier things the Chartio team dreams up.</p>
         </div>
       </div>
       <div class="row">
@@ -116,9 +116,9 @@
       </div>
       <div class="row">
         <div class="col-sm-8 offset-sm-2">
-          <p>In this interface, the merging of data is just another step, so transformations to the data could be made before and after data gets blended together. There were also some less noticeable, but still very powerful interface changes, like the addition of the “OR” filter button.</p>
-          <h3>Additional Improvements</h3>
-          <p>By default the <em>Filters</em> zone uses AND logic, so data must match all the conditions to be returned. This has always been the case. However, once at least one field has been added, the user can now click a new <em>OR</em> button to create a new dropzone, which will use OR logic in relation to the other zones. <em>OR</em> buttons will continue being added as long as one keeps adding a filter to each dropzone. This simple feature took a lot of consideration and collaboration. We looked a lot of queries more advanced users were writing by hand to determine what our interface <em>needed</em> to allow and what would be nice to have.</p>
+          <p>In this interface, the merging of data is just another step, so transformations to the data can be made before and after data gets blended together. There are also some less noticeable, but still very powerful interface changes, like the addition of the “OR” filter button.</p>
+          <h3>Improvements and Challenges</h3>
+          <p>By default the <em>Filters</em> zone uses AND logic, so data must match all the conditions to be returned. This has always been the case. However, once at least one field has been added, the user can now click a new <em>OR</em> button to create a new dropzone, which will use OR logic in relation to the other zones. <em>OR</em> buttons will continue being added as long as one keeps adding a column to each dropzone. This simple feature took a lot of consideration and collaboration. The team and I looked to more advanced users who were writing their queries by hand to determine what our interface <em>needed</em> to allow and what would be nice to have.</p>
         </div>
       </div>
       <div class="row">
@@ -137,7 +137,7 @@
       <div class="row">
         <div class="col-sm-8 offset-sm-2">
           <h3>Considering New Customers</h3>
-          <p>One great feature we were able to add with the Pipeline is the Input & Output displays for each step. This expands a preview of the data table going into and out of any step in the Pipeline. For many, it is helpful when learning the more complex transformations when there is a before and after image of the data to compare.</p>
+          <p>One great feature we were able to add with the Pipeline is the Input & Output displays for each step. This expands a preview of the data table going into and out of any step in the Pipeline. For many, it is helpful when learning the more complex transformations when there is a <em>before</em> and <em>after</em> image of the data to compare.</p>
         </div>
       </div>
       <div class="row">
@@ -150,7 +150,7 @@
       </div>
       <div class="row">
         <div class="col-sm-8 offset-sm-2">
-          <p>In fact, I looked for all kinds of places to add helpful information. Another example is when a user picks a chart type that can’t be made with the current data table they’ve created. Instead of displaying an error, we now show a description and simple example of what you need to make your data table look like and why.</p>
+          <p>In fact, I tired to consider any place I could add helpful information. Another example of where I was able to is when a user picks a chart type that can’t be made with the current data table they’ve created. Instead of displaying an error, we now show a description and simple example of what you need to make your data table look like and why.</p>
         </div>
       </div>
       <div class="row">
@@ -167,7 +167,7 @@
           <h2>Improving Dashboard Arrangement</h2>
           <p>On the other side of the product were the dashboards which the charts eventually were saved to. Some early user-testing sessions with Chartio revealed an issue a lot of new people trying out the app hit: they didn’t know how to edit the dashboard. There was a button labeled <em>Arrange Mode</em> among a few others, like <em>Add a Chart</em>. Once the button was toggled, all the charts had handles and could be moved around and resized. The charts were even responsive and would adapt to just about any size box you made for them. The issue was if you missed the button, well you were out of luck.</p>
           <h3>Testing, Testing, One, Two</h3>
-          <p>People wanted, and expected, to be able to edit charts without toggling into <em>Arrange Mode</em>. I was pretty sure the button had to go and be replaced with some kind of hover state. I also knew it would be a delicate balance getting something to look obviously draggable, but not obnoxious when someone is just looking at data. I partnered with a developer and created draggable-chart prototypes with basic jQuery. We tested our prototypes with friends and teammates to hone in on what it took to communicate “you can grab me anywhere in this area”, or “grab and drag from this corner to resize me”, and of course “click here for a big ‘ol menu of options for this chart”. And at the appropriate times.</p>
+          <p>People wanted, and expected, to be able to edit charts without toggling into <em>Arrange Mode</em>. I was pretty sure the button had to go and be replaced with some kind of hover state. I also knew it would be a delicate balance getting something to look obviously draggable, but not obnoxious when someone is just looking at data. I partnered with a developer and created draggable prototypes with basic HTML/CSS/jQuery. We tested our prototypes with teammates, friends and strangers to hone in on what it took to communicate “you can grab me anywhere in this area”, or “grab and drag from this corner to resize me”, and of course “click here for a big ol’ menu of options for this chart”. And at the appropriate times.</p>
         </div>
       </div>
       <div class="row">
@@ -191,7 +191,7 @@
         <div class="col-sm-8 offset-sm-2">
           <h2>Finding Dashboards</h2>
           <p>A long time ago, the only way to get to different dashboards in Chartio was through a dropdown menu in the top navigation bar. Customers were often surprised the logo in the nav bar took them to the main settings page. They were also starting to have rather long lists of dashboards, which were simply sorted alphabetically. People needed more than a dropdown list.</p>
-          <p>Another thing we noticed was customers would sometimes forget what a dashboard was called, or maybe they didn't know the exact name in the first place (imagine your boss says "check the marketing dashboard" rather than the exact title). We knew we could make the small list into a page, with more sorting options, but we also wanted to add ways to discover popular dashboards or cool charts others had made. An obvious answer seemed to be adding some kind of thumbnail view for dashboards, but this was actually much harder to pull off than we expected. Many customers were very sensitive to the idea of images of their data being saved somewhere automatically (fair), and generating dashboards full of charts on the spot for previews was more or less impossible.</p>
+          <p>Another thing we noticed was customers would sometimes forget what a dashboard was called, or maybe they didn't know the exact name in the first place (imagine your boss says “check the marketing dashboard” rather than the exact title). We knew we could make the small list into a page, with more sorting options, but we also wanted to add ways to discover popular dashboards or cool charts others had made. An obvious answer seemed to be adding some kind of thumbnail view for dashboards, but this was actually much harder to pull off than we expected. Many customers were very sensitive to the idea of images of their data being saved automatically (fair), and generating dashboards full of charts on the spot for previews was more or less impossible.</p>
           <h3>Challenges and Workarounds</h3>
           <p>We tried introducing the idea of saving a snapshot of your dashboard as a way to keep a history of your dashboards. Customers would often want to compare an entire dashboard to what it looked like last month, for example. This worked, and had the happy side effect of leading to the <em>Snapshots</em> feature, but even then we had to settle for making the feature opt-in. To make up for the lack of a real screenshot for some dashboards, we now generate an image using dummy charts for each chart type (like pie or bar charts) as stand ins for the charts. In a lot of cases, this can still help recognize a dashboard visually if you've seen it before, and prevents a homepage of gray boxes.</p>
         </div>
@@ -206,8 +206,9 @@
       </div>
       <div class="row">
         <div class="col-sm-8 offset-sm-2">
+          <p>This new view of dashboards also featured several new options for sorting, like “Viewed by Anyone” allow customers to see what other people in thier organization find important and are watching.</p>
           <h3>Conclusion</h3>
-          <p>Recently, I’ve been working with the team to improve a customer's first-time experience even more. We’re experimenting with ways to offer people the right advice at the right time when getting started, like a guided tour of the chart creation interface.</p>
+          <p>I love being able to work with our customers, see all the different ways they use our tool and help make it even better. Recently, I’ve been working with the team to improve a customer's first-time experience even more. We’re experimenting with ways to offer people the right advice at the right time when getting started, like a guided tour of the chart creation interface. </p>
         </div>
       </div>
 
