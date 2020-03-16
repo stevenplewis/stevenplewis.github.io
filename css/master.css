@@ -65,6 +65,12 @@ body {
 .span8 {
   grid-column-end: span 8;
 }
+.span9 {
+  grid-column-end: span 9;
+}
+.span10 {
+  grid-column-end: span 10;
+}
 
 .span-vert-3 {
   grid-row-end: span 3;
@@ -134,9 +140,6 @@ p.main-text-size, span.main-text-size, .main-text-size p {
   line-height: 1.6666666667;
   letter-spacing: -0.02em;
 }
-p.main-text-size {
-  margin-bottom: 1.25rem;
-}
 p.minor-text, .minor-text-size p {
   font-size: 1.1875em;
   line-height: 1.6842105263;
@@ -145,7 +148,6 @@ p.minor-text, .minor-text-size p {
 .citation {
   font-size: 1em;
   line-height: 1.5;
-  margin-bottom: 0.75rem;
   letter-spacing: -0.01em;
 }
 .citation-note {
@@ -158,6 +160,10 @@ a span {
   font-size: 1.1875em;
   line-height: 1.6842105263;
   letter-spacing: -0.02em;
+}
+a img + span {
+  margin-top: 0.25rem;
+  display: inline-block;
 }
 a, a span {
   text-decoration: none;
