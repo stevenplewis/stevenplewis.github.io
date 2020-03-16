@@ -115,6 +115,7 @@ h1.jumbo {
 /* TYPE */
 h1, h2 {
   font-family: "Name Sans v01 Display", "Helvetcia", sans-serif;
+  letter-spacing: -0.01em;
 }
 h1 {
   margin: 0;
@@ -133,27 +134,45 @@ p.main-text-size, span.main-text-size, .main-text-size p {
   line-height: 1.6666666667;
   letter-spacing: -0.02em;
 }
-
 p.main-text-size {
   margin-bottom: 1.25rem;
 }
 p.minor-text, .minor-text-size p {
   font-size: 1.1875em;
   line-height: 1.6842105263;
-}
-p.lil-p {
-  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
 }
 .citation {
   font-size: 1em;
   line-height: 1.5;
   margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
 }
 .citation-note {
   font-size: 0.8em;
 }
 .citation-note, .citation {
   color: #bd0000;
+}
+a span {
+  font-size: 1.1875em;
+  line-height: 1.6842105263;
+  letter-spacing: -0.02em;
+}
+a, a span {
+  text-decoration: none;
+  color: blue;
+}
+a, a img {
+  position: relative;
+  opacity: 1;
+  top: 0;
+  box-shadow: 0 rgba(0,0,0,0);
+  transition: top 0.25s, box-shadow 0.25s;
+}
+a:hover img {
+  top: -0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.10), 0 0.125rem 0.5rem rgba(0,0,0,0.15);
 }
 
 /* MISC */
