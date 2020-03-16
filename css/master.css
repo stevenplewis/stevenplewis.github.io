@@ -1,9 +1,14 @@
-@media (max-width: 57em) {
+/* make fonts tad smaller on mobile?? */
+/* @media (max-width: 57em) {
   html {
     font-size: 95%;
   }
-}
+} */
 
+/* CORE */
+html {
+  font-size: 200%;
+}
 body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -15,211 +20,144 @@ body {
   -o-font-feature-settings: "kern" 1;
   font-feature-settings: "kern" 1;
   font-kerning: normal;
-  font-family: "Alegreya", "Times New Roman", serif;
-  padding: 0.5rem;
-}
-
-.container-fluid {
-  max-width: 50rem;
-  padding: 5rem 1rem 3rem;
-}
-.container-home {
-  padding-top: 1rem;
-}
-@media (min-width: 32.5rem) {
-  .container-home {
-    padding-top: 2rem;
-  }
-}
-
-.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-
-
-h4, h5, h6, p, figcaption, li {
-  font-size: 1.2em;
-  margin-bottom: 1rem;
-}
-figure {
-  margin: 2rem 0 3rem;
-}
-figcaption {
-  font-style: italic;
-}
-.copyright {
-  font-size: 1em;
-  text-align: center;
-}
-
-h1 {
-  font-size: 2.48832em;
-  line-height: 1;
-  font-style: italic;
-  font-weight: 400;
+  font-family: "Name Sans v01 Text", "Helvetica", sans-serif;
   margin: 0;
-}
-h2 {
-  font-size: 1.728em;
-  margin-bottom: 2rem;
-  margin-top: 2rem;
-}
-h3 {
-  font-size: 1.44em;
-  margin-bottom: 1rem;
-  margin-top: 2rem;
+  padding: 0;
+  font-size: 50%;
 }
 
-h3.title {
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-}
-h4  {
-  font-size: 1em;
-  text-transform: uppercase;
-}
-
-ul {
-  padding-left: 1rem;
-}
-
-hr {
-  margin: 4rem auto;
-  width: 12rem;
-  border-color: #777;
-}
-hr.closer {
-  margin: 4rem auto 7rem;
-}
-@media (max-width: 32.5rem) {
-    hr.closer {
-      margin: 2rem auto 4rem;
-    }
-}
-
-.bordered-img {
-  border: 1px solid #777;
-}
-figure img, figure iframe {
-  margin: 1rem 0;
-  display: block;
-}
-img.no-border {
-  border: none;
-}
-img {
-  width: 100%;
-}
-
-.prev-next-links .col a {
-  display: inline-block;
-  width: 100%;
-  padding: 2rem 0 3rem;
-}
-
-.nav-row {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  z-index: 9999;
+/* GRID */
+.grid-container {
+  /* width: 100%; */
+  display: grid;
+  background: #fff;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 1rem;
   padding: 1rem;
 }
-.nav-row .container-fluid {
-  padding: 0 0.5rem;
+.start1 {
+  grid-column-start: 1;
 }
-.nav-row h1 {
-  display: inline-block;
+.start2 {
+  grid-column-start: 2;
 }
-.nav-row .about-link {
-  float: right;
+.start3 {
+  grid-column-start: 3;
 }
-.header-row {
-  z-index: 9999;
-  padding: 1rem 0;
+.span2 {
+  grid-column-end: span 2;
 }
-.header-row h3 {
-  margin-top: 1rem;
+.span3 {
+  grid-column-end: span 3;
 }
-.static-header {
-  padding: 0.5rem;
-  position: relative;
+.span4 {
+  grid-column-end: span 4;
 }
-@media (max-width: 20rem) {
-    .header-row .col {
-      padding: 0;
-    }
+.span5 {
+  grid-column-end: span 5;
 }
-@media (min-width: 32.5rem) {
-    .header-row {
-      padding: 2rem 0 3rem;
-    }
-    .static-header {
-      padding: 0.5rem 1.5rem;
-    }
+.span6 {
+  grid-column-end: span 6;
+}
+.span7 {
+  grid-column-end: span 7;
+}
+.span8 {
+  grid-column-end: span 8;
 }
 
-.footer-row {
-  margin-top: 1rem;
-  text-align: center;
+.span-vert-3 {
+  grid-row-end: span 3;
 }
 
-a {
-  color: #07aac6;
-  touch-action: manipulation;
+.margin-0 {
+  margin: 0;
 }
-p a {
-  color: #059fba;
+.margin-top-2 {
+  margin-top: 2rem;
 }
-a:hover {
-  color: #06bddd;
+.margin-top-3 {
+  margin-top: 3rem;
 }
-.study-link {
-  position: relative;
-  width: 100%;
-  margin: 0 0 1rem 0;
+.margin-top-4 {
+  margin-top: 4rem;
 }
-/*.study-link-tag {
-  color: black;
-  background: white;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}*/
-.study-link-box {
-  touch-action: manipulation;
-  opacity: 1;
-  /*background: #07aac6;*/
-  background: none;
-  /*background: rgba(8, 170, 199, 0);*/
-  background-blend-mode: multiply;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  text-align: center;
-  display: grid;
+
+h1, h2, .main-text-area {
+  grid-column-start: 3;
 }
-.study-link-box-title {
-  margin: auto;
-  background: #07aac6;
+.max-text-area {
+  grid-column-start: 2;
 }
-.study-link-box-title p, .study-link-box-title h2 {
-  color: white;
-  margin: 0.5rem 0.75rem;
+.minor-text-area {
+  grid-column-start: 4;
 }
-.study-link-box-title p {
-  /*font-style: italic;*/
+.main-text-area {
+  grid-column-end: span 5;
 }
-.study-link:hover .study-link-box {
-  background: rgba(8, 170, 199, 0.25);
-  opacity: 1;
+.minor-text-area {
+  grid-column-end: span 4;
 }
-.study-challenge {
-  font-style: italic;
-  margin: 2rem 0;
+.max-text-area {
+  grid-column-end: span 8;
+}
+h1 {
+  grid-column-end: span 6;
+}
+h1.jumbo {
+  grid-column-end: span 8;
+}
+.citation {
+  grid-column: 8 / span 2;
+  padding-top: 0.35rem;
+}
+
+/* TYPE */
+h1, h2 {
+  font-family: "Name Sans v01 Display", "Helvetcia", sans-serif;
+}
+h1 {
+  margin: 0;
+  font-size: 3.625em;
+  line-height: 1.2;
+}
+h1.jumbo {
+  font-size: 7.6875em;
+}
+p {
+  margin-block-start: 0;
+  margin-block-end: 1.33333333em;
+}
+p.main-text-size, span.main-text-size, .main-text-size p {
+  font-size: 1.5em;
+  line-height: 1.6666666667;
+  letter-spacing: -0.02em;
+}
+
+p.main-text-size {
+  margin-bottom: 1.25rem;
+}
+p.minor-text, .minor-text-size p {
+  font-size: 1.1875em;
+  line-height: 1.6842105263;
+}
+p.lil-p {
+  margin-bottom: 1rem;
+}
+.citation {
+  font-size: 1em;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+.citation-note {
+  font-size: 0.8em;
+}
+.citation-note, .citation {
+  color: #bd0000;
+}
+
+/* MISC */
+img {
+  max-width: 100%;
+  display: block;
 }
