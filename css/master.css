@@ -113,7 +113,7 @@ h1, h2, .main-text-area {
 .max-text-area {
   grid-column-end: span 8;
 }
-h1 {
+h1, h2 {
   grid-column-end: span 6;
 }
 h1.jumbo {
@@ -198,7 +198,7 @@ p.minor-text, .minor-text-size p {
   font-size: 0.8em;
 }
 .citation-note, .citation {
-  color: #bd0000;
+  color: #666;
 }
 a span {
   font-size: 1.1875em;
@@ -208,6 +208,9 @@ a span {
 a img + span {
   margin-top: 0.25rem;
   display: inline-block;
+}
+a img {
+  outline: 1px solid rgba(0, 0, 0, 0.1);
 }
 a, a span {
   text-decoration: none;
@@ -229,4 +232,8 @@ a:hover img {
 img {
   max-width: 100%;
   display: block;
+}
+
+.intro-blurb {
+  margin-bottom: 4rem;
 }
