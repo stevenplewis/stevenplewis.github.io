@@ -131,6 +131,10 @@ h1 {
 h1.jumbo {
   font-size: 7.6875em;
 }
+h2 {
+  font-size: 2.25em;
+  line-height: 1.1861111111
+}
 p {
   margin-block-start: 0;
   margin-block-end: 1.33333333em;
@@ -167,7 +171,7 @@ a img + span {
 }
 a, a span {
   text-decoration: none;
-  color: blue;
+  color: #243FF2;
 }
 a, a img {
   position: relative;
