@@ -33,7 +33,13 @@ body {
   background: #fff;
   grid-template-columns: repeat(10, 1fr);
   grid-gap: 1rem;
+}
+div.grid-container {
   padding: 1rem;
+}
+nav.grid-container {
+  background: yellow;
+  padding: 1rem 1rem;
 }
 .start1 {
   grid-column-start: 1;
@@ -116,6 +122,40 @@ h1.jumbo {
 .citation {
   grid-column: 8 / span 2;
   padding-top: 0.35rem;
+}
+
+.menu-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 999;
+  border: 1px solid black;
+  border-radius: 0;
+  font-size: 1em;
+  padding: 0.5rem 0.75rem;
+  font-family: "Name Sans v01 Display", "Helvetcia", sans-serif;
+  font-weight: 700;
+  opacity: 0.25;
+  transition: opacity 0.25s;
+}
+.menu-btn:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+.nav-menu {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 33%;
+  background: yellow;
+  z-index: 998;
+  transition: right 0.5s;
+}
+.nav-menu.hidden {
+  right: -33%;
+}
+.nav-menu.shown {
+  right: 0;
 }
 
 /* TYPE */

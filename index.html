@@ -32,11 +32,18 @@
     <meta name="twitter:image" content="http://notsteve.com/img/steve-about.jpg">
      <!-- css -->
     <link rel="stylesheet" href="css/master.css">
+    <!-- jquery, for now -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
   <!-- ———— -->
   <!-- BODY -->
   <!-- ———— -->
   <body>
+    <button type="button" name="button" class="menu-btn" id="nav-menu-btn">MENU</button>
+    <div class="nav-menu hidden">
+      nav baby
+    </div>
+
     <div class="grid-container"> <!-- grid container starts -->
       <div class="max-text-area main-text-size margin-top-3">
         <p class="margin-0">Hi, I'm</p>
@@ -175,4 +182,12 @@
 
     </div> <!-- grid container end -->
   </body>
+  <script type="text/javascript">
+    // Code for toggling the side menu
+    $(document).ready(function () {
+      $('#nav-menu-btn').on('click', function () {
+        $('.nav-menu').toggleClass('shown hidden');
+      });
+    });
+  </script>
 </html>
