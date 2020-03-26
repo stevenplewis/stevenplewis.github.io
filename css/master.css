@@ -93,8 +93,10 @@ nav.grid-container {
 .span10 {
   grid-column-end: span 10;
 }
-
-.span-vert-3 {
+.vert-span2 {
+  grid-row-end: span 2;
+}
+.vert-span3 {
   grid-row-end: span 3;
 }
 
@@ -147,7 +149,7 @@ h1.jumbo {
   z-index: 999;
   top: 0.5rem;
   color: #111;
-  opacity: 0.25;
+  opacity: 0.45;
   transition: opacity 0.25s;
 }
 .home-btn {
@@ -218,11 +220,10 @@ p.minor-text, .minor-text-size p {
   line-height: 1.5;
   letter-spacing: -0.01em;
 }
-.citation-note {
-  font-size: 0.8em;
-}
 .citation-note, .citation {
-  color: #666;
+  /* color: #666; */
+  /* color: #949494; */
+  color: #767676;
 }
 a span {
   font-size: 1.1875em;
@@ -262,7 +263,7 @@ a:hover img {
 .prev-next-links {
   display: flex;
   justify-content: space-between;
-  margin: 1rem 0;
+  margin: 3rem 0;
 }
 .prev-next-links a.prev::before {
   content: "Prev: ";
