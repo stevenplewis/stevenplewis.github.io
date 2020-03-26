@@ -230,7 +230,7 @@ a span {
   line-height: 1.6842105263;
   letter-spacing: -0.02em;
 }
-img {
+img, video {
   display: block;
   max-width: 100%;
   margin: 1rem 0 0.25rem;
