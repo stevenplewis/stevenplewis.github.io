@@ -210,7 +210,7 @@ p.main-text-size, span.main-text-size, .main-text-size p {
   line-height: 1.6666666667;
   letter-spacing: -0.02em;
 }
-p.minor-text, .minor-text-size p {
+p.minor-text-size, .minor-text-size p {
   font-size: 1.1875em;
   line-height: 1.6842105263;
   letter-spacing: -0.02em;
