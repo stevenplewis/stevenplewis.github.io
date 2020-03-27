@@ -167,6 +167,10 @@ h1.jumbo {
   padding: 0.5rem 0.75rem;
 
 }
+.menu-btn:focus {
+  background-color: yellow;
+  outline: none;
+}
 .menu-btn:hover, .home-btn:hover {
   cursor: pointer;
   opacity: 1;
@@ -242,6 +246,8 @@ img, video {
 img + span {
   margin: 0.25rem 0 1rem;
   display: inline-block;
+  max-width: 42em;
+  line-height: 2;
 }
 a, a span {
   text-decoration: none;
@@ -272,11 +278,11 @@ a:hover img {
   margin-right: 0.5rem;
 }
 .prev-next-links a.prev::before {
-  content: "Prev: ";
+  content: "back: ";
 }
 .prev-next-links a.next {
   margin-left: 0.5rem;
 }
 .prev-next-links a.next::before {
-  content: "Next: ";
+  content: "next: ";
 }
