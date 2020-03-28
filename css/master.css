@@ -198,12 +198,15 @@ h1, h2 {
   letter-spacing: -0.01em;
 }
 h1 {
-  margin: 0;
   font-size: 3.625em;
   line-height: 1.2;
+  margin: 4rem 0 0;
 }
 h1.jumbo {
   font-size: 7.6875em;
+}
+h2 {
+  margin: 3rem 0 0;
 }
 h2, .prev-next-links {
   font-size: 2.25em;
