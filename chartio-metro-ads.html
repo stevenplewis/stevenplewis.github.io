@@ -30,152 +30,133 @@
     <meta name="twitter:title" content="notsteve.com">
     <meta name="twitter:description" content="The portfolio site for designer, Steven Lewis.">
     <meta name="twitter:image" content="http://notsteve.com/img/steve-about.jpg">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/master.css">
-    <link href="https://fonts.googleapis.com/css?family=Alegreya:400,400i" rel="stylesheet">
-  </head>
-  <body>
-    <div class="nav-row">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col">
-            <h1><a href="index.html">Steven Lewis</a></h1>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-8 offset-sm-2">
-          <h2>The Chartio Metro Takeover</h2>
-          <p>After doing a healthy bit of research, the Marketing team at Chartio decided they wanted metro advertisements. Through some cunning negotions, they secured an entire floor of a downtown station (Montgomery Street BART in San Francisco) for a month (September of 2017). They also needed me to turn over finished files within a week. To be clear, this meant 52 ad panels (26 pairs), ready to print and put up on both sides of the platform, in 7 days.</p>
-          <div class="study-challenge">
-            <h3>The Challenge</h3>
-            <ul>
-              <li>Reach a wide, yet qualified, audience of prospects, customers and potential hires</li>
-              <li>Communicate the company vision in a relatable way</li>
-              <li>Stay true to the brand values</li>
-              <li>Do it all in a cost-effective manner</li>
-            </ul>
-          </div>
-          <p>For the first point, I needed to make sure the ads looked like something a potential Chartio customer or employee would care about. I also wanted to consider many people using this station would be going to work, and would see these ads every day waiting for the train. I didn’t want some bad joke that would get worse and worse with every day on the wall.</p>
-          <p>For the next two points, I looked to Chartio’s mission statement, which is “JOIN people ON data”. This is a SQL pun refferencing data table joins, and quickly sums up how the company aims to connect people with the data they need. I felt if I could infuse this phrase into the ads somehow, I’d be on the right track.</p>
-          <h3>Brainstorming and Sketching</h3>
-          <p>One of my first ideas was to take full advantage of the fact we had all the ads in the station, a propper “takeover”. I thought it would be clever to have a really long, smooth area or line chart, with occasional spikes, spanning all the ads. The flat, “boring” areas of the chart would span several ads and have no text (and I hoped would make people curious).</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <figure>
-            <img src="img/metro-sketch-1.jpg" alt="">
-            <figcaption>An early idea with one, long chart spanning the entire platform.</figcaption>
-          </figure>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-8 offset-sm-2">
-          <p>The messaging would appear next to the spikes in the chart. It would focus on how collecting a bunch of data about your company is more helpful if you’re visualizing it and can notice when big things happen. It was interesting, but I was basically trying to invent a new message to fit my cool visual. So, that was <em>no bueno</em>.</p>
-          <p>Eventually, I started thinking it would be cool to take advantage of having all the ads – and that they came in pairs. The frames which would hold the ad panels in this station were in clear pairings with black borders. So I started thinking of phrases that could be split in two somehow. Something about this logic connected with an idea I had written down earlier, “Everyone has questions [silly chart] let them find answers.”</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-5">
-          <figure>
-            <img src="img/metro-sketch-2.jpg" alt="">
-          </figure>
-        </div>
-        <div class="col-sm-7">
-          <figure>
-            <img src="img/metro-sketch-3.jpg" alt="">
-          </figure>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-8 offset-sm-2">
-          <p>I liked the idea of pairing questions with answers. I quickly made another doodle with a person on the left side asking a question, and on the right side? We would build charts with our chart builder of course.</p>
-          <h3>Pulling It Off</h3>
-          <p>After pitching my idea to the team, it was approved by our team lead and CEO. Getting good quality photos of people for the ads was a little tougher with the time constraints though. We initially wanted to get customers to pose for photos, but we just didn’t have the time to coordinate something like that. Luckily, the team had my back. People volunteered to stand in front of a wall while I photographed them, another person took photos of me in front of the wall,  and other people helped me think of good questions people in an SF subway station might be asking. Then, even more people helped me collect data to answer those questions and ultimately build charts with said data.</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-8 offset-sm-2">
+    <!-- css -->
+   <link rel="stylesheet" href="css/master.css">
+   <!-- jquery, for now -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ </head>
+ <!-- ———— -->
+ <!-- BODY -->
+ <!-- ———— -->
+ <body>
+   <a href="index.html" class="home-btn">Steven Lewis</a>
+   <button type="button" name="button" class="menu-btn" id="nav-menu-btn">menu</button>
+   <div class="nav-menu hidden">
+     <h3>Pages</h3>
+<ul class="main-text-size">
+  <li>
+    <a href="chartio-brand-2020.html">Chartio update (2020)</a>
+  </li>
+  <li>
+    <a href="chartio-metro-ads.html">Chartio BART takeover</a>
+  </li>
+  <li>
+    <a href="data-school.html">The Data School</a>
+  </li>
+  <li>
+    <a href="chartio-brand.html">Chartio update (2017)</a>
+  </li>
+  <li>
+    <a href="chartio-marketing-swag.html">Chartio collateral</a>
+  </li>
+  <li>
+    <a href="chartio-app.html">Chartio product</a>
+  </li>
+  <li>
+    <a href="designly.html">Designly</a>
+  </li>
+  <li>
+    <a href="volunteer-shirts.html">T-shirts</a>
+  </li>
+  <li>
+    <a href="logos.html">Logos</a>
+  </li>
+  <li>
+    <a href="illustrations.html">Illustrations</a>
+  </li>
+</ul>
+   </div>
 
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
+   <div class="grid-container"> <!-- grid container starts -->
+     <div class="max-text-area main-text-size">
+       <h1>Chartio BART station takeover</h1>
+       <!-- <p>Subhead maybe?</p> -->
+     </div>
+     <div class="main-text-area main-text-size margin-top-2">
+       <p>Chartio, a data visualization platform, had never really considered a subway ad. In September of 2017 though they saw an opportunity to not just advertise the business, but also recruit local talent by taking over the BART station closest to the downtown SF office.</p>
+     </div>
+     <div class="start4 span5">
+       <img src="img/chartio-train.gif" alt="">
+       <span></span>
+     </div>
+     <div class="minor-text-area minor-text-size">
+       <p>The turnaround time for the whole project was tight, but I was able to win the team over with an idea for the ads I felt confident I could execute in time.</p>
+     </div>
+     <div class="start2 span5">
+       <img src="img/metro-sketch-1.jpg" alt="">
+       <span>An earlier idea where some of the ads would be almost blank, highlighting the importance of monitoring the right things at the right time.</span>
+     </div>
+     <div class="span3">
+       <img src="img/metro-sketch-3.jpg" alt="">
+       <span>The final idea, pairing photos of people asking questions with real, charted answers.</span>
+     </div>
+     <div class="minor-text-area minor-text-size">
+       <p>The idea took advantage of the ad boards being grouped in pairs, and would combine a photo of a person (Chartio employee) pondering a question in the left panel, with a data visualization answering their question in the right panel.My logic was even if commuters did’t read any of the ads, they would see people pondering while looking at charts with the Chartio logo under them.</p>
+     </div>
+     <div class="start1 span4">
+       <img src="img/bart1.jpg" alt="">
+       <span>The final ads in the station.</span>
+     </div>
+     <div class="start5 span5">
+       <img src="img/bart2.jpg" alt="">
+       <span>Though it would have been fun to feature customers in our ads, the short timeline meant I had to get employee volunteers for the photos.</span>
+     </div>
+     <div class="start2 span5">
+       <img src="img/bart3.jpg" alt="">
+       <span></span>
+     </div>
+     <div class="start7 span4">
+       <img src="img/bart4.jpg" alt="">
+       <span>Even I ended up in one of them.</span>
+     </div>
+     <div class="minor-text-area minor-text-size">
+       <p>It was also important to me that we come up with charts that used real data, ideally on local topics, so the people using the same station for their daily commutes could actually study the data and hopefully, find something interesting.</p>
+     </div>
+     <div class="start3 span6">
+       <img src="img/metro-ad-viewers.jpg" alt="">
+       <span>Final ads in the station.</span>
+     </div>
+     <div class="start1 span6">
+       <img src="img/chartio-bart-ads.jpg" alt="">
+       <span></span>
+     </div>
+     <div class="span3">
+       <img src="img/bart-tweet.jpg" alt="">
+       <span>A reaction to the ads on twitter.</span>
+     </div>
+     <div class="start2 span8">
+       <img src="img/metro-ad-final-2.jpg" alt="">
+       <span></span>
+     </div>
 
-          <figure>
-            <img src="img/metro-ad-viewers.jpg" alt="">
-            <figcaption>Glorious, visualized data.</figcaption>
-          </figure>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <figure>
-            <img src="img/bart1.jpg" alt="">
-          </figure>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <figure>
-            <img src="img/bart2.jpg" alt="">
-          </figure>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <figure>
-            <img src="img/bart3.jpg" alt="">
-          </figure>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <figure>
-            <img src="img/bart4.jpg" alt="">
-          </figure>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-8 offset-sm-2">
-          <h3>The Results</h3>
-          <p>If you didn’t read any of the words, you still saw a black box joing people and data (oh, hey). But if you happened to take the train every day and stood in front of these signs a lot, there were real charts you could read showing things like distance to SF landmarks or stats on the Golden State Warriors during the past season. Every fifth or sixth gropuing contained and ad pair with a larger Chartio logo and the phrase “Now Everyone (Not Just the Data Team) Can Explore Their Data”. These panels also had all the portraits from the other ads running across their lower halves, driving home how Chartio connects every department to data.</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <figure>
-            <img src="img/metro-ad-final-2.jpg" alt="">
-          </figure>
-        </div>
-      </div>
 
-      <div class="row prev-next-links">
-        <div class="col">
-          <a href="chartio-website.html" class="">
-            <h3>Chartio Website</h3>
-          </a>
-        </div>
-        <div class="col text-right">
-          <a href="chartio-brand.html" class="">
-            <h3>Chartio Brand</h3>
-          </a>
-        </div>
-      </div>
 
-      <div class="row footer-row">
-        <div class="col">
-          <p>
-            <a href="index.html">Work</a> •
-            <a href="about.html">About</a> •
-            <a class="social" href="https://dribbble.com/airguitarbandit" target="_blank" title="Steven's dribbble page">Dribbble</a>&nbsp;•&nbsp;<a class="social" href="https://unsplash.com/@airguitarbandit" target="_blank" title="Steven's unsplash page">Unsplash</a>&nbsp;•&nbsp;<a class="social" href="https://twitter.com/airguitarbandit" target="_blank" title="Steven's twitter page">Twitter</a>
-          </p>
-          <p class="copyright">Copyright © 2013-2019 Steven Lewis <br> <em>Eliminate the bullshit.</em> </p>
-        </div>
-      </div>
-  </body>
+     <!-- PREV/NEXT LINKS -->
+     <div class="max-text-area prev-next-links">
+       <a class="prev" href="chartio-brand-2020.html">Chartio update (2020)</a>
+       <a class="next" href="data-school.html">The Data School</a>
+     </div>
+     <!-- FOOTER -->
+     <p class="start3 span5 minor-text-size margin-top-2">Thanks for taking a look. Reach out anytime. I hope you’re having a nice day :)</p>
+     <p class="span2 minor-text-size margin-top-2"><a href="mailto:steven@notsteve.com">email</a>, <a href="https://dribbble.com/airguitarbandit">dribbble</a>, <a href="https://www.instagram.com/airguitarbandit/">instagram</a></p>
+   </div> <!-- grid container end -->
+ </body>
+ <script type="text/javascript">
+   // Code for toggling the side menu
+   $(document).ready(function () {
+     $('#nav-menu-btn').on('click', function () {
+       $('.nav-menu').toggleClass('shown hidden');
+     });
+   });
+ </script>
 </html>
