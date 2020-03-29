@@ -169,7 +169,7 @@ h1.jumbo {
 
 }
 .menu-btn:focus {
-  background-color: yellow;
+  background-color: #eee;
   outline: none;
 }
 .menu-btn:hover, .home-btn:hover {
@@ -180,16 +180,30 @@ h1.jumbo {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 33%;
-  background: yellow;
   z-index: 998;
-  transition: right 0.5s;
+  transition: left 0.5s;
+  padding: 0 0.5rem;
+  width: 100%;
+  border-left: 2px solid #222;
+  background: #fff;
+  overflow-y: scroll;
+}
+.nav-menu ul li {
+  margin: 0.5rem 0;
 }
 .nav-menu.hidden {
-  right: -33%;
+  left: 100%;
 }
 .nav-menu.shown {
-  right: 0;
+  left: 0.5rem;
+}
+@media only screen and (min-width: 768px) {
+  .nav-menu {
+    padding: 0.25rem 1rem;
+  }
+  .nav-menu.shown {
+    left: 50%;
+  }
 }
 
 /* TYPE */
@@ -216,7 +230,7 @@ p {
   margin-block-start: 0;
   margin-block-end: 1.33333333em;
 }
-p.main-text-size, span.main-text-size, .main-text-size p {
+p.main-text-size, span.main-text-size, .main-text-size p, .main-text-size li {
   font-size: 1.5em;
   line-height: 1.6666666667;
   letter-spacing: -0.02em;
@@ -263,6 +277,9 @@ a, a img {
   top: 0;
   box-shadow: 0 rgba(0,0,0,0);
   transition: top 0.25s, box-shadow 0.25s;
+}
+a:hover, a:hover span {
+  text-decoration: underline;
 }
 a:hover img {
   top: -0.5rem;
