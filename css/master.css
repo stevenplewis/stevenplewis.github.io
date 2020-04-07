@@ -172,10 +172,6 @@ h1.jumbo {
   font-variation-settings: 'wght' 600, 'opsz' 32;
   z-index: 997;
 }
-.home-btn:hover {
-  letter-spacing: -0.02em;
-  font-variation-settings: 'wght' 700, 'opsz' 32;
-}
 .menu-btn {
   top: 0.5rem;
   right: 0.5rem;
