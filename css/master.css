@@ -27,8 +27,9 @@ body {
   font-feature-settings: "kern" 1;
   font-kerning: normal;
   font-family: "Name Sans", "Helvetcia", sans-serif;
+  font-variation-settings: 'opsz' 16;
+  font-style: normal;
   font-weight: 400;
-  font-variation-settings: 'wght' 400, 'opsz' 16;
   margin: 0;
   padding: 0;
   font-size: 50%;
@@ -155,8 +156,9 @@ h1.jumbo {
 }
 .home-btn, .menu-btn {
   font-family: "Name Sans", "Helvetcia", sans-serif;
-  font-weight: 700;
   font-variation-settings: 'wght' 700, 'opsz' 16;
+  font-style: normal;
+  font-weight: 700;
   position: fixed;
   top: 0.5rem;
   color: #111;
@@ -167,8 +169,9 @@ h1.jumbo {
   top: 0.85rem;
   left: 0.85rem;
   font-size: 2em;
+  font-variation-settings: 'wght' 700, 'opsz' 32;
+  font-style: normal;
   font-weight: 700;
-  font-variation-settings: 'wght' 600, 'opsz' 32;
   z-index: 997;
 }
 .menu-btn {
@@ -234,8 +237,9 @@ h1.jumbo {
 /* TYPE */
 h1, h2 {
   font-family: "Name Sans", "Helvetcia", sans-serif;
-  font-weight: 700;
   font-variation-settings: 'wght' 700, 'opsz' 96;
+  font-style: normal;
+  font-weight: 700;
   letter-spacing: -0.01em;
 }
 h1 {
@@ -257,9 +261,11 @@ h1.jumbo {
 h2 {
   margin: 3rem 0 0;
   font-variation-settings: 'wght' 700, 'opsz' 36;
+  font-style: normal;
+  font-weight: 700;
 }
 .prev-next-links {
-  font-variation-settings: 'wght' 400, 'opsz' 36;
+  font-variation-settings: 'opsz' 36;
 }
 h2, .prev-next-links {
   font-size: 2.25em;
@@ -268,8 +274,9 @@ h2, .prev-next-links {
 h3 {
   font-size: 1.75em;
   line-height: 1.14286;
-  weigth: 700;
   font-variation-settings: 'wght' 700, 'opsz' 28;
+  font-style: normal;
+  font-weight: 700;
 }
 p {
   margin-block-start: 0;
