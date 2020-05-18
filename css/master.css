@@ -10,6 +10,7 @@
 @font-face {
   font-family: "Name Sans";
   src:  url('name_sans-variable.woff2') format('woff2');
+  font-weight: 1 999;
 }
 
 html {
@@ -27,9 +28,6 @@ body {
   font-feature-settings: "kern" 1;
   font-kerning: normal;
   font-family: "Name Sans", "Helvetcia", sans-serif;
-  font-variation-settings: 'opsz' 16;
-  font-style: normal;
-  font-weight: 400;
   margin: 0;
   padding: 0;
   font-size: 50%;
@@ -156,8 +154,6 @@ h1.jumbo {
 }
 .home-btn, .menu-btn {
   font-family: "Name Sans", "Helvetcia", sans-serif;
-  font-variation-settings: 'wght' 700, 'opsz' 16;
-  font-style: normal;
   font-weight: 700;
   position: fixed;
   top: 0.5rem;
@@ -169,8 +165,7 @@ h1.jumbo {
   top: 0.85rem;
   left: 0.85rem;
   font-size: 2em;
-  font-variation-settings: 'wght' 700, 'opsz' 32;
-  font-style: normal;
+  font-variation-settings: 'opsz' 32;
   font-weight: 700;
   z-index: 997;
 }
@@ -237,8 +232,6 @@ h1.jumbo {
 /* TYPE */
 h1, h2 {
   font-family: "Name Sans", "Helvetcia", sans-serif;
-  font-variation-settings: 'wght' 700, 'opsz' 96;
-  font-style: normal;
   font-weight: 700;
   letter-spacing: -0.01em;
 }
@@ -246,9 +239,11 @@ h1 {
   font-size: 3.625em;
   line-height: 1.2;
   margin: 3rem 0 0;
+  font-variation-settings: 'opsz' 96;
 }
 h1.jumbo {
   font-size: 6em;
+  font-variation-settings: 'opsz' 96;
 }
 @media only screen and (min-width: 768px) {
   h1 {
@@ -256,26 +251,24 @@ h1.jumbo {
   }
   h1.jumbo {
     font-size: 7.6875em;
+    font-variation-settings: 'opsz' 123;
   }
 }
 h2 {
   margin: 3rem 0 0;
-  font-variation-settings: 'wght' 700, 'opsz' 36;
-  font-style: normal;
   font-weight: 700;
 }
 .prev-next-links {
-  font-variation-settings: 'opsz' 36;
 }
 h2, .prev-next-links {
   font-size: 2.25em;
+  font-variation-settings: 'opsz' 96;
   line-height: 1.1861111111;
 }
 h3 {
   font-size: 1.75em;
   line-height: 1.14286;
-  font-variation-settings: 'wght' 700, 'opsz' 28;
-  font-style: normal;
+  font-variation-settings: 'opsz' 28;
   font-weight: 700;
 }
 p {
