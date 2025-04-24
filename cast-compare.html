@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie & TV Show Cast Comparison</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .search-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 280px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h2 {
+            margin-top: 0;
+            color: #3498db;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .results-container {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 10px 0;
+            background-color: white;
+        }
+        .result-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        .result-item:hover {
+            background-color: #f0f0f0;
+        }
+        .selected-item {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e8f4f8;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+        .selected-item img {
+            max-width: 100px;
+            margin-right: 10px;
+            vertical-align: middle;
+            border-radius: 4px;
+        }
+        .compare-button {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 25px;
+            background-color: #2ecc71;
+            font-size: 16px;
+        }
+        .compare-button:hover {
+            background-color: #27ae60;
+        }
+        .common-cast {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        .cast-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .cast-card {
+            width: 150px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .cast-card:hover {
+            transform: translateY(-5px);
+        }
+        .cast-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .cast-info {
+            padding: 10px;
+        }
+        .actor-name {
+            font-weight: bold;
+            margin: 0 0 5px 0;
+        }
+        .character-name {
+            font-size: 0.9em;
+            color: #666;
+            margin: 0;
+        }
+        .hidden {
+            display: none;
+        }
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            padding: 20px;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+        .debug-info {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow: auto;
+            white-space: pre-wrap;
+        }
+        .debug-toggle {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Movie & TV Show Cast Comparison</h1>
+    
+    <div class="search-container">
+        <div class="search-box">
+            <h2>First Title</h2>
+            <input type="text" id="search1" placeholder="Search for a movie or TV show...">
+            <button id="searchBtn1">Search</button>
+            <div class="results-container" id="results1"></div>
+            <div class="selected-item hidden" id="selected1"></div>
+        </div>
+        
+        <div class="search-box">
+            <h2>Second Title</h2>
+            <input type="text" id="search2" placeholder="Search for a movie or TV show...">
+            <button id="searchBtn2">Search</button>
+            <div class="results-container" id="results2"></div>
+            <div class="selected-item hidden" id="selected2"></div>
+        </div>
+    </div>
+    
+    <button id="compareBtn" class="compare-button hidden">Compare Cast</button>
+    
+    <div class="common-cast hidden" id="commonCastContainer">
+        <h2>Common Cast Members</h2>
+        <div id="commonCastCount"></div>
+        <div class="cast-list" id="commonCast"></div>
+    </div>
+
+    <div class="debug-toggle">
+        <button id="debugToggleBtn">Show Debug Info</button>
+    </div>
+    <div id="debugInfo" class="debug-info hidden"></div>
+
+    <script>
+        // Replace with your TMDb API key
+        const API_KEY = 'e5fb219e5f1b653e2179cad8b60dd220';
+        const BASE_URL = 'https://api.themoviedb.org/3';
+        const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
+        
+        // Store the selected titles
+        let selectedTitle1 = null;
+        let selectedTitle2 = null;
+        
+        // Store debug information
+        let debugData = {
+            cast1: null,
+            cast2: null,
+            commonCast: null
+        };
+        
+        // DOM elements
+        const searchInput1 = document.getElementById('search1');
+        const searchBtn1 = document.getElementById('searchBtn1');
+        const resultsContainer1 = document.getElementById('results1');
+        const selectedContainer1 = document.getElementById('selected1');
+        
+        const searchInput2 = document.getElementById('search2');
+        const searchBtn2 = document.getElementById('searchBtn2');
+        const resultsContainer2 = document.getElementById('results2');
+        const selectedContainer2 = document.getElementById('selected2');
+        
+        const compareBtn = document.getElementById('compareBtn');
+        const commonCastContainer = document.getElementById('commonCastContainer');
+        const commonCastCount = document.getElementById('commonCastCount');
+        const commonCast = document.getElementById('commonCast');
+        
+        const debugInfoContainer = document.getElementById('debugInfo');
+        const debugToggleBtn = document.getElementById('debugToggleBtn');
+        
+        // Event listeners
+        searchBtn1.addEventListener('click', () => searchTitles(searchInput1.value, resultsContainer1));
+        searchBtn2.addEventListener('click', () => searchTitles(searchInput2.value, resultsContainer2));
+        compareBtn.addEventListener('click', compareCast);
+        
+        // Add enter key support for search
+        searchInput1.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchTitles(searchInput1.value, resultsContainer1);
+        });
+        searchInput2.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchTitles(searchInput2.value, resultsContainer2);
+        });
+        
+        // Debug toggle
+        debugToggleBtn.addEventListener('click', () => {
+            if (debugInfoContainer.classList.contains('hidden')) {
+                debugInfoContainer.classList.remove('hidden');
+                debugToggleBtn.textContent = 'Hide Debug Info';
+                updateDebugInfo();
+            } else {
+                debugInfoContainer.classList.add('hidden');
+                debugToggleBtn.textContent = 'Show Debug Info';
+            }
+        });
+        
+        // Search for movies and TV shows
+        async function searchTitles(query, resultsContainer) {
+            if (!query.trim()) return;
+            
+            resultsContainer.innerHTML = '<div class="loading">Searching...</div>';
+            
+            try {
+                const url = `${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}&include_adult=false`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                displayResults(data.results, resultsContainer);
+            } catch (error) {
+                resultsContainer.innerHTML = `<div class="error-message">Error: ${error.message}</div>`;
+                console.error('Search error:', error);
+            }
+        }
+        
+        // Display search results
+        function displayResults(results, resultsContainer) {
+            resultsContainer.innerHTML = '';
+            
+            if (!results || results.length === 0) {
+                resultsContainer.innerHTML = '<div class="error-message">No results found</div>';
+                return;
+            }
+            
+            // Filter only movies and TV shows
+            const filteredResults = results.filter(item => item.media_type === 'movie' || item.media_type === 'tv');
+            
+            filteredResults.forEach(item => {
+                const title = item.media_type === 'movie' ? item.title : item.name;
+                const year = item.media_type === 'movie' 
+                    ? (item.release_date ? ` (${item.release_date.substring(0, 4)})` : '')
+                    : (item.first_air_date ? ` (${item.first_air_date.substring(0, 4)})` : '');
+                
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.textContent = `${title}${year} - ${item.media_type.toUpperCase()}`;
+                
+                resultItem.addEventListener('click', () => selectTitle(item, resultsContainer));
+                
+                resultsContainer.appendChild(resultItem);
+            });
+        }
+        
+        // Select a title
+        function selectTitle(item, resultsContainer) {
+            const title = item.media_type === 'movie' ? item.title : item.name;
+            const year = item.media_type === 'movie' 
+                ? (item.release_date ? ` (${item.release_date.substring(0, 4)})` : '')
+                : (item.first_air_date ? ` (${item.first_air_date.substring(0, 4)})` : '');
+            
+            const selectedTitle = {
+                id: item.id,
+                mediaType: item.media_type,
+                title: title,
+                year: year,
+                poster: item.poster_path
+            };
+            
+            if (resultsContainer === resultsContainer1) {
+                selectedTitle1 = selectedTitle;
+                displaySelectedTitle(selectedTitle, selectedContainer1, searchInput1);
+            } else {
+                selectedTitle2 = selectedTitle;
+                displaySelectedTitle(selectedTitle, selectedContainer2, searchInput2);
+            }
+            
+            // Clear results
+            resultsContainer.innerHTML = '';
+            
+            // Show compare button if both titles are selected
+            if (selectedTitle1 && selectedTitle2) {
+                compareBtn.classList.remove('hidden');
+            }
+            
+            // Update debug info
+            updateDebugInfo();
+        }
+        
+        // Display selected title
+        function displaySelectedTitle(title, container, searchInput) {
+            const posterUrl = title.poster 
+                ? `${IMAGE_BASE_URL}${title.poster}`
+                : '/api/placeholder/100/150';
+            
+            container.innerHTML = `
+                <img src="${posterUrl}" alt="${title.title}">
+                <strong>${title.title}</strong>${title.year} (${title.mediaType.toUpperCase()})
+                <button class="clear-btn">✕</button>
+            `;
+            
+            container.classList.remove('hidden');
+            searchInput.value = '';
+            
+            // Add clear button functionality
+            container.querySelector('.clear-btn').addEventListener('click', () => {
+                container.classList.add('hidden');
+                container.innerHTML = '';
+                
+                if (container === selectedContainer1) {
+                    selectedTitle1 = null;
+                } else {
+                    selectedTitle2 = null;
+                }
+                
+                if (!selectedTitle1 || !selectedTitle2) {
+                    compareBtn.classList.add('hidden');
+                    commonCastContainer.classList.add('hidden');
+                }
+                
+                // Update debug info
+                updateDebugInfo();
+            });
+        }
+        
+        // Compare cast of both titles
+        async function compareCast() {
+            if (!selectedTitle1 || !selectedTitle2) return;
+            
+            commonCastContainer.innerHTML = '<div class="loading">Loading cast information...</div>';
+            commonCastContainer.classList.remove('hidden');
+            
+            try {
+                // Get cast for first title
+                const cast1 = await getCast(selectedTitle1.id, selectedTitle1.mediaType);
+                debugData.cast1 = cast1;
+                console.log('Cast 1:', cast1);
+                
+                // Get cast for second title
+                const cast2 = await getCast(selectedTitle2.id, selectedTitle2.mediaType);
+                debugData.cast2 = cast2;
+                console.log('Cast 2:', cast2);
+                
+                // Find common cast members
+                const commonCastMembers = findCommonCast(cast1, cast2);
+                debugData.commonCast = commonCastMembers;
+                console.log('Common cast:', commonCastMembers);
+                
+                // Display common cast
+                displayCommonCast(commonCastMembers);
+                
+                // Update debug info
+                updateDebugInfo();
+            } catch (error) {
+                commonCastContainer.innerHTML = `<div class="error-message">Error: ${error.message}</div>`;
+                console.error('Compare cast error:', error);
+            }
+        }
+        
+        // Get cast for a movie or TV show
+        async function getCast(id, mediaType) {
+            // For TV shows, use the aggregated credits endpoint
+            let url;
+            if (mediaType === 'tv') {
+                url = `${BASE_URL}/${mediaType}/${id}/aggregate_credits?api_key=${API_KEY}`;
+            } else {
+                url = `${BASE_URL}/${mediaType}/${id}/credits?api_key=${API_KEY}`;
+            }
+            
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            // Check the API response structure
+            console.log(`${mediaType} credits response:`, data);
+            
+            // Return the cast array, checking both standard and aggregated formats
+            return data.cast || [];
+        }
+        
+        // Find common cast members
+        function findCommonCast(cast1, cast2) {
+            const commonCast = [];
+            const cast2Map = new Map();
+            
+            // Create a map of cast2 for faster lookup
+            cast2.forEach(actor => {
+                cast2Map.set(actor.id, actor);
+            });
+            
+            // Check each actor from cast1 if they're in cast2
+            cast1.forEach(actor1 => {
+                if (cast2Map.has(actor1.id)) {
+                    const actor2 = cast2Map.get(actor1.id);
+                    
+                    // Handle different character formats for TV shows vs movies
+                    let character1 = '';
+                    let character2 = '';
+                    
+                    // For TV shows with aggregate_credits format
+                    if (actor1.roles && actor1.roles.length > 0) {
+                        character1 = actor1.roles.map(role => role.character).join(', ');
+                    } else {
+                        character1 = actor1.character || 'Unknown';
+                    }
+                    
+                    if (actor2.roles && actor2.roles.length > 0) {
+                        character2 = actor2.roles.map(role => role.character).join(', ');
+                    } else {
+                        character2 = actor2.character || 'Unknown';
+                    }
+                    
+                    commonCast.push({
+                        id: actor1.id,
+                        name: actor1.name,
+                        profile_path: actor1.profile_path,
+                        character1: character1,
+                        character2: character2
+                    });
+                }
+            });
+            
+            return commonCast;
+        }
+        
+        // Display common cast
+        function displayCommonCast(commonCastMembers) {
+            commonCastContainer.innerHTML = '';
+            
+            // Recreate the common cast header and count
+            commonCastContainer.innerHTML = `
+                <h2>Common Cast Members</h2>
+                <div id="commonCastCount">Found ${commonCastMembers.length} common cast member${commonCastMembers.length !== 1 ? 's' : ''}</div>
+                <div class="cast-list" id="commonCast"></div>
+            `;
+            
+            const commonCastList = document.getElementById('commonCast');
+            
+            if (commonCastMembers.length === 0) {
+                commonCastList.innerHTML = '<div class="error-message">No common cast members found</div>';
+                return;
+            }
+            
+            commonCastMembers.forEach(actor => {
+                const profileUrl = actor.profile_path 
+                    ? `${IMAGE_BASE_URL}${actor.profile_path}`
+                    : '/api/placeholder/150/200';
+                
+                const castCard = document.createElement('div');
+                castCard.className = 'cast-card';
+                castCard.innerHTML = `
+                    <img src="${profileUrl}" alt="${actor.name}">
+                    <div class="cast-info">
+                        <p class="actor-name">${actor.name}</p>
+                        <p class="character-name">In "${selectedTitle1.title}": ${actor.character1}</p>
+                        <p class="character-name">In "${selectedTitle2.title}": ${actor.character2}</p>
+                    </div>
+                `;
+                
+                commonCastList.appendChild(castCard);
+            });
+        }
+        
+        // Update debug info
+        function updateDebugInfo() {
+            const debug = {
+                selectedTitle1,
+                selectedTitle2,
+                cast1: debugData.cast1 ? {
+                    length: debugData.cast1.length,
+                    sample: debugData.cast1.slice(0, 3)
+                } : null,
+                cast2: debugData.cast2 ? {
+                    length: debugData.cast2.length,
+                    sample: debugData.cast2.slice(0, 3)
+                } : null,
+                commonCast: debugData.commonCast
+            };
+            
+            debugInfoContainer.textContent = JSON.stringify(debug, null, 2);
+        }
+    </script>
+</body>
+</html>
