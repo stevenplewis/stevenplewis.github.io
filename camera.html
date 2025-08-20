@@ -18,7 +18,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 20px 200px 20px; /* Extra bottom padding for phone holder */
+            padding: 20px 20px 300px 20px; /* Extra bottom padding for phone holder */
             color: white;
         }
 
@@ -363,6 +363,14 @@
 
         <div class="camera-controls" id="cameraControls" style="display: none;">
             <div class="control-group">
+                <label class="control-label">Horizontal Skew</label>
+                <div class="slider-container">
+                    <input type="range" id="skewSlider" class="control-slider" min="-15" max="15" step="0.5" value="0">
+                    <span class="slider-value" id="skewValue">0°</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
                 <label class="control-label">Camera</label>
                 <select id="cameraSelect" class="camera-select">
                     <option value="environment">Back Camera (1x)</option>
@@ -446,7 +454,8 @@
             zoom: 1,
             translateX: 0,
             translateY: 0,
-            rotate: 0
+            rotate: 0,
+            skew: 0
         };
 
         // Initialize elements
@@ -470,6 +479,7 @@
             document.getElementById('translateXSlider').addEventListener('input', updateTransform);
             document.getElementById('translateYSlider').addEventListener('input', updateTransform);
             document.getElementById('rotateSlider').addEventListener('input', updateTransform);
+            document.getElementById('skewSlider').addEventListener('input', updateTransform);
         });
 
         async function startCamera() {
@@ -482,39 +492,79 @@
                 const cameraSelect = document.getElementById('cameraSelect');
                 cameraSelect.innerHTML = '';
                 
-                videoDevices.forEach((device, index) => {
+                if (videoDevices.length === 0) {
                     const option = document.createElement('option');
-                    option.value = device.deviceId;
-                    
-                    // Try to identify camera types
-                    const label = device.label || `Camera ${index + 1}`;
-                    if (label.toLowerCase().includes('back') || label.toLowerCase().includes('rear')) {
-                        option.textContent = `${label} (Back)`;
-                    } else if (label.toLowerCase().includes('front')) {
-                        option.textContent = `${label} (Front)`;
-                    } else if (label.toLowerCase().includes('ultra') || label.toLowerCase().includes('wide')) {
-                        option.textContent = `${label} (Ultra Wide)`;
-                    } else if (label.toLowerCase().includes('tele') || label.toLowerCase().includes('2x') || label.toLowerCase().includes('zoom')) {
-                        option.textContent = `${label} (Telephoto)`;
-                    } else {
-                        option.textContent = label;
-                    }
-                    
+                    option.value = '';
+                    option.textContent = 'No cameras found';
                     cameraSelect.appendChild(option);
-                });
+                } else {
+                    videoDevices.forEach((device, index) => {
+                        const option = document.createElement('option');
+                        option.value = device.deviceId;
+                        
+                        // Try to identify camera types, with better fallbacks
+                        let label = device.label || `Camera ${index + 1}`;
+                        
+                        if (label.toLowerCase().includes('back') || label.toLowerCase().includes('rear') || label.toLowerCase().includes('environment')) {
+                            option.textContent = `${label} (Back)`;
+                        } else if (label.toLowerCase().includes('front') || label.toLowerCase().includes('user') || label.toLowerCase().includes('selfie')) {
+                            option.textContent = `${label} (Front)`;
+                        } else if (label.toLowerCase().includes('ultra') || label.toLowerCase().includes('wide')) {
+                            option.textContent = `${label} (Ultra Wide)`;
+                        } else if (label.toLowerCase().includes('tele') || label.toLowerCase().includes('2x') || label.toLowerCase().includes('zoom')) {
+                            option.textContent = `${label} (Telephoto)`;
+                        } else {
+                            // Better fallback naming
+                            option.textContent = `Camera ${index + 1}${index === 0 ? ' (Primary)' : ''}`;
+                        }
+                        
+                        cameraSelect.appendChild(option);
+                    });
+                }
                 
                 availableCameras = videoDevices;
                 
-                // Start with back camera if available
-                const backCamera = videoDevices.find(device => 
-                    device.label.toLowerCase().includes('back') || 
-                    device.label.toLowerCase().includes('rear') ||
-                    device.label.toLowerCase().includes('environment')
-                );
+                // Try different strategies to find the back camera
+                let selectedDeviceId;
                 
-                const selectedDeviceId = backCamera ? backCamera.deviceId : videoDevices[0]?.deviceId;
+                // Strategy 1: Look for back/rear/environment in label
+                let backCamera = videoDevices.find(device => {
+                    const label = device.label.toLowerCase();
+                    return label.includes('back') || label.includes('rear') || label.includes('environment');
+                });
                 
-                await switchToCamera(selectedDeviceId);
+                // Strategy 2: If no labeled back camera, try facingMode constraint
+                if (!backCamera && videoDevices.length > 0) {
+                    try {
+                        const testStream = await navigator.mediaDevices.getUserMedia({
+                            video: { facingMode: { exact: 'environment' } }
+                        });
+                        const track = testStream.getVideoTracks()[0];
+                        const settings = track.getSettings();
+                        selectedDeviceId = settings.deviceId;
+                        testStream.getTracks().forEach(t => t.stop());
+                        
+                        // Find the device that matches this ID
+                        backCamera = videoDevices.find(device => device.deviceId === selectedDeviceId);
+                    } catch (e) {
+                        // Fallback to first camera that's not explicitly front-facing
+                        backCamera = videoDevices.find(device => {
+                            const label = device.label.toLowerCase();
+                            return !label.includes('front') && !label.includes('user') && !label.includes('selfie');
+                        }) || videoDevices[0];
+                    }
+                }
+                
+                selectedDeviceId = backCamera ? backCamera.deviceId : videoDevices[0]?.deviceId;
+                
+                if (selectedDeviceId) {
+                    // Update the dropdown to show the selected camera
+                    cameraSelect.value = selectedDeviceId;
+                    await switchToCamera(selectedDeviceId);
+                } else {
+                    // Try with no device constraint (use default)
+                    await switchToCamera(null);
+                }
                 
                 document.getElementById('cameraOverlay').style.display = 'none';
                 document.getElementById('cameraControls').style.display = 'block';
@@ -538,13 +588,21 @@
             }
             
             try {
-                stream = await navigator.mediaDevices.getUserMedia({
+                const constraints = {
                     video: {
-                        deviceId: deviceId ? { exact: deviceId } : undefined,
                         width: { ideal: 1920 },
                         height: { ideal: 1080 }
                     }
-                });
+                };
+                
+                if (deviceId) {
+                    constraints.video.deviceId = { exact: deviceId };
+                } else {
+                    // Try environment facing mode as fallback
+                    constraints.video.facingMode = { ideal: 'environment' };
+                }
+                
+                stream = await navigator.mediaDevices.getUserMedia(constraints);
                 
                 video.srcObject = stream;
                 currentTrack = stream.getVideoTracks()[0];
@@ -566,6 +624,11 @@
                 
             } catch (error) {
                 console.error('Error switching camera:', error);
+                // If exact device fails, try without device constraint
+                if (deviceId) {
+                    console.log('Falling back to default camera');
+                    await switchToCamera(null);
+                }
             }
         }
 
@@ -589,10 +652,12 @@
             transformSettings.translateX = parseInt(document.getElementById('translateXSlider').value);
             transformSettings.translateY = parseInt(document.getElementById('translateYSlider').value);
             transformSettings.rotate = parseFloat(document.getElementById('rotateSlider').value);
+            transformSettings.skew = parseFloat(document.getElementById('skewSlider').value);
             
             document.getElementById('translateXValue').textContent = transformSettings.translateX;
             document.getElementById('translateYValue').textContent = transformSettings.translateY;
             document.getElementById('rotateValue').textContent = transformSettings.rotate + '°';
+            document.getElementById('skewValue').textContent = transformSettings.skew + '°';
             
             updateVideoTransform();
         }
@@ -611,6 +676,10 @@
             
             if (transformSettings.rotate !== 0) {
                 transform += `rotate(${transformSettings.rotate}deg) `;
+            }
+            
+            if (transformSettings.skew !== 0) {
+                transform += `skewX(${transformSettings.skew}deg) `;
             }
             
             if (flipImage) {
@@ -687,6 +756,10 @@
             
             if (transformSettings.rotate !== 0) {
                 tempCtx.rotate(transformSettings.rotate * Math.PI / 180);
+            }
+            
+            if (transformSettings.skew !== 0) {
+                tempCtx.transform(1, 0, Math.tan(transformSettings.skew * Math.PI / 180), 1, 0, 0);
             }
             
             tempCtx.scale(transformSettings.zoom, transformSettings.zoom);
