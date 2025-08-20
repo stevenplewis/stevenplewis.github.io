@@ -68,6 +68,66 @@
             margin-bottom: 30px;
         }
 
+        .flip-toggle {
+            margin-bottom: 20px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin: 0 10px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #ff6b6b;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .flip-label {
+            color: white;
+            font-size: 16px;
+            vertical-align: middle;
+        }
+
+        .flipped {
+            transform: rotate(180deg);
+        }
+
         button {
             background: linear-gradient(45deg, #ff6b6b, #ee5a24);
             border: none;
@@ -219,6 +279,15 @@
             Photos taken: 0/4
         </div>
 
+        <div class="flip-toggle">
+            <span class="flip-label">Flip Image</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="flipToggle">
+                <span class="slider"></span>
+            </label>
+            <span class="flip-label">📷 ↻</span>
+        </div>
+
         <div class="controls">
             <button id="startCamera">Start Camera</button>
             <button id="takePhoto" disabled>Take 4 Photos</button>
@@ -239,6 +308,7 @@
         let photos = [];
         let stream = null;
         let isCountingDown = false;
+        let flipImage = false;
 
         // Initialize elements
         document.addEventListener('DOMContentLoaded', function() {
@@ -250,6 +320,10 @@
             document.getElementById('takePhoto').addEventListener('click', initiatePhotoCapture);
             document.getElementById('resetStrip').addEventListener('click', resetStrip);
             document.getElementById('downloadStrip').addEventListener('click', downloadStrip);
+            document.getElementById('flipToggle').addEventListener('change', function(e) {
+                flipImage = e.target.checked;
+                video.classList.toggle('flipped', flipImage);
+            });
         });
 
         async function startCamera() {
@@ -301,16 +375,14 @@
                 if (count > 0) {
                     countdownEl.textContent = count;
                 } else {
-                    countdownEl.textContent = '📸';
+                    // Take photo immediately after countdown
+                    takePhoto();
+                    countdownEl.style.display = 'none';
+                    
+                    // Short pause between photos, then continue sequence
                     setTimeout(() => {
-                        takePhoto();
-                        countdownEl.style.display = 'none';
-                        
-                        // Short pause between photos, then continue sequence
-                        setTimeout(() => {
-                            takePhotoSequence(photoIndex + 1);
-                        }, 1000);
-                    }, 500);
+                        takePhotoSequence(photoIndex + 1);
+                    }, 1000);
                     clearInterval(countdownInterval);
                 }
             }, 1000);
@@ -326,8 +398,20 @@
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             
+            // Save context state
+            ctx.save();
+            
+            if (flipImage) {
+                // Flip the image 180 degrees
+                ctx.translate(canvas.width, canvas.height);
+                ctx.rotate(Math.PI);
+            }
+            
             // Draw video frame to canvas
             ctx.drawImage(video, 0, 0);
+            
+            // Restore context state
+            ctx.restore();
             
             // Crop to square (center crop)
             const size = Math.min(video.videoWidth, video.videoHeight);
