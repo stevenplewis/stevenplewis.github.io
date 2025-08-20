@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera Obscura Photo Strip</title>
+    <title>Camera Obscura Photobooth</title>
     <style>
         * {
             margin: 0;
@@ -12,13 +12,13 @@
         }
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 20px 300px 20px; /* Extra bottom padding for phone holder */
+            padding: 20px;
             color: white;
         }
 
@@ -29,133 +29,55 @@
         }
 
         h1 {
+            font-size: 2rem;
             margin-bottom: 30px;
-            font-size: 24px;
-            font-weight: 300;
-            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .camera-container {
             position: relative;
-            margin-bottom: 30px;
-            border-radius: 20px;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 20px;
+            background: #000;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
         #video {
             width: 100%;
-            height: 300px;
+            height: 100%;
             object-fit: cover;
-            background: #000;
+            display: block;
         }
 
-        .camera-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            font-size: 18px;
+        #canvas {
+            display: none;
         }
 
         .controls {
-            margin-bottom: 30px;
-        }
-
-        .flip-toggle {
-            margin-bottom: 20px;
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-            margin: 0 10px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: #ff6b6b;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        .flip-label {
-            color: white;
-            font-size: 16px;
-            vertical-align: middle;
-        }
-
-        .camera-controls {
+            margin: 20px 0;
+            padding: 20px;
             background: rgba(255,255,255,0.1);
             border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
             backdrop-filter: blur(10px);
         }
 
-        .control-group {
-            margin-bottom: 15px;
+        .slider-group {
+            margin: 15px 0;
+            text-align: left;
         }
 
-        .control-group:last-child {
-            margin-bottom: 0;
-        }
-
-        .control-label {
+        .slider-group label {
             display: block;
-            color: white;
             font-size: 14px;
             margin-bottom: 8px;
-            font-weight: 500;
+            font-weight: bold;
         }
 
-        .slider-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .control-slider {
-            flex: 1;
+        .slider {
+            width: 100%;
             height: 6px;
             border-radius: 3px;
             background: rgba(255,255,255,0.3);
@@ -163,102 +85,110 @@
             -webkit-appearance: none;
         }
 
-        .control-slider::-webkit-slider-thumb {
+        .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #ff6b6b;
+            background: white;
             cursor: pointer;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
 
-        .control-slider::-moz-range-thumb {
+        .slider::-moz-range-thumb {
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #ff6b6b;
+            background: white;
             cursor: pointer;
             border: none;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
 
-        .slider-value {
+        .btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             color: white;
-            font-size: 12px;
-            min-width: 40px;
-            text-align: center;
-            background: rgba(0,0,0,0.3);
-            padding: 4px 8px;
-            border-radius: 12px;
-        }
-
-        .camera-select {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 8px;
-            color: white;
-            padding: 8px 12px;
-            font-size: 14px;
-            width: 100%;
-        }
-
-        .camera-select option {
-            background: #333;
-            color: white;
-        }
-
-        .video-transform {
-            transition: transform 0.3s ease;
-        }
-
-        button {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
             border: none;
-            color: white;
             padding: 15px 30px;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(238, 90, 36, 0.3);
-            margin: 0 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            min-width: 200px;
         }
 
-        button:hover {
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(238, 90, 36, 0.4);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
         }
 
-        button:disabled {
-            background: #666;
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
             cursor: not-allowed;
-            box-shadow: none;
             transform: none;
         }
 
-        .photo-count {
-            margin-bottom: 20px;
-            font-size: 18px;
-            font-weight: 300;
-            display: none; /* Hidden until photos start being taken */
+        .photo-grid {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2px;
+            width: 300px;
+            height: 400px;
+            margin: 20px auto;
+            background: white;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
-        .photo-count.visible {
-            display: block;
+        .photo-slot {
+            background: #f0f0f0;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            z-index: 10;
+            display: none;
+        }
+
+        .progress {
+            margin: 20px 0;
+            text-align: center;
+            font-size: 18px;
         }
 
         .progress-bar {
             width: 100%;
-            height: 4px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 2px;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            margin: 10px 0;
             overflow: hidden;
-            margin-bottom: 30px;
         }
 
         .progress-fill {
@@ -268,614 +198,301 @@
             transition: width 0.3s ease;
         }
 
-        .photo-strip {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            margin-top: 20px;
-        }
-
-        .photo-strip h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .strip-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-        }
-
-        .strip-photo {
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 2px solid #e9ecef;
+        .reset-btn {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
         }
 
         .download-btn {
-            background: linear-gradient(45deg, #28a745, #20c997);
-            margin-top: 15px;
-        }
-
-        .download-btn:hover {
-            box-shadow: 0 15px 30px rgba(40, 167, 69, 0.4);
-        }
-
-        #canvas {
-            display: none;
-        }
-
-        .countdown {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 72px;
-            font-weight: bold;
-            color: #ff6b6b;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            z-index: 10;
-        }
-
-        .flash {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: white;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        @keyframes flash {
-            0% { opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { opacity: 0; }
-        }
-
-        .flash.active {
-            animation: flash 0.3s ease-out;
+            background: linear-gradient(135deg, #00b894, #00a085);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📷 Camera Obscura Photo Strip</h1>
+        <h1>📷 Camera Obscura Photobooth</h1>
         
         <div class="camera-container">
-            <video id="video" autoplay playsinline class="video-transform"></video>
-            <div class="camera-overlay" id="cameraOverlay">
-                <div>Tap "Start Camera" to begin</div>
-            </div>
-            <div class="countdown" id="countdown" style="display: none;"></div>
-            <div class="flash" id="flash"></div>
-        </div>
-
-        <div class="camera-controls" id="cameraControls" style="display: none;">
-            <div class="control-group">
-                <label class="control-label">Horizontal Skew</label>
-                <div class="slider-container">
-                    <input type="range" id="skewSlider" class="control-slider" min="-15" max="15" step="0.5" value="0">
-                    <span class="slider-value" id="skewValue">0°</span>
-                </div>
-            </div>
-            
-            <div class="control-group">
-                <label class="control-label">Camera</label>
-                <select id="cameraSelect" class="camera-select">
-                    <option value="environment">Back Camera (1x)</option>
-                </select>
-            </div>
-            
-            <div class="control-group">
-                <label class="control-label">Zoom</label>
-                <div class="slider-container">
-                    <input type="range" id="zoomSlider" class="control-slider" min="1" max="3" step="0.1" value="1">
-                    <span class="slider-value" id="zoomValue">1.0x</span>
-                </div>
-            </div>
-            
-            <div class="control-group">
-                <label class="control-label">Horizontal Shift</label>
-                <div class="slider-container">
-                    <input type="range" id="translateXSlider" class="control-slider" min="-50" max="50" step="1" value="0">
-                    <span class="slider-value" id="translateXValue">0</span>
-                </div>
-            </div>
-            
-            <div class="control-group">
-                <label class="control-label">Vertical Shift</label>
-                <div class="slider-container">
-                    <input type="range" id="translateYSlider" class="control-slider" min="-50" max="50" step="1" value="0">
-                    <span class="slider-value" id="translateYValue">0</span>
-                </div>
-            </div>
-            
-            <div class="control-group">
-                <label class="control-label">Rotation</label>
-                <div class="slider-container">
-                    <input type="range" id="rotateSlider" class="control-slider" min="-10" max="10" step="0.5" value="0">
-                    <span class="slider-value" id="rotateValue">0°</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
-
-        <div class="photo-count" id="photoCount">
-            Photos taken: 0/4
-        </div>
-
-        <div class="flip-toggle">
-            <span class="flip-label">Flip Image</span>
-            <label class="toggle-switch">
-                <input type="checkbox" id="flipToggle">
-                <span class="slider"></span>
-            </label>
-            <span class="flip-label">📷 ↻</span>
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas"></canvas>
+            <div id="countdown" class="countdown"></div>
         </div>
 
         <div class="controls">
-            <button id="startCamera">Start Camera</button>
-            <button id="takePhoto" disabled>Take 4 Photos</button>
-            <button id="resetStrip">Reset Strip</button>
+            <div class="slider-group">
+                <label for="perspective">Perspective Correction (Keystone)</label>
+                <input type="range" id="perspective" class="slider" min="-30" max="30" value="0">
+            </div>
         </div>
 
-        <div class="photo-strip" id="photoStrip" style="display: none;">
-            <h3>Your Photo Strip</h3>
-            <div class="strip-container" id="stripContainer"></div>
-            <button class="download-btn" id="downloadStrip">Download Strip</button>
+        <div class="progress" id="progress" style="display: none;">
+            <div>Photo <span id="current-photo">0</span> of 4</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <button id="start-btn" class="btn">📸 TAKE PHOTOS</button>
+        <button id="reset-btn" class="btn reset-btn" style="display: none;">🔄 TAKE NEW PHOTOS</button>
+        <button id="download-btn" class="btn download-btn" style="display: none;">💾 DOWNLOAD STRIP</button>
+
+        <div id="photo-grid" class="photo-grid">
+            <div class="photo-slot" id="slot-1"></div>
+            <div class="photo-slot" id="slot-2"></div>
+            <div class="photo-slot" id="slot-3"></div>
+            <div class="photo-slot" id="slot-4"></div>
         </div>
     </div>
-
-    <canvas id="canvas"></canvas>
 
     <script>
         let video, canvas, ctx;
         let photos = [];
+        let currentPhotoIndex = 0;
+        let isCapturing = false;
         let stream = null;
-        let isCountingDown = false;
-        let flipImage = false;
-        let currentTrack = null;
-        let availableCameras = [];
-        let transformSettings = {
-            zoom: 1,
-            translateX: 0,
-            translateY: 0,
-            rotate: 0,
-            skew: 0
-        };
 
-        // Initialize elements
-        document.addEventListener('DOMContentLoaded', function() {
+        // Image adjustment values
+        let perspective = 0;
+
+        // Apply live video filter preview
+        function updateVideoFilter() {
+            const videoEl = document.getElementById('video');
+            const skewValue = perspective * 0.5; // Adjust sensitivity
+            videoEl.style.transform = `perspective(1000px) rotateY(${skewValue}deg)`;
+        }
+
+        async function initCamera() {
             video = document.getElementById('video');
             canvas = document.getElementById('canvas');
             ctx = canvas.getContext('2d');
-            
-            document.getElementById('startCamera').addEventListener('click', startCamera);
-            document.getElementById('takePhoto').addEventListener('click', initiatePhotoCapture);
-            document.getElementById('resetStrip').addEventListener('click', resetStrip);
-            document.getElementById('downloadStrip').addEventListener('click', downloadStrip);
-            document.getElementById('flipToggle').addEventListener('change', function(e) {
-                flipImage = e.target.checked;
-                updateVideoTransform();
-            });
-            
-            // Camera controls
-            document.getElementById('cameraSelect').addEventListener('change', switchCamera);
-            document.getElementById('zoomSlider').addEventListener('input', updateZoom);
-            document.getElementById('translateXSlider').addEventListener('input', updateTransform);
-            document.getElementById('translateYSlider').addEventListener('input', updateTransform);
-            document.getElementById('rotateSlider').addEventListener('input', updateTransform);
-            document.getElementById('skewSlider').addEventListener('input', updateTransform);
-        });
 
-        async function startCamera() {
             try {
-                // Get available cameras first
-                const devices = await navigator.mediaDevices.enumerateDevices();
-                const videoDevices = devices.filter(device => device.kind === 'videoinput');
-                
-                // Populate camera selector
-                const cameraSelect = document.getElementById('cameraSelect');
-                cameraSelect.innerHTML = '';
-                
-                if (videoDevices.length === 0) {
-                    const option = document.createElement('option');
-                    option.value = '';
-                    option.textContent = 'No cameras found';
-                    cameraSelect.appendChild(option);
-                } else {
-                    videoDevices.forEach((device, index) => {
-                        const option = document.createElement('option');
-                        option.value = device.deviceId;
-                        
-                        // Try to identify camera types, with better fallbacks
-                        let label = device.label || `Camera ${index + 1}`;
-                        
-                        if (label.toLowerCase().includes('back') || label.toLowerCase().includes('rear') || label.toLowerCase().includes('environment')) {
-                            option.textContent = `${label} (Back)`;
-                        } else if (label.toLowerCase().includes('front') || label.toLowerCase().includes('user') || label.toLowerCase().includes('selfie')) {
-                            option.textContent = `${label} (Front)`;
-                        } else if (label.toLowerCase().includes('ultra') || label.toLowerCase().includes('wide')) {
-                            option.textContent = `${label} (Ultra Wide)`;
-                        } else if (label.toLowerCase().includes('tele') || label.toLowerCase().includes('2x') || label.toLowerCase().includes('zoom')) {
-                            option.textContent = `${label} (Telephoto)`;
-                        } else {
-                            // Better fallback naming
-                            option.textContent = `Camera ${index + 1}${index === 0 ? ' (Primary)' : ''}`;
-                        }
-                        
-                        cameraSelect.appendChild(option);
-                    });
-                }
-                
-                availableCameras = videoDevices;
-                
-                // Try different strategies to find the back camera
-                let selectedDeviceId;
-                
-                // Strategy 1: Look for back/rear/environment in label
-                let backCamera = videoDevices.find(device => {
-                    const label = device.label.toLowerCase();
-                    return label.includes('back') || label.includes('rear') || label.includes('environment');
-                });
-                
-                // Strategy 2: If no labeled back camera, try facingMode constraint
-                if (!backCamera && videoDevices.length > 0) {
-                    try {
-                        const testStream = await navigator.mediaDevices.getUserMedia({
-                            video: { facingMode: { exact: 'environment' } }
-                        });
-                        const track = testStream.getVideoTracks()[0];
-                        const settings = track.getSettings();
-                        selectedDeviceId = settings.deviceId;
-                        testStream.getTracks().forEach(t => t.stop());
-                        
-                        // Find the device that matches this ID
-                        backCamera = videoDevices.find(device => device.deviceId === selectedDeviceId);
-                    } catch (e) {
-                        // Fallback to first camera that's not explicitly front-facing
-                        backCamera = videoDevices.find(device => {
-                            const label = device.label.toLowerCase();
-                            return !label.includes('front') && !label.includes('user') && !label.includes('selfie');
-                        }) || videoDevices[0];
-                    }
-                }
-                
-                selectedDeviceId = backCamera ? backCamera.deviceId : videoDevices[0]?.deviceId;
-                
-                if (selectedDeviceId) {
-                    // Update the dropdown to show the selected camera
-                    cameraSelect.value = selectedDeviceId;
-                    await switchToCamera(selectedDeviceId);
-                } else {
-                    // Try with no device constraint (use default)
-                    await switchToCamera(null);
-                }
-                
-                document.getElementById('cameraOverlay').style.display = 'none';
-                document.getElementById('cameraControls').style.display = 'block';
-                document.getElementById('startCamera').disabled = true;
-                document.getElementById('takePhoto').disabled = false;
-                
-            } catch (error) {
-                console.error('Error accessing camera:', error);
-                alert('Could not access camera. Please ensure you have granted camera permissions.');
-            }
-        }
-
-        async function switchCamera() {
-            const selectedDeviceId = document.getElementById('cameraSelect').value;
-            await switchToCamera(selectedDeviceId);
-        }
-
-        async function switchToCamera(deviceId) {
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-            }
-            
-            try {
-                const constraints = {
+                stream = await navigator.mediaDevices.getUserMedia({
                     video: {
+                        facingMode: 'environment',
                         width: { ideal: 1920 },
-                        height: { ideal: 1080 }
+                        height: { ideal: 1920 }
                     }
-                };
-                
-                if (deviceId) {
-                    constraints.video.deviceId = { exact: deviceId };
-                } else {
-                    // Try environment facing mode as fallback
-                    constraints.video.facingMode = { ideal: 'environment' };
-                }
-                
-                stream = await navigator.mediaDevices.getUserMedia(constraints);
-                
-                video.srcObject = stream;
-                currentTrack = stream.getVideoTracks()[0];
-                
-                // Check for zoom capability
-                const capabilities = currentTrack.getCapabilities();
-                const zoomSlider = document.getElementById('zoomSlider');
-                
-                if (capabilities.zoom) {
-                    zoomSlider.min = capabilities.zoom.min;
-                    zoomSlider.max = capabilities.zoom.max;
-                    zoomSlider.step = (capabilities.zoom.max - capabilities.zoom.min) / 100;
-                } else {
-                    // Fallback to digital zoom via CSS transform
-                    zoomSlider.min = 1;
-                    zoomSlider.max = 3;
-                    zoomSlider.step = 0.1;
-                }
-                
-            } catch (error) {
-                console.error('Error switching camera:', error);
-                // If exact device fails, try without device constraint
-                if (deviceId) {
-                    console.log('Falling back to default camera');
-                    await switchToCamera(null);
-                }
-            }
-        }
-
-        function updateZoom() {
-            const zoomValue = parseFloat(document.getElementById('zoomSlider').value);
-            transformSettings.zoom = zoomValue;
-            document.getElementById('zoomValue').textContent = zoomValue.toFixed(1) + 'x';
-            
-            // Try hardware zoom first
-            if (currentTrack && currentTrack.getCapabilities().zoom) {
-                currentTrack.applyConstraints({
-                    advanced: [{ zoom: zoomValue }]
                 });
+                video.srcObject = stream;
+                
+                video.addEventListener('loadedmetadata', () => {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                });
+            } catch (err) {
+                console.error('Error accessing camera:', err);
+                alert('Unable to access camera. Please make sure you\'ve granted camera permissions.');
+            }
+        }
+
+        function capturePhoto() {
+            // Set canvas to square dimensions
+            const size = Math.min(video.videoWidth, video.videoHeight);
+            canvas.width = size;
+            canvas.height = size;
+
+            // Calculate crop position for center square
+            const cropX = (video.videoWidth - size) / 2;
+            const cropY = (video.videoHeight - size) / 2;
+
+            // Clear canvas and apply perspective transformation
+            ctx.clearRect(0, 0, size, size);
+            
+            if (perspective !== 0) {
+                const skewX = perspective * 0.002; // Adjust sensitivity
+                ctx.save();
+                ctx.transform(1, 0, skewX, 1, 0, 0);
+                ctx.drawImage(video, cropX, cropY, size, size, 0, 0, size, size);
+                ctx.restore();
             } else {
-                // Fallback to CSS transform
-                updateVideoTransform();
+                ctx.drawImage(video, cropX, cropY, size, size, 0, 0, size, size);
+            }
+
+            // Convert to data URL and store
+            const photoData = canvas.toDataURL('image/jpeg', 0.8);
+            photos[currentPhotoIndex] = photoData;
+
+            // Display in grid
+            const slot = document.getElementById(`slot-${currentPhotoIndex + 1}`);
+            const img = document.createElement('img');
+            img.src = photoData;
+            slot.innerHTML = '';
+            slot.appendChild(img);
+
+            currentPhotoIndex++;
+            updateProgress();
+
+            if (currentPhotoIndex >= 4) {
+                completeSession();
             }
         }
 
-        function updateTransform() {
-            transformSettings.translateX = parseInt(document.getElementById('translateXSlider').value);
-            transformSettings.translateY = parseInt(document.getElementById('translateYSlider').value);
-            transformSettings.rotate = parseFloat(document.getElementById('rotateSlider').value);
-            transformSettings.skew = parseFloat(document.getElementById('skewSlider').value);
-            
-            document.getElementById('translateXValue').textContent = transformSettings.translateX;
-            document.getElementById('translateYValue').textContent = transformSettings.translateY;
-            document.getElementById('rotateValue').textContent = transformSettings.rotate + '°';
-            document.getElementById('skewValue').textContent = transformSettings.skew + '°';
-            
-            updateVideoTransform();
-        }
-
-        function updateVideoTransform() {
-            let transform = '';
-            
-            // Apply transforms in order
-            if (transformSettings.translateX !== 0 || transformSettings.translateY !== 0) {
-                transform += `translate(${transformSettings.translateX}px, ${transformSettings.translateY}px) `;
-            }
-            
-            if (transformSettings.zoom !== 1) {
-                transform += `scale(${transformSettings.zoom}) `;
-            }
-            
-            if (transformSettings.rotate !== 0) {
-                transform += `rotate(${transformSettings.rotate}deg) `;
-            }
-            
-            if (transformSettings.skew !== 0) {
-                transform += `skewX(${transformSettings.skew}deg) `;
-            }
-            
-            if (flipImage) {
-                transform += 'rotate(180deg) ';
-            }
-            
-            video.style.transform = transform;
-        }
-
-        function initiatePhotoCapture() {
-            if (isCountingDown || photos.length >= 4) return;
-            
-            isCountingDown = true;
-            document.getElementById('takePhoto').disabled = true;
-            
-            // Start the sequence for all 4 photos
-            takePhotoSequence(0);
-        }
-
-        function takePhotoSequence(photoIndex) {
-            if (photoIndex >= 4) {
-                // Sequence complete
-                isCountingDown = false;
-                showPhotoStrip();
-                return;
-            }
-
-            let count = 3;
+        function countdown(callback) {
             const countdownEl = document.getElementById('countdown');
             countdownEl.style.display = 'block';
-            countdownEl.textContent = count;
             
-            const countdownInterval = setInterval(() => {
+            let count = 3;
+            countdownEl.textContent = count;
+
+            const interval = setInterval(() => {
                 count--;
                 if (count > 0) {
                     countdownEl.textContent = count;
-                } else {
-                    // Take photo immediately after countdown
-                    takePhoto();
-                    countdownEl.style.display = 'none';
-                    
-                    // Short pause between photos, then continue sequence
+                } else if (count === 0) {
+                    countdownEl.textContent = '📸';
                     setTimeout(() => {
-                        takePhotoSequence(photoIndex + 1);
-                    }, 1000);
-                    clearInterval(countdownInterval);
+                        countdownEl.style.display = 'none';
+                        callback();
+                        
+                        // Short delay between photos, then start next countdown
+                        if (currentPhotoIndex < 4) {
+                            setTimeout(() => {
+                                if (currentPhotoIndex < 4) {
+                                    countdown(capturePhoto);
+                                }
+                            }, 1500);
+                        }
+                        clearInterval(interval);
+                    }, 500);
+                } else {
+                    clearInterval(interval);
                 }
             }, 1000);
         }
 
-        function takePhoto() {
-            // Flash effect
-            const flash = document.getElementById('flash');
-            flash.classList.add('active');
-            setTimeout(() => flash.classList.remove('active'), 300);
-            
-            // Create a larger canvas to handle transforms
-            const tempCanvas = document.createElement('canvas');
-            const tempCtx = tempCanvas.getContext('2d');
-            
-            // Set canvas size to video dimensions
-            tempCanvas.width = video.videoWidth;
-            tempCanvas.height = video.videoHeight;
-            
-            // Save context state
-            tempCtx.save();
-            
-            // Apply transforms to match what user sees
-            tempCtx.translate(tempCanvas.width / 2, tempCanvas.height / 2);
-            
-            if (flipImage) {
-                tempCtx.rotate(Math.PI);
-            }
-            
-            if (transformSettings.rotate !== 0) {
-                tempCtx.rotate(transformSettings.rotate * Math.PI / 180);
-            }
-            
-            if (transformSettings.skew !== 0) {
-                tempCtx.transform(1, 0, Math.tan(transformSettings.skew * Math.PI / 180), 1, 0, 0);
-            }
-            
-            tempCtx.scale(transformSettings.zoom, transformSettings.zoom);
-            tempCtx.translate(-tempCanvas.width / 2, -tempCanvas.height / 2);
-            tempCtx.translate(transformSettings.translateX, transformSettings.translateY);
-            
-            // Draw video frame to canvas
-            tempCtx.drawImage(video, 0, 0);
-            
-            // Restore context state
-            tempCtx.restore();
-            
-            // Now crop to square from the transformed image
-            const size = Math.min(tempCanvas.width, tempCanvas.height);
-            const x = (tempCanvas.width - size) / 2;
-            const y = (tempCanvas.height - size) / 2;
-            
-            canvas.width = size;
-            canvas.height = size;
-            ctx.drawImage(tempCanvas, x, y, size, size, 0, 0, size, size);
-            
-            // Convert to data URL
-            const photoData = canvas.toDataURL('image/jpeg', 0.8);
-            photos.push(photoData);
-            
-            updateUI();
+        function updateProgress() {
+            const progressEl = document.getElementById('progress');
+            const currentPhotoEl = document.getElementById('current-photo');
+            const progressFill = document.getElementById('progress-fill');
+
+            progressEl.style.display = 'block';
+            currentPhotoEl.textContent = currentPhotoIndex;
+            progressFill.style.width = (currentPhotoIndex / 4) * 100 + '%';
         }
 
-        function updateUI() {
-            const progress = (photos.length / 4) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-            
-            const photoCountEl = document.getElementById('photoCount');
-            photoCountEl.textContent = `Photos taken: ${photos.length}/4`;
-            
-            // Show photo count once we start taking photos
-            if (photos.length > 0) {
-                photoCountEl.classList.add('visible');
-            }
-        }
+        function startPhotoSession() {
+            if (isCapturing) return;
 
-        function showPhotoStrip() {
-            const stripContainer = document.getElementById('stripContainer');
-            stripContainer.innerHTML = '';
-            
-            photos.forEach((photo, index) => {
-                const img = document.createElement('img');
-                img.src = photo;
-                img.className = 'strip-photo';
-                img.alt = `Photo ${index + 1}`;
-                stripContainer.appendChild(img);
-            });
-            
-            document.getElementById('photoStrip').style.display = 'block';
-        }
-
-        function resetStrip() {
+            isCapturing = true;
             photos = [];
-            updateUI();
-            document.getElementById('photoStrip').style.display = 'none';
-            document.getElementById('takePhoto').disabled = false;
-            
-            // Hide photo count again when resetting
-            document.getElementById('photoCount').classList.remove('visible');
+            currentPhotoIndex = 0;
+
+            // Show grid and hide start button
+            document.getElementById('photo-grid').style.display = 'grid';
+            document.getElementById('start-btn').style.display = 'none';
+
+            // Clear previous photos
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`slot-${i}`).innerHTML = '';
+            }
+
+            updateProgress();
+            countdown(capturePhoto);
         }
 
-        function downloadStrip() {
-            if (photos.length !== 4) return;
-            
-            // Create a square canvas for the 2x2 photo strip
+        function completeSession() {
+            isCapturing = false;
+            document.getElementById('progress').style.display = 'none';
+            document.getElementById('reset-btn').style.display = 'inline-block';
+            document.getElementById('download-btn').style.display = 'inline-block';
+        }
+
+        function resetSession() {
+            photos = [];
+            currentPhotoIndex = 0;
+            isCapturing = false;
+
+            document.getElementById('photo-grid').style.display = 'none';
+            document.getElementById('start-btn').style.display = 'inline-block';
+            document.getElementById('reset-btn').style.display = 'none';
+            document.getElementById('download-btn').style.display = 'none';
+            document.getElementById('progress').style.display = 'none';
+        }
+
+        function downloadPhotoStrip() {
             const stripCanvas = document.createElement('canvas');
             const stripCtx = stripCanvas.getContext('2d');
             
-            // Set strip dimensions (square format for 2x2)
-            const photoSize = 300;
-            const spacing = 10;
-            const padding = 20;
+            // Higher resolution photo strip
+            const stripWidth = 1200;
+            const stripHeight = 1600;
+            const border = 60;
+            const photoSize = (stripWidth - border * 3) / 2; // Account for outer borders and center gap
+            const gap = 20;
             
-            stripCanvas.width = (photoSize * 2) + spacing + (padding * 2);
-            stripCanvas.height = (photoSize * 2) + spacing + (padding * 2);
-            
-            // White background
+            stripCanvas.width = stripWidth;
+            stripCanvas.height = stripHeight;
+
+            // White background with border
             stripCtx.fillStyle = 'white';
-            stripCtx.fillRect(0, 0, stripCanvas.width, stripCanvas.height);
-            
-            // Draw photos in 2x2 grid
-            let loadedCount = 0;
-            photos.forEach((photo, index) => {
+            stripCtx.fillRect(0, 0, stripWidth, stripHeight);
+
+            // Add title with better positioning
+            stripCtx.fillStyle = '#333';
+            stripCtx.font = 'bold 48px Arial';
+            stripCtx.textAlign = 'center';
+            stripCtx.fillText('Camera Obscura Photobooth', stripWidth / 2, border + 40);
+
+            // Calculate photo grid starting position
+            const gridStartY = border + 80;
+            const gridHeight = stripHeight - gridStartY - border;
+            const photoAreaHeight = (gridHeight - gap) / 2;
+
+            // Draw photos in 2x2 grid with proper borders
+            let photosLoaded = 0;
+            photos.forEach((photoData, index) => {
                 const img = new Image();
-                img.onload = function() {
-                    const col = index % 2;
+                img.onload = () => {
                     const row = Math.floor(index / 2);
-                    const x = padding + (col * (photoSize + spacing));
-                    const y = padding + (row * (photoSize + spacing));
-                    
-                    stripCtx.drawImage(img, x, y, photoSize, photoSize);
-                    
-                    loadedCount++;
+                    const col = index % 2;
+                    const x = border + col * (photoSize + gap);
+                    const y = gridStartY + row * (photoAreaHeight + gap);
+
+                    // Draw photo maintaining aspect ratio
+                    stripCtx.drawImage(img, x, y, photoSize, photoAreaHeight);
+
+                    photosLoaded++;
                     // If this is the last photo, trigger download
-                    if (loadedCount === photos.length) {
+                    if (photosLoaded === photos.length) {
                         const link = document.createElement('a');
-                        link.download = 'camera-obscura-strip.jpg';
-                        link.href = stripCanvas.toDataURL('image/jpeg', 0.9);
+                        link.download = `photobooth-strip-${new Date().getTime()}.jpg`;
+                        link.href = stripCanvas.toDataURL('image/jpeg', 0.95);
                         link.click();
                     }
                 };
-                img.src = photo;
+                img.src = photoData;
             });
         }
 
-        // Cleanup when page is unloaded
-        window.addEventListener('beforeunload', function() {
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
+        // Event listeners
+        document.getElementById('start-btn').addEventListener('click', startPhotoSession);
+        document.getElementById('reset-btn').addEventListener('click', resetSession);
+        document.getElementById('download-btn').addEventListener('click', downloadPhotoStrip);
+
+        // Slider controls
+        document.getElementById('perspective').addEventListener('input', (e) => {
+            perspective = parseInt(e.target.value);
+            updateVideoFilter(); // Apply live preview
+        });
+
+        // Initialize camera when page loads
+        window.addEventListener('load', initCamera);
+
+        // Prevent zoom on double-tap
+        document.addEventListener('touchstart', function(event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
             }
         });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     </script>
 </body>
 </html>
