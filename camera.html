@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Obscura Photo Strip</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .camera-container {
+            position: relative;
+            margin-bottom: 30px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        #video {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background: #000;
+        }
+
+        .camera-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            font-size: 18px;
+        }
+
+        .controls {
+            margin-bottom: 30px;
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(238, 90, 36, 0.3);
+            margin: 0 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(238, 90, 36, 0.4);
+        }
+
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .photo-count {
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 300;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ee5a24);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .photo-strip {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            margin-top: 20px;
+        }
+
+        .photo-strip h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .strip-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .strip-photo {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            margin-top: 15px;
+        }
+
+        .download-btn:hover {
+            box-shadow: 0 15px 30px rgba(40, 167, 69, 0.4);
+        }
+
+        #canvas {
+            display: none;
+        }
+
+        .countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 72px;
+            font-weight: bold;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .flash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes flash {
+            0% { opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0; }
+        }
+
+        .flash.active {
+            animation: flash 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📷 Camera Obscura Photo Strip</h1>
+        
+        <div class="camera-container">
+            <video id="video" autoplay playsinline></video>
+            <div class="camera-overlay" id="cameraOverlay">
+                <div>Tap "Start Camera" to begin</div>
+            </div>
+            <div class="countdown" id="countdown" style="display: none;"></div>
+            <div class="flash" id="flash"></div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="photo-count" id="photoCount">
+            Photos taken: 0/4
+        </div>
+
+        <div class="controls">
+            <button id="startCamera">Start Camera</button>
+            <button id="takePhoto" disabled>Take 4 Photos</button>
+            <button id="resetStrip">Reset Strip</button>
+        </div>
+
+        <div class="photo-strip" id="photoStrip" style="display: none;">
+            <h3>Your Photo Strip</h3>
+            <div class="strip-container" id="stripContainer"></div>
+            <button class="download-btn" id="downloadStrip">Download Strip</button>
+        </div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <script>
+        let video, canvas, ctx;
+        let photos = [];
+        let stream = null;
+        let isCountingDown = false;
+
+        // Initialize elements
+        document.addEventListener('DOMContentLoaded', function() {
+            video = document.getElementById('video');
+            canvas = document.getElementById('canvas');
+            ctx = canvas.getContext('2d');
+            
+            document.getElementById('startCamera').addEventListener('click', startCamera);
+            document.getElementById('takePhoto').addEventListener('click', initiatePhotoCapture);
+            document.getElementById('resetStrip').addEventListener('click', resetStrip);
+            document.getElementById('downloadStrip').addEventListener('click', downloadStrip);
+        });
+
+        async function startCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: 'environment', // Use back camera if available
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    }
+                });
+                
+                video.srcObject = stream;
+                document.getElementById('cameraOverlay').style.display = 'none';
+                document.getElementById('startCamera').disabled = true;
+                document.getElementById('takePhoto').disabled = false;
+                
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+                alert('Could not access camera. Please ensure you have granted camera permissions.');
+            }
+        }
+
+        function initiatePhotoCapture() {
+            if (isCountingDown || photos.length >= 4) return;
+            
+            isCountingDown = true;
+            document.getElementById('takePhoto').disabled = true;
+            
+            // Start the sequence for all 4 photos
+            takePhotoSequence(0);
+        }
+
+        function takePhotoSequence(photoIndex) {
+            if (photoIndex >= 4) {
+                // Sequence complete
+                isCountingDown = false;
+                showPhotoStrip();
+                return;
+            }
+
+            let count = 3;
+            const countdownEl = document.getElementById('countdown');
+            countdownEl.style.display = 'block';
+            countdownEl.textContent = count;
+            
+            const countdownInterval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownEl.textContent = count;
+                } else {
+                    countdownEl.textContent = '📸';
+                    setTimeout(() => {
+                        takePhoto();
+                        countdownEl.style.display = 'none';
+                        
+                        // Short pause between photos, then continue sequence
+                        setTimeout(() => {
+                            takePhotoSequence(photoIndex + 1);
+                        }, 1000);
+                    }, 500);
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+        }
+
+        function takePhoto() {
+            // Flash effect
+            const flash = document.getElementById('flash');
+            flash.classList.add('active');
+            setTimeout(() => flash.classList.remove('active'), 300);
+            
+            // Set canvas size to video dimensions
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            // Draw video frame to canvas
+            ctx.drawImage(video, 0, 0);
+            
+            // Crop to square (center crop)
+            const size = Math.min(video.videoWidth, video.videoHeight);
+            const x = (video.videoWidth - size) / 2;
+            const y = (video.videoHeight - size) / 2;
+            
+            const croppedCanvas = document.createElement('canvas');
+            const croppedCtx = croppedCanvas.getContext('2d');
+            croppedCanvas.width = size;
+            croppedCanvas.height = size;
+            
+            croppedCtx.drawImage(canvas, x, y, size, size, 0, 0, size, size);
+            
+            // Convert to data URL
+            const photoData = croppedCanvas.toDataURL('image/jpeg', 0.8);
+            photos.push(photoData);
+            
+            updateUI();
+        }
+
+        function updateUI() {
+            const progress = (photos.length / 4) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('photoCount').textContent = `Photos taken: ${photos.length}/4`;
+        }
+
+        function showPhotoStrip() {
+            const stripContainer = document.getElementById('stripContainer');
+            stripContainer.innerHTML = '';
+            
+            photos.forEach((photo, index) => {
+                const img = document.createElement('img');
+                img.src = photo;
+                img.className = 'strip-photo';
+                img.alt = `Photo ${index + 1}`;
+                stripContainer.appendChild(img);
+            });
+            
+            document.getElementById('photoStrip').style.display = 'block';
+        }
+
+        function resetStrip() {
+            photos = [];
+            updateUI();
+            document.getElementById('photoStrip').style.display = 'none';
+            document.getElementById('takePhoto').disabled = false;
+        }
+
+        function downloadStrip() {
+            if (photos.length !== 4) return;
+            
+            // Create a square canvas for the 2x2 photo strip
+            const stripCanvas = document.createElement('canvas');
+            const stripCtx = stripCanvas.getContext('2d');
+            
+            // Set strip dimensions (square format for 2x2)
+            const photoSize = 300;
+            const spacing = 10;
+            const padding = 20;
+            
+            stripCanvas.width = (photoSize * 2) + spacing + (padding * 2);
+            stripCanvas.height = (photoSize * 2) + spacing + (padding * 2);
+            
+            // White background
+            stripCtx.fillStyle = 'white';
+            stripCtx.fillRect(0, 0, stripCanvas.width, stripCanvas.height);
+            
+            // Draw photos in 2x2 grid
+            let loadedCount = 0;
+            photos.forEach((photo, index) => {
+                const img = new Image();
+                img.onload = function() {
+                    const col = index % 2;
+                    const row = Math.floor(index / 2);
+                    const x = padding + (col * (photoSize + spacing));
+                    const y = padding + (row * (photoSize + spacing));
+                    
+                    stripCtx.drawImage(img, x, y, photoSize, photoSize);
+                    
+                    loadedCount++;
+                    // If this is the last photo, trigger download
+                    if (loadedCount === photos.length) {
+                        const link = document.createElement('a');
+                        link.download = 'camera-obscura-strip.jpg';
+                        link.href = stripCanvas.toDataURL('image/jpeg', 0.9);
+                        link.click();
+                    }
+                };
+                img.src = photo;
+            });
+        }
+
+        // Cleanup when page is unloaded
+        window.addEventListener('beforeunload', function() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        });
+    </script>
+</body>
+</html>
