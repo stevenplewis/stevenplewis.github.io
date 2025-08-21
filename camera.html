@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera Obscura Photobooth</title>
+    <title>Photo Booth</title>
     <style>
         * {
             margin: 0;
@@ -16,483 +16,520 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: center;
             padding: 20px;
-            color: white;
         }
 
-        .container {
-            max-width: 400px;
+        .photo-booth {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 900px;
             width: 100%;
-            text-align: center;
         }
 
         h1 {
-            font-size: 2rem;
+            text-align: center;
+            color: #333;
             margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .camera-container {
             position: relative;
-            width: 320px;
-            height: 320px;
-            margin: 0 auto 20px;
-            background: #000;
+            width: 100%;
+            max-width: 500px;
+            height: 500px;
+            margin: 0 auto 30px;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        #video {
+        #videoElement {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+            transform-origin: center;
         }
 
-        #canvas {
+        .countdown-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
             display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .countdown-text {
+            color: white;
+            font-size: 8em;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: pulse 1s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .controls {
-            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            background: rgba(255, 255, 255, 0.8);
             padding: 20px;
-            background: rgba(255,255,255,0.1);
             border-radius: 15px;
-            backdrop-filter: blur(10px);
-        }
-
-        .slider-group {
-            margin: 15px 0;
-            text-align: left;
-        }
-
-        .slider-group label {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        .slider {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             width: 100%;
-            height: 6px;
-            border-radius: 3px;
-            background: rgba(255,255,255,0.3);
+            max-width: 600px;
+        }
+
+        .slider-container {
+            margin-bottom: 15px;
+        }
+
+        .slider-container:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
             outline: none;
             -webkit-appearance: none;
         }
 
-        .slider::-webkit-slider-thumb {
+        input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 20px;
             height: 20px;
             border-radius: 50%;
             background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
         }
 
-        .slider::-moz-range-thumb {
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        input[type="range"]::-moz-range-thumb {
             width: 20px;
             height: 20px;
             border-radius: 50%;
             background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             border: none;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
 
-        .btn {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        .button-container {
+            text-align: center;
+        }
+
+        .capture-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 18px;
+            padding: 20px 40px;
+            font-size: 1.3em;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            margin: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
-            min-width: 200px;
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        .capture-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
         }
 
-        .btn:active {
-            transform: translateY(0);
+        .capture-btn:active {
+            transform: translateY(-1px);
         }
 
-        .btn:disabled {
+        .capture-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
 
-        .photo-grid {
-            display: none;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 2px;
-            width: 300px;
-            height: 400px;
-            margin: 20px auto;
-            background: white;
-            padding: 10px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-
-        .photo-slot {
-            background: #f0f0f0;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .photo-slot img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .countdown {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 4rem;
-            font-weight: bold;
-            color: rgba(255, 255, 255, 0.9);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-            z-index: 10;
-            display: none;
-        }
-
-        .progress {
-            margin: 20px 0;
+        .photo-result {
+            margin-top: 30px;
             text-align: center;
-            font-size: 18px;
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 4px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b6b, #ee5a24);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .reset-btn {
-            background: linear-gradient(135deg, #74b9ff, #0984e3);
+        .photo-result img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .download-btn {
-            background: linear-gradient(135deg, #00b894, #00a085);
+            background: linear-gradient(45deg, #10ac84, #00d2d3);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(16, 172, 132, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 172, 132, 0.4);
+        }
+
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .capture-btn {
+                padding: 15px 30px;
+                font-size: 1.1em;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>📷 Camera Obscura Photobooth</h1>
+    <div class="photo-booth">
+        <h1>📸 Photo Booth</h1>
         
         <div class="camera-container">
-            <video id="video" autoplay playsinline></video>
-            <canvas id="canvas"></canvas>
-            <div id="countdown" class="countdown"></div>
+            <video id="videoElement" autoplay playsinline></video>
+            <div class="countdown-overlay" id="countdownOverlay">
+                <div class="countdown-text" id="countdownText"></div>
+            </div>
         </div>
 
         <div class="controls">
-            <div class="slider-group">
-                <label for="perspective">Perspective Correction (Keystone)</label>
-                <input type="range" id="perspective" class="slider" min="-30" max="30" value="0">
+            <div class="control-group">
+                <div class="slider-container">
+                    <label for="zoomSlider">Zoom Level</label>
+                    <input type="range" id="zoomSlider" min="1" max="3" step="0.1" value="1.3">
+                </div>
+                <div class="slider-container">
+                    <label for="posXSlider">Horizontal Position</label>
+                    <input type="range" id="posXSlider" min="-100" max="100" step="5" value="0">
+                </div>
+                <div class="slider-container">
+                    <label for="posYSlider">Vertical Position</label>
+                    <input type="range" id="posYSlider" min="-100" max="100" step="5" value="0">
+                </div>
+                <div class="slider-container">
+                    <label for="keystoneSlider">Horizontal Keystone</label>
+                    <input type="range" id="keystoneSlider" min="-30" max="30" step="1" value="0">
+                </div>
             </div>
         </div>
 
-        <div class="progress" id="progress" style="display: none;">
-            <div>Photo <span id="current-photo">0</span> of 4</div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
+        <div class="button-container">
+            <button class="capture-btn" id="captureBtn">Take Photo</button>
         </div>
 
-        <button id="start-btn" class="btn">📸 TAKE PHOTOS</button>
-        <button id="reset-btn" class="btn reset-btn" style="display: none;">🔄 TAKE NEW PHOTOS</button>
-        <button id="download-btn" class="btn download-btn" style="display: none;">💾 DOWNLOAD STRIP</button>
-
-        <div id="photo-grid" class="photo-grid">
-            <div class="photo-slot" id="slot-1"></div>
-            <div class="photo-slot" id="slot-2"></div>
-            <div class="photo-slot" id="slot-3"></div>
-            <div class="photo-slot" id="slot-4"></div>
-        </div>
+        <div class="photo-result" id="photoResult"></div>
+        
+        <div class="error" id="errorMsg" style="display: none;"></div>
     </div>
 
     <script>
-        let video, canvas, ctx;
-        let photos = [];
-        let currentPhotoIndex = 0;
-        let isCapturing = false;
-        let stream = null;
-
-        // Image adjustment values
-        let perspective = 0;
-
-        // Apply live video filter preview
-        function updateVideoFilter() {
-            const videoEl = document.getElementById('video');
-            const skewValue = perspective * 0.5; // Adjust sensitivity
-            videoEl.style.transform = `perspective(1000px) rotateY(${skewValue}deg)`;
-        }
-
-        async function initCamera() {
-            video = document.getElementById('video');
-            canvas = document.getElementById('canvas');
-            ctx = canvas.getContext('2d');
-
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({
-                    video: {
-                        facingMode: 'environment',
-                        width: { ideal: 1920 },
-                        height: { ideal: 1920 }
-                    }
-                });
-                video.srcObject = stream;
+        class PhotoBooth {
+            constructor() {
+                this.video = document.getElementById('videoElement');
+                this.captureBtn = document.getElementById('captureBtn');
+                this.countdownOverlay = document.getElementById('countdownOverlay');
+                this.countdownText = document.getElementById('countdownText');
+                this.photoResult = document.getElementById('photoResult');
+                this.errorMsg = document.getElementById('errorMsg');
                 
-                video.addEventListener('loadedmetadata', () => {
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                });
-            } catch (err) {
-                console.error('Error accessing camera:', err);
-                alert('Unable to access camera. Please make sure you\'ve granted camera permissions.');
-            }
-        }
-
-        function capturePhoto() {
-            // Set canvas to square dimensions
-            const size = Math.min(video.videoWidth, video.videoHeight);
-            canvas.width = size;
-            canvas.height = size;
-
-            // Calculate crop position for center square
-            const cropX = (video.videoWidth - size) / 2;
-            const cropY = (video.videoHeight - size) / 2;
-
-            // Clear canvas and apply perspective transformation
-            ctx.clearRect(0, 0, size, size);
-            
-            if (perspective !== 0) {
-                const skewX = perspective * 0.002; // Adjust sensitivity
-                ctx.save();
-                ctx.transform(1, 0, skewX, 1, 0, 0);
-                ctx.drawImage(video, cropX, cropY, size, size, 0, 0, size, size);
-                ctx.restore();
-            } else {
-                ctx.drawImage(video, cropX, cropY, size, size, 0, 0, size, size);
-            }
-
-            // Convert to data URL and store
-            const photoData = canvas.toDataURL('image/jpeg', 0.8);
-            photos[currentPhotoIndex] = photoData;
-
-            // Display in grid
-            const slot = document.getElementById(`slot-${currentPhotoIndex + 1}`);
-            const img = document.createElement('img');
-            img.src = photoData;
-            slot.innerHTML = '';
-            slot.appendChild(img);
-
-            currentPhotoIndex++;
-            updateProgress();
-
-            if (currentPhotoIndex >= 4) {
-                completeSession();
-            }
-        }
-
-        function countdown(callback) {
-            const countdownEl = document.getElementById('countdown');
-            countdownEl.style.display = 'block';
-            
-            let count = 3;
-            countdownEl.textContent = count;
-
-            const interval = setInterval(() => {
-                count--;
-                if (count > 0) {
-                    countdownEl.textContent = count;
-                } else if (count === 0) {
-                    countdownEl.textContent = '📸';
-                    setTimeout(() => {
-                        countdownEl.style.display = 'none';
-                        callback();
-                        
-                        // Short delay between photos, then start next countdown
-                        if (currentPhotoIndex < 4) {
-                            setTimeout(() => {
-                                if (currentPhotoIndex < 4) {
-                                    countdown(capturePhoto);
-                                }
-                            }, 1500);
-                        }
-                        clearInterval(interval);
-                    }, 500);
-                } else {
-                    clearInterval(interval);
-                }
-            }, 1000);
-        }
-
-        function updateProgress() {
-            const progressEl = document.getElementById('progress');
-            const currentPhotoEl = document.getElementById('current-photo');
-            const progressFill = document.getElementById('progress-fill');
-
-            progressEl.style.display = 'block';
-            currentPhotoEl.textContent = currentPhotoIndex;
-            progressFill.style.width = (currentPhotoIndex / 4) * 100 + '%';
-        }
-
-        function startPhotoSession() {
-            if (isCapturing) return;
-
-            isCapturing = true;
-            photos = [];
-            currentPhotoIndex = 0;
-
-            // Show grid and hide start button
-            document.getElementById('photo-grid').style.display = 'grid';
-            document.getElementById('start-btn').style.display = 'none';
-
-            // Clear previous photos
-            for (let i = 1; i <= 4; i++) {
-                document.getElementById(`slot-${i}`).innerHTML = '';
-            }
-
-            updateProgress();
-            countdown(capturePhoto);
-        }
-
-        function completeSession() {
-            isCapturing = false;
-            document.getElementById('progress').style.display = 'none';
-            document.getElementById('reset-btn').style.display = 'inline-block';
-            document.getElementById('download-btn').style.display = 'inline-block';
-        }
-
-        function resetSession() {
-            photos = [];
-            currentPhotoIndex = 0;
-            isCapturing = false;
-
-            document.getElementById('photo-grid').style.display = 'none';
-            document.getElementById('start-btn').style.display = 'inline-block';
-            document.getElementById('reset-btn').style.display = 'none';
-            document.getElementById('download-btn').style.display = 'none';
-            document.getElementById('progress').style.display = 'none';
-        }
-
-        function downloadPhotoStrip() {
-            const stripCanvas = document.createElement('canvas');
-            const stripCtx = stripCanvas.getContext('2d');
-            
-            // Higher resolution photo strip
-            const stripWidth = 1200;
-            const stripHeight = 1600;
-            const border = 60;
-            const photoSize = (stripWidth - border * 3) / 2; // Account for outer borders and center gap
-            const gap = 20;
-            
-            stripCanvas.width = stripWidth;
-            stripCanvas.height = stripHeight;
-
-            // White background with border
-            stripCtx.fillStyle = 'white';
-            stripCtx.fillRect(0, 0, stripWidth, stripHeight);
-
-            // Add title with better positioning
-            stripCtx.fillStyle = '#333';
-            stripCtx.font = 'bold 48px Arial';
-            stripCtx.textAlign = 'center';
-            stripCtx.fillText('Camera Obscura Photobooth', stripWidth / 2, border + 40);
-
-            // Calculate photo grid starting position
-            const gridStartY = border + 80;
-            const gridHeight = stripHeight - gridStartY - border;
-            const photoAreaHeight = (gridHeight - gap) / 2;
-
-            // Draw photos in 2x2 grid with proper borders
-            let photosLoaded = 0;
-            photos.forEach((photoData, index) => {
-                const img = new Image();
-                img.onload = () => {
-                    const row = Math.floor(index / 2);
-                    const col = index % 2;
-                    const x = border + col * (photoSize + gap);
-                    const y = gridStartY + row * (photoAreaHeight + gap);
-
-                    // Draw photo maintaining aspect ratio
-                    stripCtx.drawImage(img, x, y, photoSize, photoAreaHeight);
-
-                    photosLoaded++;
-                    // If this is the last photo, trigger download
-                    if (photosLoaded === photos.length) {
-                        const link = document.createElement('a');
-                        link.download = `photobooth-strip-${new Date().getTime()}.jpg`;
-                        link.href = stripCanvas.toDataURL('image/jpeg', 0.95);
-                        link.click();
-                    }
+                this.zoomSlider = document.getElementById('zoomSlider');
+                this.posXSlider = document.getElementById('posXSlider');
+                this.posYSlider = document.getElementById('posYSlider');
+                this.keystoneSlider = document.getElementById('keystoneSlider');
+                
+                this.stream = null;
+                this.currentSettings = {
+                    zoom: 1.3,
+                    posX: 0,
+                    posY: 0,
+                    keystone: 0
                 };
-                img.src = photoData;
-            });
+                
+                this.init();
+            }
+            
+            async init() {
+                await this.setupCamera();
+                this.setupEventListeners();
+                this.updateVideoTransform();
+            }
+            
+            async setupCamera() {
+                try {
+                    this.stream = await navigator.mediaDevices.getUserMedia({
+                        video: { 
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 },
+                            facingMode: 'user'
+                        },
+                        audio: false
+                    });
+                    
+                    this.video.srcObject = this.stream;
+                    this.hideError();
+                } catch (error) {
+                    this.showError('Camera access denied or not available. Please allow camera access and refresh the page.');
+                }
+            }
+            
+            setupEventListeners() {
+                this.captureBtn.addEventListener('click', () => this.startCountdown());
+                
+                this.zoomSlider.addEventListener('input', (e) => {
+                    this.currentSettings.zoom = parseFloat(e.target.value);
+                    this.updateVideoTransform();
+                });
+                
+                this.posXSlider.addEventListener('input', (e) => {
+                    this.currentSettings.posX = parseInt(e.target.value);
+                    this.updateVideoTransform();
+                });
+                
+                this.posYSlider.addEventListener('input', (e) => {
+                    this.currentSettings.posY = parseInt(e.target.value);
+                    this.updateVideoTransform();
+                });
+                
+                this.keystoneSlider.addEventListener('input', (e) => {
+                    this.currentSettings.keystone = parseInt(e.target.value);
+                    this.updateVideoTransform();
+                });
+            }
+            
+            updateVideoTransform() {
+                const { zoom, posX, posY, keystone } = this.currentSettings;
+                const transforms = [
+                    `scale(${zoom})`,
+                    `translateX(${posX}px)`,
+                    `translateY(${posY}px)`,
+                    `perspective(1000px) rotateY(${keystone}deg)`
+                ];
+                this.video.style.transform = transforms.join(' ');
+            }
+            
+            async startCountdown() {
+                this.captureBtn.disabled = true;
+                const capturedPhotos = [];
+                
+                for (let photoNum = 1; photoNum <= 4; photoNum++) {
+                    this.countdownOverlay.style.display = 'flex';
+                    
+                    for (let i = 3; i > 0; i--) {
+                        this.countdownText.textContent = `${photoNum}/4 - ${i}`;
+                        this.countdownText.style.animation = 'none';
+                        this.countdownText.offsetHeight;
+                        this.countdownText.style.animation = 'pulse 1s ease-in-out';
+                        await this.delay(1000);
+                    }
+                    
+                    this.countdownText.textContent = `📸 ${photoNum}/4`;
+                    this.countdownText.style.animation = 'none';
+                    this.countdownText.offsetHeight;
+                    this.countdownText.style.animation = 'pulse 0.5s ease-in-out';
+                    
+                    await this.delay(500);
+                    
+                    const photoDataUrl = this.capturePhoto();
+                    capturedPhotos.push(photoDataUrl);
+                    
+                    this.countdownOverlay.style.display = 'none';
+                    
+                    if (photoNum < 4) {
+                        await this.delay(1500);
+                    }
+                }
+                
+                await this.create2x2Grid(capturedPhotos);
+                this.captureBtn.disabled = false;
+            }
+            
+            capturePhoto() {
+                const containerSize = 500;
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                canvas.width = containerSize;
+                canvas.height = containerSize;
+                
+                const tempCanvas = document.createElement('canvas');
+                const tempCtx = tempCanvas.getContext('2d');
+                tempCanvas.width = containerSize;
+                tempCanvas.height = containerSize;
+                
+                const videoWidth = this.video.videoWidth;
+                const videoHeight = this.video.videoHeight;
+                const videoSize = Math.min(videoWidth, videoHeight);
+                const sourceX = (videoWidth - videoSize) / 2;
+                const sourceY = (videoHeight - videoSize) / 2;
+                
+                tempCtx.drawImage(
+                    this.video,
+                    sourceX, sourceY, videoSize, videoSize,
+                    0, 0, containerSize, containerSize
+                );
+                
+                const { zoom, posX, posY, keystone } = this.currentSettings;
+                
+                ctx.save();
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.scale(zoom, zoom);
+                ctx.translate(posX, posY);
+                
+                if (keystone !== 0) {
+                    const angleRad = keystone * Math.PI / 180;
+                    const perspective = canvas.width;
+                    const cosAngle = Math.cos(angleRad);
+                    const sinAngle = Math.sin(angleRad);
+                    ctx.transform(cosAngle, 0, sinAngle / perspective * canvas.width * 0.001, 1, 0, 0);
+                }
+                
+                ctx.drawImage(
+                    tempCanvas,
+                    -canvas.width / 2,
+                    -canvas.height / 2,
+                    canvas.width,
+                    canvas.height
+                );
+                
+                ctx.restore();
+                return canvas.toDataURL('image/png');
+            }
+            
+            async create2x2Grid(photos) {
+                return new Promise((resolve) => {
+                    const individualSize = 400;
+                    const borderWidth = 20;
+                    const gridSize = (individualSize * 2) + (borderWidth * 3);
+                    
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = gridSize;
+                    canvas.height = gridSize;
+                    
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, gridSize, gridSize);
+                    
+                    let loadedCount = 0;
+                    photos.forEach((dataUrl, index) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            const row = Math.floor(index / 2);
+                            const col = index % 2;
+                            const x = borderWidth + (col * (individualSize + borderWidth));
+                            const y = borderWidth + (row * (individualSize + borderWidth));
+                            
+                            ctx.drawImage(img, x, y, individualSize, individualSize);
+                            loadedCount++;
+                            
+                            if (loadedCount === 4) {
+                                const gridDataUrl = canvas.toDataURL('image/png');
+                                this.displayPhoto(gridDataUrl);
+                                resolve();
+                            }
+                        };
+                        img.src = dataUrl;
+                    });
+                });
+            }
+            
+            displayPhoto(dataUrl) {
+                const img = document.createElement('img');
+                img.src = dataUrl;
+                img.alt = 'Captured Photo';
+                
+                const downloadBtn = document.createElement('button');
+                downloadBtn.className = 'download-btn';
+                downloadBtn.textContent = '💾 Download Photo';
+                downloadBtn.onclick = () => this.downloadPhoto(dataUrl);
+                
+                this.photoResult.innerHTML = '';
+                this.photoResult.appendChild(img);
+                this.photoResult.appendChild(downloadBtn);
+            }
+            
+            downloadPhoto(dataUrl) {
+                const link = document.createElement('a');
+                link.download = `photo-booth-${new Date().getTime()}.png`;
+                link.href = dataUrl;
+                link.click();
+            }
+            
+            showError(message) {
+                this.errorMsg.textContent = message;
+                this.errorMsg.style.display = 'block';
+            }
+            
+            hideError() {
+                this.errorMsg.style.display = 'none';
+            }
+            
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
         }
-
-        // Event listeners
-        document.getElementById('start-btn').addEventListener('click', startPhotoSession);
-        document.getElementById('reset-btn').addEventListener('click', resetSession);
-        document.getElementById('download-btn').addEventListener('click', downloadPhotoStrip);
-
-        // Slider controls
-        document.getElementById('perspective').addEventListener('input', (e) => {
-            perspective = parseInt(e.target.value);
-            updateVideoFilter(); // Apply live preview
+        
+        window.addEventListener('load', () => {
+            new PhotoBooth();
         });
-
-        // Initialize camera when page loads
-        window.addEventListener('load', initCamera);
-
-        // Prevent zoom on double-tap
-        document.addEventListener('touchstart', function(event) {
-            if (event.touches.length > 1) {
-                event.preventDefault();
-            }
-        });
-
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function(event) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
     </script>
 </body>
 </html>
