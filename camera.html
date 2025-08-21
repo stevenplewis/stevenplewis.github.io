@@ -16,9 +16,10 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             padding: 20px;
+            padding-bottom: 400px; /* Extra bottom padding for phone holder */
         }
 
         .photo-booth {
@@ -29,6 +30,7 @@
             backdrop-filter: blur(10px);
             max-width: 900px;
             width: 100%;
+            margin-top: 20px;
         }
 
         h1 {
@@ -41,13 +43,15 @@
 
         .camera-container {
             position: relative;
-            width: 100%;
-            max-width: 500px;
+            width: 500px;
             height: 500px;
+            max-width: calc(100% - 60px); /* Account for container padding (30px * 2) */
+            max-height: calc(100% - 60px); /* Keep it square */
             margin: 0 auto 30px;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            aspect-ratio: 1; /* Ensure perfect square */
         }
 
         #videoElement {
@@ -267,6 +271,17 @@
             .capture-btn {
                 padding: 15px 30px;
                 font-size: 1.1em;
+            }
+            
+            .camera-container {
+                width: calc(100vw - 100px); /* Account for body padding (20px * 2) + container padding (30px * 2) + some margin */
+                height: calc(100vw - 100px); /* Keep it perfectly square */
+                max-width: 500px;
+                max-height: 500px;
+            }
+            
+            body {
+                padding-bottom: 500px; /* More bottom padding on mobile */
             }
         }
     </style>
