@@ -1,0 +1,41 @@
+/* make fonts tad smaller on mobile?? */
+/* @media (max-width: 57em) {
+  html {
+    font-size: 95%;
+  }
+} */
+
+/* CORE */
+
+@font-face {
+  font-family: "Name Sans";
+  src:  url('name_sans-variable.woff2') format('woff2');
+  font-weight: 1 999;
+}
+
+html {
+  font-size: 200%;
+}
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -o-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  font-family: "Name Sans", "Helvetcia", sans-serif;
+  margin: 0;
+  padding: 0.5rem;
+  font-size: 50%;
+  color: #111;
+}
+
+img {
+  margin: 0.25rem;
+  filter: drop-shadow(0 0.125rem 0.25rem #ddd);
+  max-width: calc(100% - 0.5rem);
+}
