@@ -9,7 +9,7 @@
 
 @font-face {
   font-family: "Name Sans";
-  src:  url('name_sans-variable.woff2') format('woff2');
+  src: url("name_sans-variable.woff2") format("woff2");
   font-weight: 1 999;
 }
 
@@ -32,6 +32,7 @@ body {
   padding: 0.5rem;
   font-size: 50%;
   color: #111;
+  text-align: center;
 }
 
 img {
