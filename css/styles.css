@@ -35,7 +35,8 @@ body {
   text-align: center;
 }
 
-img {
+img,
+video {
   margin: 0.25rem;
   filter: drop-shadow(0 0.125rem 0.25rem #ddd);
   max-width: calc(100% - 0.5rem);
