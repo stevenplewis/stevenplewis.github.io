@@ -1,0 +1,1055 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Don't Be Greedy</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Courier New", monospace;
+        background: #c0c0c0;
+        min-height: 100vh;
+        padding: 20px;
+        color: #000;
+        image-rendering: pixelated;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image:
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.03) 2px,
+            rgba(0, 0, 0, 0.03) 4px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.03) 2px,
+            rgba(0, 0, 0, 0.03) 4px
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      h1 {
+        text-align: center;
+        color: #ff00ff;
+        margin-bottom: 30px;
+        font-size: 3.5em;
+        text-shadow:
+          4px 0 0 #000,
+          -4px 0 0 #000,
+          0 4px 0 #000,
+          0 -4px 0 #000,
+          4px 4px 0 #000;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        font-weight: 900;
+      }
+
+      .game-setup {
+        background: #fff;
+        padding: 30px;
+        border: 6px solid #000;
+        box-shadow: 8px 8px 0 #000;
+        margin-bottom: 20px;
+      }
+
+      .game-setup h2 {
+        margin-bottom: 20px;
+        color: #ff00ff;
+        text-transform: uppercase;
+        font-size: 1.8em;
+        font-weight: 900;
+      }
+
+      .setup-controls {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      label {
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 14px;
+      }
+
+      select,
+      input {
+        padding: 10px;
+        border: 4px solid #000;
+        font-size: 16px;
+        font-family: "Courier New", monospace;
+        font-weight: bold;
+        background: #fff;
+      }
+
+      select:focus,
+      input:focus {
+        outline: none;
+        background: #ffeb3b;
+      }
+
+      button {
+        padding: 12px 24px;
+        border: 4px solid #000;
+        font-size: 16px;
+        font-weight: 900;
+        font-family: "Courier New", monospace;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.1s;
+        background: #ffeb3b;
+        color: #000;
+        box-shadow: 4px 4px 0 #000;
+        position: relative;
+      }
+
+      button:hover {
+        background: #00ffff;
+      }
+
+      button:active {
+        transform: translate(4px, 4px);
+        box-shadow: 0 0 0 #000;
+      }
+
+      button:disabled {
+        background: #888;
+        color: #666;
+        cursor: not-allowed;
+      }
+
+      .game-board {
+        display: none;
+        background: #fff;
+        padding: 30px;
+        border: 6px solid #000;
+        box-shadow: 8px 8px 0 #000;
+      }
+
+      .game-board.active {
+        display: block;
+      }
+
+      .game-info {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: #000;
+        border: 4px solid #ffeb3b;
+      }
+
+      .info-item {
+        text-align: center;
+      }
+
+      .info-item h3 {
+        font-size: 12px;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        font-weight: 900;
+        letter-spacing: 1px;
+        color: #00ffff;
+      }
+
+      .info-item .value {
+        font-size: 32px;
+        font-weight: 900;
+        color: #ffeb3b;
+        text-shadow: 2px 2px 0 #ff00ff;
+      }
+
+      .player-card {
+        background: #e0e0e0;
+        padding: 20px;
+        margin-bottom: 15px;
+        border: 4px solid #000;
+        transition: all 0.2s;
+        box-shadow: 4px 4px 0 #000;
+      }
+
+      .player-card.human {
+        background: #fff;
+        border-width: 5px;
+        border-color: #0000ff;
+        box-shadow:
+          4px 4px 0 #000,
+          0 0 0 2px #0000ff inset;
+      }
+
+      .player-card.busted {
+        background: #ff6b6b;
+        animation: glitchShake 0.3s infinite;
+        border-color: #000;
+      }
+
+      .player-card.busted .player-name {
+        color: #fff;
+        text-shadow: 2px 2px 0 #000;
+      }
+
+      .player-card.busted .player-info > div:last-child {
+        background: #000;
+        color: #fff;
+        padding: 8px 16px;
+        border: 3px solid #fff;
+        font-weight: 900;
+      }
+
+      .player-card.busted .player-info > div:last-child strong {
+        color: #ffeb3b;
+      }
+
+      @keyframes glitchShake {
+        0% {
+          transform: translate(0, 0);
+        }
+        25% {
+          transform: translate(-2px, 2px);
+        }
+        50% {
+          transform: translate(2px, -2px);
+        }
+        75% {
+          transform: translate(-2px, -2px);
+        }
+        100% {
+          transform: translate(2px, 2px);
+        }
+      }
+
+      .player-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .player-name {
+        font-weight: 900;
+        font-size: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .player-score {
+        font-size: 16px;
+        font-weight: 900;
+        background: #000;
+        color: #00ff00;
+        padding: 4px 12px;
+        border: 2px solid #00ff00;
+        font-family: "Courier New", monospace;
+      }
+
+      .player-info {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 20px;
+        align-items: center;
+      }
+
+      .player-total {
+        background: #000;
+        color: #00ff00;
+        padding: 12px 20px;
+        border: 4px solid #00ff00;
+        font-weight: 900;
+        font-size: 20px;
+        white-space: nowrap;
+        min-width: 140px;
+        text-align: center;
+      }
+
+      .card-display {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 20px;
+        background: #ffeb3b;
+        color: #000;
+        border: 4px solid #000;
+        font-weight: 900;
+        font-size: 24px;
+        text-transform: uppercase;
+        box-shadow: 3px 3px 0 #000;
+      }
+
+      .tokens-display {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .token {
+        width: 48px;
+        height: 48px;
+        background: #ff00ff;
+        border: 4px solid #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        color: #fff;
+        font-size: 20px;
+        box-shadow: 2px 2px 0 #000;
+        position: relative;
+        text-shadow: 1px 1px 0 #000;
+      }
+
+      .token.hidden {
+        background: #808080;
+        color: #606060;
+      }
+
+      .token.peek {
+        background: #00ffff;
+        color: #000;
+        font-size: 24px;
+        text-shadow: none;
+      }
+
+      .token.last-taken {
+        animation: pixelPulse 0.4s ease-in-out;
+        box-shadow:
+          0 0 0 4px #ffeb3b,
+          2px 2px 0 #000;
+      }
+
+      @keyframes pixelPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        25% {
+          transform: scale(1.2) rotate(-5deg);
+        }
+        50% {
+          transform: scale(1.3);
+        }
+        75% {
+          transform: scale(1.2) rotate(5deg);
+        }
+      }
+
+      .decision-buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .decision-buttons button {
+        flex: 1;
+        padding: 18px;
+        font-size: 18px;
+      }
+
+      .take-btn {
+        background: #00ff00;
+        border-color: #000;
+      }
+
+      .take-btn:hover {
+        background: #00ffff;
+      }
+
+      .pass-btn {
+        background: #ff00ff;
+        color: #fff;
+        border-color: #000;
+      }
+
+      .pass-btn:hover {
+        background: #ff6b6b;
+      }
+
+      .status-message {
+        text-align: center;
+        padding: 16px;
+        background: #000;
+        border: 4px solid #ff00ff;
+        margin-bottom: 20px;
+        font-weight: 900;
+        color: #ff00ff;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 16px;
+        animation: textGlow 2s ease-in-out infinite;
+      }
+
+      @keyframes textGlow {
+        0%,
+        100% {
+          color: #ff00ff;
+        }
+        50% {
+          color: #00ffff;
+        }
+      }
+
+      .final-scores {
+        margin-top: 30px;
+        padding: 30px;
+        background: #000;
+        border: 6px solid #ffeb3b;
+      }
+
+      .final-scores h3 {
+        margin-bottom: 20px;
+        color: #ffeb3b;
+        font-size: 2.5em;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-shadow: 3px 3px 0 #ff00ff;
+      }
+
+      .score-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px;
+        border-bottom: 3px solid #404040;
+        font-size: 18px;
+        font-weight: 900;
+        color: #fff;
+      }
+
+      .score-row.winner {
+        background: #ffeb3b;
+        color: #000;
+        border: 4px solid #ff00ff;
+        font-size: 22px;
+        margin-bottom: 10px;
+        box-shadow: 3px 3px 0 #ff00ff;
+      }
+
+      .peek-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .peek-modal.active {
+        display: flex;
+        animation: scanlines 8s linear infinite;
+      }
+
+      @keyframes scanlines {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 0 100%;
+        }
+      }
+
+      .peek-modal-content {
+        background: #fff;
+        padding: 30px;
+        border: 6px solid #000;
+        max-width: 500px;
+        width: 90%;
+        box-shadow:
+          8px 8px 0 #ff00ff,
+          0 0 0 3px #000;
+      }
+
+      .peek-modal h3 {
+        margin-bottom: 20px;
+        color: #ff00ff;
+        font-size: 1.6em;
+        text-transform: uppercase;
+        font-weight: 900;
+      }
+
+      .peek-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .peek-option {
+        padding: 16px;
+        background: #e0e0e0;
+        border: 4px solid #000;
+        cursor: pointer;
+        transition: all 0.1s;
+        font-weight: 900;
+        text-transform: uppercase;
+        box-shadow: 3px 3px 0 #000;
+      }
+
+      .peek-option:hover {
+        background: #00ffff;
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0 #000;
+      }
+
+      .peek-option:active {
+        transform: translate(3px, 3px);
+        box-shadow: 0 0 0 #000;
+      }
+
+      .peek-result {
+        margin-top: 20px;
+        padding: 25px;
+        background: #000;
+        border: 4px solid #00ff00;
+        text-align: center;
+      }
+
+      .peek-result h4 {
+        color: #00ff00;
+        margin-bottom: 15px;
+        font-size: 1.3em;
+        text-transform: uppercase;
+        font-weight: 900;
+      }
+
+      .peek-result .total {
+        font-size: 56px;
+        font-weight: 900;
+        color: #ffeb3b;
+        text-shadow: 3px 3px 0 #ff00ff;
+        font-family: "Courier New", monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Don't Be Greedy</h1>
+
+      <div class="game-setup" id="setup">
+        <h2>Game Setup</h2>
+        <div class="setup-controls">
+          <label for="playerCount">Number of Players:</label>
+          <select id="playerCount">
+            <option value="3">3 Players</option>
+            <option value="4" selected>4 Players</option>
+            <option value="5">5 Players</option>
+            <option value="6">6 Players</option>
+          </select>
+        </div>
+        <div class="setup-controls">
+          <label for="roundCount">Number of Rounds:</label>
+          <input type="number" id="roundCount" value="10" min="5" max="20" />
+        </div>
+        <button onclick="startGame()">Start Game</button>
+      </div>
+
+      <div class="game-board" id="gameBoard">
+        <div class="game-info">
+          <div class="info-item">
+            <h3>Round</h3>
+            <div class="value" id="currentRound">1</div>
+          </div>
+          <div class="info-item">
+            <h3>Total Rounds</h3>
+            <div class="value" id="totalRounds">10</div>
+          </div>
+          <div class="info-item">
+            <h3>Tokens Left</h3>
+            <div class="value" id="tokensLeft">20</div>
+          </div>
+        </div>
+
+        <div class="status-message" id="statusMessage"></div>
+
+        <div id="playersContainer"></div>
+
+        <button
+          id="nextRoundBtn"
+          style="
+            display: none;
+            width: 100%;
+            padding: 20px;
+            font-size: 20px;
+            margin-top: 20px;
+          "
+          onclick="nextRound()"
+        >
+          Next Round
+        </button>
+
+        <div class="final-scores" id="finalScores" style="display: none">
+          <h3>🏆 Final Scores 🏆</h3>
+          <div id="finalScoresList"></div>
+          <button
+            style="margin-top: 20px; width: 100%"
+            onclick="location.reload()"
+          >
+            New Game
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="peek-modal" id="peekModal">
+      <div class="peek-modal-content">
+        <h3>👀 Peek Token! Choose a player to reveal:</h3>
+        <div class="peek-options" id="peekOptions"></div>
+        <div class="peek-result" id="peekResult" style="display: none"></div>
+      </div>
+    </div>
+
+    <script>
+      let gameState = {
+        players: [],
+        currentRound: 1,
+        totalRounds: 10,
+        tokenPool: [],
+        cardDeck: [],
+        roundActive: false,
+        waitingForDecisions: false,
+      };
+
+      function initializeDeck() {
+        const deck = [];
+        for (let i = 1; i <= 6; i++) {
+          for (let j = 0; j < 5; j++) {
+            deck.push(i);
+          }
+        }
+        return shuffle(deck);
+      }
+
+      function initializeTokenPool() {
+        const tokens = [];
+        // More 1s than 2s and 3s
+        for (let i = 0; i < 12; i++) tokens.push(1);
+        for (let i = 0; i < 9; i++) tokens.push(2);
+        for (let i = 0; i < 6; i++) tokens.push(3);
+        // Add peek tokens
+        for (let i = 0; i < 3; i++) tokens.push("peek");
+        return shuffle(tokens);
+      }
+
+      function shuffle(array) {
+        const arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+
+      function startGame() {
+        const playerCount = parseInt(
+          document.getElementById("playerCount").value,
+        );
+        const roundCount = parseInt(
+          document.getElementById("roundCount").value,
+        );
+
+        gameState.totalRounds = roundCount;
+        gameState.players = [];
+
+        // Create human player
+        gameState.players.push({
+          name: "You",
+          isHuman: true,
+          totalScore: 0,
+          card: 0,
+          tokens: [],
+          roundTotal: 0,
+          decision: null,
+        });
+
+        // Create AI players
+        for (let i = 1; i < playerCount; i++) {
+          gameState.players.push({
+            name: `Player ${i + 1}`,
+            isHuman: false,
+            totalScore: 0,
+            card: 0,
+            tokens: [],
+            roundTotal: 0,
+            decision: null,
+          });
+        }
+
+        document.getElementById("setup").style.display = "none";
+        document.getElementById("gameBoard").classList.add("active");
+
+        startNewRound();
+      }
+
+      function startNewRound() {
+        gameState.cardDeck = initializeDeck();
+        gameState.tokenPool = initializeTokenPool();
+        gameState.roundActive = true;
+        gameState.waitingForDecisions = true;
+
+        // Deal cards
+        gameState.players.forEach((player) => {
+          player.card = gameState.cardDeck.pop();
+          player.tokens = [];
+          player.roundTotal = player.card;
+          player.decision = null;
+          player.busted = false; // Clear busted status from previous round
+        });
+
+        setStatus("Round started! Make your decision: Take a token or Pass?");
+        updateDisplay();
+      }
+
+      function makeDecision(take) {
+        if (!gameState.waitingForDecisions) return;
+
+        const humanPlayer = gameState.players.find((p) => p.isHuman);
+        if (humanPlayer.decision !== null) return;
+
+        humanPlayer.decision = take;
+
+        // AI makes decisions
+        gameState.players.forEach((player) => {
+          if (!player.isHuman && player.decision === null) {
+            player.decision = makeAIDecision(player);
+          }
+        });
+
+        processDecisions();
+      }
+
+      function makeAIDecision(player) {
+        // Simple AI logic:
+        // - If total is low (< 10), likely take
+        // - If total is medium (10-14), random
+        // - If total is high (> 14), likely pass
+        const total = player.roundTotal;
+        const tokensLeft = gameState.tokenPool.length;
+
+        if (tokensLeft === 0) return false;
+
+        if (total < 8) {
+          return Math.random() > 0.2; // 80% take
+        } else if (total < 12) {
+          return Math.random() > 0.4; // 60% take
+        } else if (total < 15) {
+          return Math.random() > 0.6; // 40% take
+        } else {
+          return Math.random() > 0.8; // 20% take
+        }
+      }
+
+      function processDecisions() {
+        gameState.waitingForDecisions = false;
+
+        let anyTaken = false;
+        let peekTokensTaken = [];
+
+        // Mark all tokens as not newly taken
+        gameState.players.forEach((player) => {
+          player.tokens.forEach((t, idx) => {
+            if (player.tokenJustTaken === idx) {
+              delete player.tokenJustTaken;
+            }
+          });
+        });
+
+        gameState.players.forEach((player) => {
+          if (player.decision && gameState.tokenPool.length > 0) {
+            const tokenValue = gameState.tokenPool.pop();
+            const tokenIndex = player.tokens.length;
+
+            if (tokenValue === "peek") {
+              player.tokens.push(tokenValue);
+              player.tokenJustTaken = tokenIndex;
+              peekTokensTaken.push(player);
+            } else {
+              player.tokens.push(tokenValue);
+              player.tokenJustTaken = tokenIndex;
+              player.roundTotal += tokenValue;
+            }
+            anyTaken = true;
+          }
+        });
+
+        // Brief pause to show decisions
+        updateDisplay();
+
+        // Handle peek tokens sequentially
+        if (peekTokensTaken.length > 0) {
+          handlePeekTokens(peekTokensTaken, 0);
+        } else {
+          continueRound();
+        }
+      }
+
+      function handlePeekTokens(players, index) {
+        if (index >= players.length) {
+          continueRound();
+          return;
+        }
+
+        const player = players[index];
+
+        if (player.isHuman) {
+          showPeekModal(() => {
+            handlePeekTokens(players, index + 1);
+          });
+        } else {
+          // AI automatically peeks at a random opponent
+          setTimeout(() => {
+            const opponents = gameState.players.filter((p) => p !== player);
+            const target =
+              opponents[Math.floor(Math.random() * opponents.length)];
+            setStatus(
+              `${player.name} used a peek token to look at ${target.name}'s total!`,
+            );
+            setTimeout(() => {
+              handlePeekTokens(players, index + 1);
+            }, 1500);
+          }, 1000);
+        }
+      }
+
+      function showPeekModal(callback) {
+        const modal = document.getElementById("peekModal");
+        const options = document.getElementById("peekOptions");
+        const result = document.getElementById("peekResult");
+
+        result.style.display = "none";
+
+        const otherPlayers = gameState.players.filter((p) => !p.isHuman);
+
+        options.innerHTML = otherPlayers
+          .map(
+            (player, idx) =>
+              `<div class="peek-option" onclick="revealPeek(${idx})">
+                    ${player.name}
+                </div>`,
+          )
+          .join("");
+
+        modal.classList.add("active");
+        window.peekCallback = callback;
+      }
+
+      function revealPeek(playerIndex) {
+        const otherPlayers = gameState.players.filter((p) => !p.isHuman);
+        const target = otherPlayers[playerIndex];
+
+        const result = document.getElementById("peekResult");
+        result.innerHTML = `
+                <h4>${target.name}'s Total:</h4>
+                <div class="total">${target.roundTotal}</div>
+                <button onclick="closePeekModal()" style="margin-top: 15px; width: 100%;">Continue</button>
+            `;
+        result.style.display = "block";
+
+        document.getElementById("peekOptions").style.display = "none";
+      }
+
+      function closePeekModal() {
+        const modal = document.getElementById("peekModal");
+        modal.classList.remove("active");
+        document.getElementById("peekOptions").style.display = "flex";
+
+        if (window.peekCallback) {
+          window.peekCallback();
+          window.peekCallback = null;
+        }
+      }
+
+      function continueRound() {
+        setTimeout(() => {
+          // Count how many players took tokens THIS turn (not passed)
+          const playersTookTokens = gameState.players.filter(
+            (p) => p.decision === true,
+          ).length;
+
+          // Round ends if 1 or fewer players took tokens (meaning all or all-but-one passed)
+          if (playersTookTokens <= 1 || gameState.tokenPool.length === 0) {
+            if (playersTookTokens === 1) {
+              setStatus("All but one player passed this turn! Round ends.");
+            } else if (playersTookTokens === 0) {
+              setStatus("All players passed this turn! Round ends.");
+            }
+            endRound();
+          } else {
+            // Reset decisions for next turn - everyone can choose again
+            gameState.players.forEach((p) => (p.decision = null));
+            gameState.waitingForDecisions = true;
+            updateDisplay();
+            setStatus("Make your decision: Take a token or Pass?");
+          }
+        }, 1000);
+      }
+
+      function endRound() {
+        gameState.roundActive = false;
+        gameState.waitingForDecisions = false;
+
+        // Find highest total(s)
+        const maxTotal = Math.max(
+          ...gameState.players.map((p) => p.roundTotal),
+        );
+
+        // Score the round
+        gameState.players.forEach((player) => {
+          if (player.roundTotal === maxTotal) {
+            // Busted - score 0
+            player.busted = true;
+          } else {
+            player.totalScore += player.roundTotal;
+            player.busted = false;
+          }
+        });
+
+        updateDisplay(true);
+        setStatus("Round over! Highest total(s) bust and score 0.");
+        document.getElementById("nextRoundBtn").style.display = "block";
+      }
+
+      function nextRound() {
+        document.getElementById("nextRoundBtn").style.display = "none";
+
+        if (gameState.currentRound >= gameState.totalRounds) {
+          endGame();
+        } else {
+          gameState.currentRound++;
+          startNewRound();
+        }
+      }
+
+      function endGame() {
+        const finalScores = document.getElementById("finalScores");
+        const scoresList = document.getElementById("finalScoresList");
+
+        const sortedPlayers = [...gameState.players].sort(
+          (a, b) => b.totalScore - a.totalScore,
+        );
+        const maxScore = sortedPlayers[0].totalScore;
+
+        scoresList.innerHTML = sortedPlayers
+          .map(
+            (player) =>
+              `<div class="score-row ${player.totalScore === maxScore ? "winner" : ""}">
+                    <span>${player.name}</span>
+                    <span>${player.totalScore} points</span>
+                </div>`,
+          )
+          .join("");
+
+        finalScores.style.display = "block";
+        setStatus(`Game Over! ${sortedPlayers[0].name} wins!`);
+      }
+
+      function updateDisplay(showAll = false) {
+        document.getElementById("currentRound").textContent =
+          gameState.currentRound;
+        document.getElementById("totalRounds").textContent =
+          gameState.totalRounds;
+        document.getElementById("tokensLeft").textContent =
+          gameState.tokenPool.length;
+
+        const container = document.getElementById("playersContainer");
+        container.innerHTML = gameState.players
+          .map((player) => {
+            const isHuman = player.isHuman;
+            const showCard = showAll || isHuman;
+            const showTokens = showAll || isHuman;
+
+            return `
+                    <div class="player-card ${isHuman ? "human" : ""} ${player.busted ? "busted" : ""}">
+                        <div class="player-header">
+                            <span class="player-name">${player.name}</span>
+                            <span class="player-score">Total Score: ${player.totalScore}</span>
+                        </div>
+                        <div class="player-info">
+                            <div class="card-display">
+                                Card: ${showCard ? player.card : "?"}
+                            </div>
+                            <div class="tokens-display">
+                                ${player.tokens
+                                  .map((t, idx) => {
+                                    // Peek tokens are always visible to everyone
+                                    const isPeek = t === "peek";
+                                    const shouldShow = showTokens || isPeek;
+                                    const isLastTaken =
+                                      player.tokenJustTaken === idx && !showAll;
+                                    return `<div class="token ${shouldShow ? (isPeek ? "peek" : "") : "hidden"} ${isLastTaken ? "last-taken" : ""}">
+                                        ${shouldShow ? (isPeek ? "👀" : t) : "?"}
+                                    </div>`;
+                                  })
+                                  .join("")}
+                            </div>
+                            <div class="player-total">
+                                <strong>Total: ${showAll || isHuman ? player.roundTotal : "?"}</strong>
+                                ${player.busted ? '<br><span style="color: #ff0000; font-weight: 900; text-shadow: 2px 2px 0 #000;">BUSTED!</span>' : ""}
+                            </div>
+                        </div>
+                        ${
+                          isHuman &&
+                          gameState.waitingForDecisions &&
+                          player.decision === null
+                            ? `
+                            <div class="decision-buttons">
+                                <button class="take-btn" onclick="makeDecision(true)" ${gameState.tokenPool.length === 0 ? "disabled" : ""}>
+                                    Take Token
+                                </button>
+                                <button class="pass-btn" onclick="makeDecision(false)">
+                                    Pass
+                                </button>
+                            </div>
+                        `
+                            : ""
+                        }
+                        ${
+                          player.decision !== null &&
+                          !showAll &&
+                          gameState.waitingForDecisions === false
+                            ? `
+                            <div style="margin-top: 10px; font-style: italic; color: #666;">
+                                ${player.decision ? "✓ Took a token" : "✓ Passed"}
+                            </div>
+                        `
+                            : ""
+                        }
+                    </div>
+                `;
+          })
+          .join("");
+      }
+
+      function setStatus(message) {
+        document.getElementById("statusMessage").textContent = message;
+      }
+    </script>
+  </body>
+</html>
