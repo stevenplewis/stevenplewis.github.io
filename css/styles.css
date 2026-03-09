@@ -29,7 +29,7 @@ body {
   font-kerning: normal;
   font-family: "Name Sans", "Helvetcia", sans-serif;
   margin: 0;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
   font-size: 50%;
   color: #111;
   text-align: center;
@@ -37,12 +37,12 @@ body {
 
 img,
 video {
-  margin: 0.25rem;
+  margin: 0.5rem;
   filter: drop-shadow(0 0.125rem 0.25rem #ddd);
-  max-width: calc(100% - 2rem);
-  max-height: calc(100vh - 4rem);
+  max-width: calc(100% - 4rem);
 }
 
 .photo-gallery img {
-  margin: 0.5rem;
+  margin: 2rem;
+  max-height: calc(100vh - 4rem);
 }
