@@ -37,9 +37,27 @@ body {
 
 img,
 video {
-  margin: 0.5rem;
+  margin: 1rem;
   filter: drop-shadow(0 0.125rem 0.25rem #ddd);
   max-width: calc(100% - 4rem);
+}
+
+img,
+video,
+figure,
+figure img,
+div {
+  vertical-align: middle;
+}
+
+figure {
+  display: inline-block;
+  margin: 0.5rem;
+}
+
+figure img,
+figure video {
+  margin: 0.5rem;
 }
 
 .photo-gallery img {
