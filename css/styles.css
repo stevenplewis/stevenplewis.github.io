@@ -37,9 +37,16 @@ body {
 
 img,
 video {
-  margin: 1rem;
+  margin: 0.5rem 0;
   filter: drop-shadow(0 0.125rem 0.25rem #ddd);
-  max-width: calc(100% - 4rem);
+  max-width: calc(100% - 1rem);
+}
+
+@media (min-width: 48rem) {
+  img {
+    margin: 1rem;
+    max-width: calc(100% - 4rem);
+  }
 }
 
 img,
@@ -57,10 +64,25 @@ figure {
 
 figure img,
 figure video {
-  margin: 0.5rem;
+  margin: 0.5rem 0;
+  max-width: 100%;
+}
+@media (min-width: 48rem) {
+  figure img,
+  figure video {
+    margin: 0.5rem;
+    max-width: 100%;
+  }
 }
 
 .photo-gallery img {
-  margin: 2rem;
   max-height: calc(100vh - 4rem);
+}
+
+@media (min-width: 48rem) {
+  .photo-gallery img {
+    margin: 2rem;
+    width: auto;
+    max-width: calc(100% - 4rem);
+  }
 }
