@@ -1,0 +1,1444 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cast Compare</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      @keyframes spotlight {
+        0% {
+          background-position: -200% center;
+        }
+        100% {
+          background-position: 200% center;
+        }
+      }
+
+      /* Respect user's motion preferences */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      body {
+        font-family: "Space Mono", monospace;
+        line-height: 1.6;
+        background: #0d0802;
+        color: #e8d5c4;
+        min-height: 100vh;
+        padding: 3rem 2rem;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(212, 175, 55, 0.02) 2px,
+          rgba(212, 175, 55, 0.02) 4px
+        );
+        pointer-events: none;
+        z-index: 99;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+        width: 100%;
+      }
+
+      h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2rem, 7vw, 5.5rem);
+        font-weight: 300;
+        text-align: center;
+        margin-bottom: 0.25rem;
+        color: #e8ba5a;
+        letter-spacing: clamp(0.15em, 0.3em, 0.3em);
+        text-transform: uppercase;
+        position: relative;
+        text-shadow:
+          0 0 20px rgba(232, 186, 90, 0.5),
+          3px 3px 0 rgba(255, 51, 255, 0.3),
+          -3px -3px 0 rgba(51, 255, 255, 0.3);
+        word-wrap: break-word;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          transparent 40%,
+          rgba(255, 255, 255, 0.3) 50%,
+          transparent 60%,
+          transparent 100%
+        );
+        background-size: 200% 100%;
+        background-position: -200% center;
+        background-clip: text;
+        -webkit-background-clip: text;
+        transition: text-shadow 0.6s ease;
+      }
+
+      h1:hover {
+        animation: spotlight 1.2s ease-out forwards;
+        text-shadow:
+          0 0 30px rgba(232, 186, 90, 0.8),
+          3px 3px 0 rgba(255, 51, 255, 0.4),
+          -3px -3px 0 rgba(51, 255, 255, 0.4),
+          0 0 50px rgba(255, 255, 255, 0.3);
+      }
+
+      .subtitle {
+        text-align: center;
+        font-size: 0.7rem;
+        color: #ff66ff;
+        text-transform: uppercase;
+        letter-spacing: 0.5em;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        text-shadow: 0 0 10px rgba(255, 102, 255, 0.8);
+      }
+
+      .divider {
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          #ff66ff 25%,
+          #e8ba5a 50%,
+          #33ffff 75%,
+          transparent 100%
+        );
+        margin: 1rem auto 3rem;
+        max-width: 600px;
+        box-shadow: 0 0 10px rgba(232, 186, 90, 0.5);
+      }
+
+      .search-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 3rem;
+        margin-bottom: 3rem;
+      }
+
+      .search-box {
+        background: rgba(13, 8, 2, 0.8);
+        border: 3px solid #e8ba5a;
+        padding: clamp(1.25rem, 3vw, 2rem);
+        position: relative;
+        box-shadow:
+          8px 8px 0 rgba(255, 51, 255, 0.3),
+          -2px -2px 0 rgba(51, 255, 255, 0.2);
+        transition: all 0.3s;
+        min-width: 0; /* Allow flex items to shrink below their min-content size */
+      }
+
+      .search-box:hover {
+        box-shadow:
+          12px 12px 0 rgba(255, 51, 255, 0.4),
+          -3px -3px 0 rgba(51, 255, 255, 0.3);
+        transform: translate(-2px, -2px);
+      }
+
+      .search-box::before {
+        content: "";
+        position: absolute;
+        top: -3px;
+        left: -3px;
+        right: -3px;
+        bottom: -3px;
+        background: linear-gradient(135deg, #ff66ff, #33ffff);
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .search-box:hover::before {
+        opacity: 0.2;
+      }
+
+      h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: #33ffff;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        border-bottom: 2px solid #e8ba5a;
+        padding-bottom: 0.75rem;
+        text-shadow: 0 0 10px rgba(51, 255, 255, 0.5);
+      }
+
+      .input-btn-group {
+        display: flex;
+        gap: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      input {
+        flex: 1;
+        padding: 1rem;
+        background: #000;
+        border: 2px solid #e8ba5a;
+        border-right: none;
+        color: #e8d5c4;
+        font-size: 0.85rem;
+        font-family: "Space Mono", monospace;
+        letter-spacing: 0.05em;
+        transition: all 0.3s;
+      }
+
+      input::placeholder {
+        color: #9d8b7c;
+        font-style: italic;
+      }
+
+      input:focus {
+        outline: 3px solid #ff66ff;
+        outline-offset: 2px;
+        background: #0d0802;
+        border-color: #ff66ff;
+        box-shadow: 0 0 15px rgba(255, 102, 255, 0.3);
+      }
+
+      button {
+        background: linear-gradient(135deg, #e8ba5a 0%, #ff66ff 100%);
+        color: #000;
+        border: 2px solid #e8ba5a;
+        padding: 1rem 2rem;
+        cursor: pointer;
+        font-family: "Space Mono", monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        font-weight: 700;
+        transition: all 0.2s;
+        position: relative;
+      }
+
+      button:hover {
+        box-shadow:
+          0 0 20px rgba(255, 102, 255, 0.6),
+          4px 4px 0 rgba(51, 255, 255, 0.4);
+        transform: translate(-2px, -2px);
+      }
+
+      button:focus {
+        outline: 3px solid #33ffff;
+        outline-offset: 2px;
+      }
+
+      button:active {
+        transform: translate(0, 0);
+        box-shadow: none;
+      }
+
+      .results-container {
+        max-height: 22rem;
+        overflow-y: auto;
+        background: rgba(0, 0, 0, 0.8);
+        border: 1px solid rgba(232, 186, 90, 0.5);
+      }
+
+      .results-container::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      .results-container::-webkit-scrollbar-track {
+        background: #000;
+        border-left: 1px solid #e8ba5a;
+      }
+
+      .results-container::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #e8ba5a, #ff66ff);
+        border: 2px solid #000;
+      }
+
+      .result-item {
+        padding: 0.9rem 1.25rem;
+        border-bottom: 1px solid rgba(232, 186, 90, 0.2);
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all 0.15s;
+        letter-spacing: 0.05em;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .result-item:hover {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 102, 255, 0.2),
+          rgba(51, 255, 255, 0.2)
+        );
+        border-left: 4px solid #33ffff;
+        padding-left: 1.5rem;
+        color: #33ffff;
+        text-shadow: 0 0 8px rgba(51, 255, 255, 0.8);
+      }
+
+      .result-item:focus {
+        outline: 2px solid #ff66ff;
+        outline-offset: -2px;
+        background: rgba(255, 102, 255, 0.15);
+      }
+
+      .selected-item {
+        margin-top: 1.5rem;
+        padding: 1.25rem;
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px solid #e8ba5a;
+        border-left: 8px solid #ff66ff;
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        box-shadow: 4px 4px 0 rgba(51, 255, 255, 0.3);
+      }
+
+      .selected-item img {
+        width: 85px;
+        height: 128px;
+        object-fit: cover;
+        border: 2px solid #33ffff;
+        filter: contrast(1.2) saturate(0.8);
+        box-shadow: 0 0 15px rgba(51, 255, 255, 0.3);
+      }
+
+      .selected-item-text {
+        flex: 1;
+        font-size: 0.9rem;
+        letter-spacing: 0.05em;
+      }
+
+      .selected-item-text strong {
+        font-family: "Cormorant Garamond", serif;
+        color: #e8ba5a;
+        font-size: 1.1rem;
+        letter-spacing: 0.1em;
+      }
+
+      .clear-btn {
+        background: transparent;
+        border: 2px solid #ff66ff;
+        color: #ff66ff;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+      }
+
+      .clear-btn:hover {
+        background: #ff66ff;
+        color: #000;
+        box-shadow: 0 0 15px rgba(255, 102, 255, 0.8);
+      }
+
+      .clear-btn:focus {
+        outline: 3px solid #33ffff;
+        outline-offset: 2px;
+      }
+
+      .compare-button {
+        display: block;
+        margin: 3rem auto;
+        padding: 1.5rem 4rem;
+        background: linear-gradient(
+          135deg,
+          #e8ba5a 0%,
+          #ff66ff 50%,
+          #33ffff 100%
+        );
+        border: 4px solid #e8ba5a;
+        color: #000;
+        font-size: 1.1rem;
+        font-weight: 700;
+        box-shadow:
+          10px 10px 0 rgba(255, 102, 255, 0.4),
+          -3px -3px 0 rgba(51, 255, 255, 0.3);
+        transition: all 0.3s;
+      }
+
+      .compare-button:hover {
+        box-shadow:
+          15px 15px 0 rgba(255, 102, 255, 0.5),
+          -5px -5px 0 rgba(51, 255, 255, 0.4),
+          0 0 30px rgba(232, 186, 90, 0.5);
+        transform: translate(-3px, -3px);
+      }
+
+      .compare-button:focus {
+        outline: 4px solid #33ffff;
+        outline-offset: 3px;
+      }
+
+      .common-cast {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 3rem;
+        border: 4px solid #e8ba5a;
+        margin-top: 3rem;
+        position: relative;
+        box-shadow:
+          12px 12px 0 rgba(255, 102, 255, 0.3),
+          -4px -4px 0 rgba(51, 255, 255, 0.2);
+      }
+
+      .common-cast::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #ff66ff, #33ffff);
+        box-shadow: 0 0 10px rgba(255, 102, 255, 0.5);
+      }
+
+      .common-cast h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 3rem;
+        font-weight: 300;
+        text-align: center;
+        color: #e8ba5a;
+        border-bottom: 3px solid;
+        border-image: linear-gradient(90deg, #ff66ff, #e8ba5a, #33ffff) 1;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        letter-spacing: 0.3em;
+        text-shadow:
+          0 0 20px rgba(232, 186, 90, 0.5),
+          2px 2px 0 rgba(255, 102, 255, 0.3);
+      }
+
+      #commonCastCount {
+        text-align: center;
+        font-size: 0.75rem;
+        margin-bottom: 3rem;
+        color: #33ffff;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        font-weight: 700;
+        text-shadow: 0 0 10px rgba(51, 255, 255, 0.8);
+      }
+
+      .cast-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 2.5rem;
+      }
+
+      .cast-card {
+        background: #000;
+        border: 2px solid #e8ba5a;
+        overflow: hidden;
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      .cast-card::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          45deg,
+          transparent 40%,
+          rgba(255, 102, 255, 0.3) 45%,
+          rgba(51, 255, 255, 0.3) 55%,
+          transparent 60%
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s;
+      }
+
+      .cast-card:hover::after {
+        transform: translateX(100%);
+      }
+
+      .cast-card:hover {
+        border-color: #33ffff;
+        box-shadow:
+          6px 6px 0 rgba(255, 102, 255, 0.4),
+          -2px -2px 0 rgba(51, 255, 255, 0.3);
+        transform: translate(-3px, -3px);
+      }
+
+      .cast-card:focus-within {
+        outline: 3px solid #ff66ff;
+        outline-offset: 2px;
+      }
+
+      .cast-card img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        display: block;
+        filter: contrast(1.2) saturate(0.9);
+        transition: filter 0.3s;
+      }
+
+      .cast-card:hover img {
+        filter: contrast(1.3) saturate(1.1);
+      }
+
+      .cast-info {
+        padding: 1.25rem;
+        background: linear-gradient(180deg, #000, #0d0802);
+      }
+
+      .actor-name {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        font-size: 1.4rem;
+        color: #e8ba5a;
+        letter-spacing: 0.1em;
+        text-shadow: 0 0 5px rgba(232, 186, 90, 0.5);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .character-name {
+        font-size: 0.75rem;
+        color: #33ffff;
+        margin: 0.4rem 0;
+        line-height: 1.5;
+        letter-spacing: 0.05em;
+        text-shadow: 0 0 5px rgba(51, 255, 255, 0.3);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .error-message {
+        color: #ff66ff;
+        text-align: center;
+        padding: 2.5rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        border: 2px solid #ff66ff;
+        background: rgba(255, 102, 255, 0.1);
+        text-shadow: 0 0 10px rgba(255, 102, 255, 0.8);
+        box-shadow: 4px 4px 0 rgba(51, 255, 255, 0.3);
+      }
+
+      .loading {
+        text-align: center;
+        padding: 2.5rem;
+        font-family: "Cormorant Garamond", serif;
+        color: #e8ba5a;
+        font-size: 1.5rem;
+        letter-spacing: 0.2em;
+        font-weight: 300;
+        text-shadow: 0 0 20px rgba(232, 186, 90, 0.8);
+      }
+
+      .debug-info {
+        background: rgba(0, 0, 0, 0.9);
+        border: 2px solid rgba(232, 186, 90, 0.3);
+        padding: 1.5rem;
+        margin: 2rem 0;
+        font-family: "Space Mono", monospace;
+        font-size: 11px;
+        max-height: 350px;
+        overflow: auto;
+        white-space: pre-wrap;
+        color: #33ffff;
+      }
+
+      .debug-toggle {
+        display: none;
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      /* Skip to main content link for screen readers */
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: #e8ba5a;
+        color: #000;
+        padding: 8px;
+        text-decoration: none;
+        z-index: 100;
+      }
+
+      .skip-link:focus {
+        top: 0;
+      }
+
+      /* Tablet and below */
+      @media (max-width: 1024px) {
+        .search-container {
+          gap: 2rem;
+        }
+
+        .cast-list {
+          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+          gap: 2rem;
+        }
+      }
+
+      /* Mobile landscape and below */
+      @media (max-width: 768px) {
+        body {
+          padding: 2rem 1rem;
+        }
+
+        h1 {
+          font-size: clamp(2rem, 8vw, 3rem);
+          letter-spacing: 0.2em;
+        }
+
+        .subtitle {
+          font-size: 0.65rem;
+          letter-spacing: 0.3em;
+        }
+
+        .divider {
+          max-width: 400px;
+        }
+
+        .search-container {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .search-box {
+          padding: 1.5rem;
+          box-shadow:
+            6px 6px 0 rgba(255, 51, 255, 0.3),
+            -2px -2px 0 rgba(51, 255, 255, 0.2);
+        }
+
+        .search-box:hover {
+          box-shadow:
+            8px 8px 0 rgba(255, 51, 255, 0.4),
+            -2px -2px 0 rgba(51, 255, 255, 0.3);
+        }
+
+        h2 {
+          font-size: 1.75rem;
+        }
+
+        .input-btn-group {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+
+        input {
+          border-right: 2px solid #e8ba5a;
+          padding: 1rem;
+          font-size: 16px; /* Avoid iOS focus zoom (<16px) */
+        }
+
+        button {
+          width: 100%;
+          padding: 1rem;
+          font-size: 0.8rem;
+        }
+
+        .selected-item {
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+
+        .selected-item img {
+          width: 70px;
+          height: 105px;
+        }
+
+        .compare-button {
+          font-size: 1rem;
+          padding: 1.25rem 2.5rem;
+          box-shadow:
+            8px 8px 0 rgba(255, 102, 255, 0.4),
+            -2px -2px 0 rgba(51, 255, 255, 0.3);
+        }
+
+        .compare-button:hover {
+          box-shadow:
+            10px 10px 0 rgba(255, 102, 255, 0.5),
+            -3px -3px 0 rgba(51, 255, 255, 0.4);
+        }
+
+        .common-cast {
+          padding: 2rem 1.5rem;
+          box-shadow:
+            8px 8px 0 rgba(255, 102, 255, 0.3),
+            -3px -3px 0 rgba(51, 255, 255, 0.2);
+        }
+
+        .common-cast h2 {
+          font-size: 2.25rem;
+        }
+
+        .cast-list {
+          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+          gap: 1.5rem;
+        }
+
+        .cast-card {
+          box-shadow: none;
+        }
+
+        .cast-card:hover {
+          box-shadow:
+            4px 4px 0 rgba(255, 102, 255, 0.4),
+            -1px -1px 0 rgba(51, 255, 255, 0.3);
+          transform: translate(-2px, -2px);
+        }
+
+        .cast-card img {
+          height: 240px;
+        }
+
+        .cast-info {
+          padding: 1rem;
+        }
+
+        .actor-name {
+          font-size: 1.2rem;
+        }
+
+        .character-name {
+          font-size: 0.7rem;
+        }
+      }
+
+      /* Small mobile */
+      @media (max-width: 480px) {
+        body {
+          padding: 1.5rem 0.75rem;
+        }
+
+        h1 {
+          font-size: clamp(1.75rem, 10vw, 2.5rem);
+          letter-spacing: 0.15em;
+          margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+          font-size: 0.6rem;
+          letter-spacing: 0.25em;
+          margin-bottom: 1.5rem;
+        }
+
+        .search-container {
+          gap: 1.5rem;
+        }
+
+        .search-box {
+          padding: 1.25rem;
+          border-width: 2px;
+        }
+
+        h2 {
+          font-size: 1.5rem;
+          margin-bottom: 1rem;
+        }
+
+        input {
+          padding: 0.875rem;
+          font-size: 16px; /* Avoid iOS focus zoom (<16px) */
+        }
+
+        button {
+          padding: 0.875rem;
+          font-size: 0.75rem;
+        }
+
+        .selected-item {
+          padding: 1rem;
+        }
+
+        .selected-item img {
+          width: 60px;
+          height: 90px;
+        }
+
+        .selected-item-text {
+          font-size: 0.85rem;
+        }
+
+        .selected-item-text strong {
+          font-size: 1rem;
+        }
+
+        .compare-button {
+          width: 100%;
+          font-size: 0.95rem;
+          padding: 1.125rem 2rem;
+          letter-spacing: 0.15em;
+        }
+
+        .common-cast {
+          padding: 1.5rem 1rem;
+          border-width: 3px;
+        }
+
+        .common-cast h2 {
+          font-size: 2rem;
+          letter-spacing: 0.2em;
+        }
+
+        #commonCastCount {
+          font-size: 0.7rem;
+          margin-bottom: 2rem;
+        }
+
+        .cast-list {
+          grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+          gap: 1.25rem;
+        }
+
+        .cast-card img {
+          height: 200px;
+        }
+
+        .cast-info {
+          padding: 0.875rem;
+        }
+
+        .actor-name {
+          font-size: 1.1rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .character-name {
+          font-size: 0.65rem;
+          line-height: 1.4;
+        }
+      }
+
+      /* Touch device optimizations */
+      @media (hover: none) and (pointer: coarse) {
+        button,
+        .result-item,
+        .clear-btn,
+        .cast-card {
+          min-height: 44px; /* Minimum touch target size */
+          min-width: 44px;
+        }
+
+        .result-item {
+          padding: 1rem 1.25rem;
+        }
+
+        button {
+          padding: 1rem 2rem;
+        }
+      }
+
+      /* Very wide screens */
+      @media (min-width: 1600px) {
+        .container {
+          max-width: 1600px;
+        }
+
+        .cast-list {
+          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+          gap: 3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="container" id="main-content">
+      <h1>Cast Compare</h1>
+      <div class="subtitle">Find actors who appear in two titles</div>
+      <div class="divider" role="presentation"></div>
+
+      <div class="search-container">
+        <div class="search-box">
+          <h2>Title One</h2>
+          <div class="input-btn-group">
+            <input
+              type="text"
+              id="search1"
+              placeholder="Search movies and TV"
+              aria-label="Search for first movie or TV show"
+            />
+          </div>
+          <div
+            class="results-container"
+            id="results1"
+            role="region"
+            aria-live="polite"
+            aria-label="Search results for first title"
+          ></div>
+          <div class="selected-item hidden" id="selected1"></div>
+        </div>
+
+        <div class="search-box">
+          <h2>Title Two</h2>
+          <div class="input-btn-group">
+            <input
+              type="text"
+              id="search2"
+              placeholder="Search movies and TV"
+              aria-label="Search for second movie or TV show"
+            />
+          </div>
+          <div
+            class="results-container"
+            id="results2"
+            role="region"
+            aria-live="polite"
+            aria-label="Search results for second title"
+          ></div>
+          <div class="selected-item hidden" id="selected2"></div>
+        </div>
+      </div>
+
+      <div
+        class="common-cast hidden"
+        id="commonCastContainer"
+        role="region"
+        aria-live="polite"
+        aria-label="Common cast members"
+      >
+        <h2>Common Cast</h2>
+        <div id="commonCastCount"></div>
+        <div class="cast-list" id="commonCast"></div>
+      </div>
+
+      <div class="debug-toggle">
+        <button id="debugToggleBtn">Show Debug Info</button>
+      </div>
+      <div id="debugInfo" class="debug-info hidden"></div>
+    </div>
+
+    <script>
+      // Replace with your TMDb API key
+      const API_KEY = "e5fb219e5f1b653e2179cad8b60dd220";
+      const BASE_URL = "https://api.themoviedb.org/3";
+      const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+
+      // Store the selected titles
+      let selectedTitle1 = null;
+      let selectedTitle2 = null;
+
+      // Store debug information
+      let debugData = {
+        cast1: null,
+        cast2: null,
+        commonCast: null,
+      };
+
+      // DOM elements
+      const searchInput1 = document.getElementById("search1");
+      const resultsContainer1 = document.getElementById("results1");
+      const selectedContainer1 = document.getElementById("selected1");
+
+      const searchInput2 = document.getElementById("search2");
+      const resultsContainer2 = document.getElementById("results2");
+      const selectedContainer2 = document.getElementById("selected2");
+
+      const commonCastContainer = document.getElementById(
+        "commonCastContainer",
+      );
+      const commonCastCount = document.getElementById("commonCastCount");
+      const commonCast = document.getElementById("commonCast");
+
+      const debugInfoContainer = document.getElementById("debugInfo");
+      const debugToggleBtn = document.getElementById("debugToggleBtn");
+
+      // Auto-search (debounced)
+      const MIN_QUERY_LENGTH = 3;
+      const SEARCH_DEBOUNCE_MS = 500;
+
+      let debounceTimer1 = null;
+      let debounceTimer2 = null;
+
+      let latestSearchToken1 = 0;
+      let latestSearchToken2 = 0;
+
+      // Used to ignore stale compare runs
+      let compareRunToken = 0;
+
+      function isMobileViewport() {
+        return window.matchMedia("(max-width: 768px)").matches;
+      }
+
+      function scheduleSearch1() {
+        const query = searchInput1.value.trim();
+        if (debounceTimer1) clearTimeout(debounceTimer1);
+
+        if (query.length < MIN_QUERY_LENGTH) {
+          resultsContainer1.innerHTML = "";
+          return;
+        }
+
+        debounceTimer1 = setTimeout(() => {
+          runSearchNow1();
+        }, SEARCH_DEBOUNCE_MS);
+      }
+
+      function runSearchNow1() {
+        const query = searchInput1.value.trim();
+        if (query.length < MIN_QUERY_LENGTH) {
+          resultsContainer1.innerHTML = "";
+          return;
+        }
+
+        const token = ++latestSearchToken1;
+        searchTitles(query, resultsContainer1, token, 1);
+      }
+
+      function scheduleSearch2() {
+        const query = searchInput2.value.trim();
+        if (debounceTimer2) clearTimeout(debounceTimer2);
+
+        if (query.length < MIN_QUERY_LENGTH) {
+          resultsContainer2.innerHTML = "";
+          return;
+        }
+
+        debounceTimer2 = setTimeout(() => {
+          runSearchNow2();
+        }, SEARCH_DEBOUNCE_MS);
+      }
+
+      function runSearchNow2() {
+        const query = searchInput2.value.trim();
+        if (query.length < MIN_QUERY_LENGTH) {
+          resultsContainer2.innerHTML = "";
+          return;
+        }
+
+        const token = ++latestSearchToken2;
+        searchTitles(query, resultsContainer2, token, 2);
+      }
+
+      // Auto-search listeners
+      searchInput1.addEventListener("input", scheduleSearch1);
+      searchInput2.addEventListener("input", scheduleSearch2);
+
+      // Enter key support: trigger immediately
+      searchInput1.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          runSearchNow1();
+        }
+      });
+      searchInput2.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          runSearchNow2();
+        }
+      });
+
+      // Debug toggle
+      debugToggleBtn.addEventListener("click", () => {
+        if (debugInfoContainer.classList.contains("hidden")) {
+          debugInfoContainer.classList.remove("hidden");
+          debugToggleBtn.textContent = "Hide Debug Info";
+          updateDebugInfo();
+        } else {
+          debugInfoContainer.classList.add("hidden");
+          debugToggleBtn.textContent = "Show Debug Info";
+        }
+      });
+
+      // Search for movies and TV shows
+      async function searchTitles(query, resultsContainer, requestToken, inputIndex) {
+        if (!query.trim()) return;
+
+        resultsContainer.innerHTML = '<div class="loading">Searching...</div>';
+
+        try {
+          const url = `${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}&include_adult=false`;
+          const response = await fetch(url);
+          const data = await response.json();
+
+          // Ignore out-of-order responses
+          if (
+            (inputIndex === 1 && requestToken !== latestSearchToken1) ||
+            (inputIndex === 2 && requestToken !== latestSearchToken2)
+          ) {
+            return;
+          }
+
+          displayResults(data.results, resultsContainer);
+        } catch (error) {
+          // If this request is stale, don't overwrite newer results
+          if (
+            (inputIndex === 1 && requestToken !== latestSearchToken1) ||
+            (inputIndex === 2 && requestToken !== latestSearchToken2)
+          ) {
+            return;
+          }
+          resultsContainer.innerHTML = `<div class="error-message">Error: ${error.message}</div>`;
+          console.error("Search error:", error);
+        }
+      }
+
+      // Display search results
+      function displayResults(results, resultsContainer) {
+        resultsContainer.innerHTML = "";
+
+        if (!results || results.length === 0) {
+          resultsContainer.innerHTML =
+            '<div class="error-message">No results found</div>';
+          return;
+        }
+
+        // Filter only movies and TV shows
+        const filteredResults = results.filter(
+          (item) => item.media_type === "movie" || item.media_type === "tv",
+        );
+
+        filteredResults.forEach((item) => {
+          const title = item.media_type === "movie" ? item.title : item.name;
+          const year =
+            item.media_type === "movie"
+              ? item.release_date
+                ? ` (${item.release_date.substring(0, 4)})`
+                : ""
+              : item.first_air_date
+                ? ` (${item.first_air_date.substring(0, 4)})`
+                : "";
+
+          const resultItem = document.createElement("div");
+          resultItem.className = "result-item";
+          resultItem.textContent = `${title}${year} — ${item.media_type.toUpperCase()}`;
+          resultItem.setAttribute("role", "button");
+          resultItem.setAttribute("tabindex", "0");
+          resultItem.setAttribute("aria-label", `Select ${title}${year}`);
+
+          resultItem.addEventListener("click", () =>
+            selectTitle(item, resultsContainer),
+          );
+          resultItem.addEventListener("keypress", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              selectTitle(item, resultsContainer);
+            }
+          });
+
+          resultsContainer.appendChild(resultItem);
+        });
+      }
+
+      // Select a title
+      function selectTitle(item, resultsContainer) {
+        const title = item.media_type === "movie" ? item.title : item.name;
+        const year =
+          item.media_type === "movie"
+            ? item.release_date
+              ? ` (${item.release_date.substring(0, 4)})`
+              : ""
+            : item.first_air_date
+              ? ` (${item.first_air_date.substring(0, 4)})`
+              : "";
+
+        const selectedTitle = {
+          id: item.id,
+          mediaType: item.media_type,
+          title: title,
+          year: year,
+          poster: item.poster_path,
+        };
+
+        if (resultsContainer === resultsContainer1) {
+          selectedTitle1 = selectedTitle;
+          displaySelectedTitle(selectedTitle, selectedContainer1, searchInput1);
+        } else {
+          selectedTitle2 = selectedTitle;
+          displaySelectedTitle(selectedTitle, selectedContainer2, searchInput2);
+        }
+
+        // Clear results
+        resultsContainer.innerHTML = "";
+
+        // Auto-compare when both titles are selected.
+        // Increment `compareRunToken` so any in-flight compare run gets ignored.
+        if (selectedTitle1 && selectedTitle2) {
+          compareRunToken++;
+          debugData.cast1 = null;
+          debugData.cast2 = null;
+          debugData.commonCast = null;
+          compareCast(compareRunToken);
+        } else {
+          compareRunToken++;
+          commonCastContainer.classList.add("hidden");
+          commonCastContainer.innerHTML = "";
+          debugData.cast1 = null;
+          debugData.cast2 = null;
+          debugData.commonCast = null;
+        }
+
+        // Update debug info
+        updateDebugInfo();
+      }
+
+      // Display selected title
+      function displaySelectedTitle(title, container, searchInput) {
+        const posterUrl = title.poster
+          ? `${IMAGE_BASE_URL}${title.poster}`
+          : `https://placehold.co/85x128/0d0802/33ffff?text=${encodeURIComponent(title.title.substring(0, 1))}`;
+        container.innerHTML = `
+                <img src="${posterUrl}" alt="Poster for ${title.title}">
+                <div class="selected-item-text">
+                    <strong>${title.title}</strong>${title.year}<br>
+                    <small>${title.mediaType.toUpperCase()}</small>
+                </div>
+                <button class="clear-btn" aria-label="Clear selection for ${title.title}">×</button>
+            `;
+
+        container.classList.remove("hidden");
+        searchInput.value = "";
+
+        // Add clear button functionality
+        container.querySelector(".clear-btn").addEventListener("click", () => {
+          container.classList.add("hidden");
+          container.innerHTML = "";
+
+          if (container === selectedContainer1) {
+            selectedTitle1 = null;
+          } else {
+            selectedTitle2 = null;
+          }
+
+          if (!selectedTitle1 || !selectedTitle2) {
+            compareRunToken++;
+            commonCastContainer.classList.add("hidden");
+            commonCastContainer.innerHTML = "";
+            debugData.cast1 = null;
+            debugData.cast2 = null;
+            debugData.commonCast = null;
+          }
+
+          // Update debug info
+          updateDebugInfo();
+        });
+      }
+
+      // Compare cast of both titles
+      async function compareCast(runToken) {
+        if (!selectedTitle1 || !selectedTitle2) return;
+
+        // Snapshot current selections so async work refers to the user’s choices at start.
+        const title1 = selectedTitle1;
+        const title2 = selectedTitle2;
+
+        commonCastContainer.innerHTML =
+          '<div class="loading">Loading cast information...</div>';
+        commonCastContainer.classList.remove("hidden");
+
+        try {
+          // Get cast for first title
+          const cast1 = await getCast(
+            title1.id,
+            title1.mediaType,
+          );
+          if (runToken !== compareRunToken) return;
+          debugData.cast1 = cast1;
+          console.log("Cast 1:", cast1);
+
+          // Get cast for second title
+          const cast2 = await getCast(
+            title2.id,
+            title2.mediaType,
+          );
+          if (runToken !== compareRunToken) return;
+          debugData.cast2 = cast2;
+          console.log("Cast 2:", cast2);
+
+          // Find common cast members
+          const commonCastMembers = findCommonCast(cast1, cast2);
+          if (runToken !== compareRunToken) return;
+          debugData.commonCast = commonCastMembers;
+          console.log("Common cast:", commonCastMembers);
+
+          // Display common cast
+          displayCommonCast(commonCastMembers);
+          if (runToken !== compareRunToken) return;
+
+          // Mobile-only: scroll to the results once rendered.
+          if (isMobileViewport()) {
+            window.requestAnimationFrame(() => {
+              commonCastContainer.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            });
+          }
+
+          // Update debug info
+          updateDebugInfo();
+        } catch (error) {
+          if (runToken !== compareRunToken) return;
+          commonCastContainer.innerHTML = `<div class="error-message">Error: ${error.message}</div>`;
+          console.error("Compare cast error:", error);
+        }
+      }
+
+      // Get cast for a movie or TV show
+      async function getCast(id, mediaType) {
+        // For TV shows, use the aggregated credits endpoint
+        let url;
+        if (mediaType === "tv") {
+          url = `${BASE_URL}/${mediaType}/${id}/aggregate_credits?api_key=${API_KEY}`;
+        } else {
+          url = `${BASE_URL}/${mediaType}/${id}/credits?api_key=${API_KEY}`;
+        }
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        // Check the API response structure
+        console.log(`${mediaType} credits response:`, data);
+
+        // Return the cast array, checking both standard and aggregated formats
+        return data.cast || [];
+      }
+
+      // Find common cast members
+      function findCommonCast(cast1, cast2) {
+        const commonCast = [];
+        const cast2Map = new Map();
+
+        // Create a map of cast2 for faster lookup
+        cast2.forEach((actor) => {
+          cast2Map.set(actor.id, actor);
+        });
+
+        // Check each actor from cast1 if they're in cast2
+        cast1.forEach((actor1) => {
+          if (cast2Map.has(actor1.id)) {
+            const actor2 = cast2Map.get(actor1.id);
+
+            // Handle different character formats for TV shows vs movies
+            let character1 = "";
+            let character2 = "";
+
+            // For TV shows with aggregate_credits format
+            if (actor1.roles && actor1.roles.length > 0) {
+              character1 = actor1.roles
+                .map((role) => role.character)
+                .join(", ");
+            } else {
+              character1 = actor1.character || "Unknown";
+            }
+
+            if (actor2.roles && actor2.roles.length > 0) {
+              character2 = actor2.roles
+                .map((role) => role.character)
+                .join(", ");
+            } else {
+              character2 = actor2.character || "Unknown";
+            }
+
+            commonCast.push({
+              id: actor1.id,
+              name: actor1.name,
+              profile_path: actor1.profile_path,
+              character1: character1,
+              character2: character2,
+            });
+          }
+        });
+
+        return commonCast;
+      }
+
+      // Display common cast
+      function displayCommonCast(commonCastMembers) {
+        commonCastContainer.innerHTML = "";
+
+        // Recreate the common cast header and count
+        commonCastContainer.innerHTML = `
+                <h2>Common Cast</h2>
+                <div id="commonCastCount">Found ${commonCastMembers.length} common cast member${commonCastMembers.length !== 1 ? "s" : ""}</div>
+                <div class="cast-list" id="commonCast"></div>
+            `;
+
+        const commonCastList = document.getElementById("commonCast");
+
+        if (commonCastMembers.length === 0) {
+          commonCastList.innerHTML =
+            '<div class="error-message">No common cast members found</div>';
+          return;
+        }
+
+        commonCastMembers.forEach((actor) => {
+          const profileUrl = actor.profile_path
+            ? `${IMAGE_BASE_URL}${actor.profile_path}`
+            : `https://placehold.co/200x300/0d0802/33ffff?text=${encodeURIComponent(actor.name.substring(0, 1))}`;
+          const castCard = document.createElement("div");
+          castCard.className = "cast-card";
+          castCard.setAttribute("tabindex", "0");
+          castCard.innerHTML = `
+                    <img src="${profileUrl}" alt="Photo of ${actor.name}">
+                    <div class="cast-info">
+                        <p class="actor-name">${actor.name}</p>
+                        <p class="character-name">In "${selectedTitle1.title}": ${actor.character1}</p>
+                        <p class="character-name">In "${selectedTitle2.title}": ${actor.character2}</p>
+                    </div>
+                `;
+
+          commonCastList.appendChild(castCard);
+        });
+      }
+
+      // Update debug info
+      function updateDebugInfo() {
+        const debug = {
+          selectedTitle1,
+          selectedTitle2,
+          cast1: debugData.cast1
+            ? {
+                length: debugData.cast1.length,
+                sample: debugData.cast1.slice(0, 3),
+              }
+            : null,
+          cast2: debugData.cast2
+            ? {
+                length: debugData.cast2.length,
+                sample: debugData.cast2.slice(0, 3),
+              }
+            : null,
+          commonCast: debugData.commonCast,
+        };
+
+        debugInfoContainer.textContent = JSON.stringify(debug, null, 2);
+      }
+    </script>
+  </body>
+</html>
