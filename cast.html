@@ -208,7 +208,6 @@
         padding: 1rem;
         background: #000;
         border: 2px solid #e8ba5a;
-        border-right: none;
         color: #e8d5c4;
         font-size: 0.85rem;
         font-family: "Space Mono", monospace;
@@ -876,9 +875,7 @@
     </style>
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
-    <div class="container" id="main-content">
+    <div class="container">
       <h1>Cast Compare</h1>
       <div class="subtitle">Find actors who appear in two titles</div>
       <div class="divider" role="presentation"></div>
@@ -1076,7 +1073,12 @@
       });
 
       // Search for movies and TV shows
-      async function searchTitles(query, resultsContainer, requestToken, inputIndex) {
+      async function searchTitles(
+        query,
+        resultsContainer,
+        requestToken,
+        inputIndex,
+      ) {
         if (!query.trim()) return;
 
         resultsContainer.innerHTML = '<div class="loading">Searching...</div>';
@@ -1263,19 +1265,13 @@
 
         try {
           // Get cast for first title
-          const cast1 = await getCast(
-            title1.id,
-            title1.mediaType,
-          );
+          const cast1 = await getCast(title1.id, title1.mediaType);
           if (runToken !== compareRunToken) return;
           debugData.cast1 = cast1;
           console.log("Cast 1:", cast1);
 
           // Get cast for second title
-          const cast2 = await getCast(
-            title2.id,
-            title2.mediaType,
-          );
+          const cast2 = await getCast(title2.id, title2.mediaType);
           if (runToken !== compareRunToken) return;
           debugData.cast2 = cast2;
           console.log("Cast 2:", cast2);
