@@ -290,6 +290,12 @@
         letter-spacing: 0.05em;
         word-wrap: break-word;
         overflow-wrap: break-word;
+        /* Fix mobile tap reliability: eliminates 300ms delay and prevents
+           the browser from cancelling taps that land on child text nodes */
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(51, 255, 255, 0.2);
+        user-select: none;
+        -webkit-user-select: none;
       }
 
       .result-item:hover {
@@ -1143,6 +1149,20 @@
           resultItem.setAttribute("tabindex", "0");
           resultItem.setAttribute("aria-label", `Select ${title}${year}`);
 
+          // touchend fires reliably even when the tap starts on a child text
+          // node. preventDefault() stops the 300ms-delayed ghost click that
+          // would otherwise fire afterward on touch devices.
+          resultItem.addEventListener(
+            "touchend",
+            (e) => {
+              e.preventDefault();
+              selectTitle(item, resultsContainer);
+            },
+            { passive: false },
+          );
+
+          // click handles mouse (desktop) and acts as a fallback for any
+          // touch browser that doesn't fire touchend as expected.
           resultItem.addEventListener("click", () =>
             selectTitle(item, resultsContainer),
           );
@@ -1255,7 +1275,7 @@
       async function compareCast(runToken) {
         if (!selectedTitle1 || !selectedTitle2) return;
 
-        // Snapshot current selections so async work refers to the user’s choices at start.
+        // Snapshot current selections so async work refers to the user's choices at start.
         const title1 = selectedTitle1;
         const title2 = selectedTitle2;
 
